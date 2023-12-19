@@ -1,0 +1,50 @@
+---
+- hosts: localhost
+  gather_facts: false
+  tasks:
+    - name: Get the name of the main user
+      shell: "awk -F: '$3 == 1000 {print $1}' /etc/passwd"
+      register: main_user
+
+    - name: Create .ssh directory in the home directory of the main user
+      file:
+        path: "/home/{{ main_user.stdout }}/.ssh"
+        state: directory
+        mode: '0700'
+        owner: "{{ main_user.stdout }}"
+        group: "{{ main_user.stdout }}"
+
+    - name: Create the ssh config file
+      file:
+        path: "/home/{{ main_user.stdout }}/.ssh/config"
+        state: touch
+
+    - name: Generate ssh key
+      command: "ssh-keygen -t rsa -b 2048 -f /home/{{ main_user.stdout }}/.ssh/git -q -N ''"
+      args:
+        creates: "/home/{{ main_user.stdout }}/.ssh/git"
+      become: yes
+      become_user: "{{ main_user.stdout }}"
+
+    - name: Create the ssh config file
+      blockinfile:
+        path: "/home/{{ main_user.stdout }}/.ssh/config"
+        block: |
+          Host *
+              ServerAliveInterval 60
+              ServerAliveCountMax 5
+
+          Host github.com
+              IdentityFile ~/.ssh/git
+
+          Host gitlab.com
+              IdentityFile ~/.ssh/git
+        owner: "{{ main_user.stdout }}"
+        group: "{{ main_user.stdout }}"
+        mode: '0644'
+
+    - name: add name credential of the main user to git
+      command: 'git config --global user.name "wurfkreuz"'
+
+    - name: add email credential of the main user to git
+      command: 'git config --global user.email "wurfkreuz@mail.ru"'

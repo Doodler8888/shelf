@@ -1,0 +1,10 @@
+--ignore-dir=/opt/
+--ignore-dir=/dev/
+--ignore-dir=/proc/
+--ignore-dir=/sys/
+--ignore-dir=/tmp/
+--ignore-dir=/var/
+--ignore-dir=.git/
+--ignore-dir=node_modules/
+--ignore-dir=vendor/
+--ignore-dir=/nix/
