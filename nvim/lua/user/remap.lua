@@ -75,9 +75,9 @@ vim.api.nvim_set_keymap('i', '<M-a>', '<Esc>A', {noremap = true})
 vim.api.nvim_set_keymap('n', '<Leader>tn', ':tabnew<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<Leader>tx', ':tabclose<CR>', {noremap = true, silent = true})
 
--- Move between tabs with 'Alt-1', 'Alt-2', etc.
+-- Move between tabs with 
 for i = 1, 9 do
-  vim.api.nvim_set_keymap('n', '<M-'..i..'>', i..'gt', {noremap = true, silent = true})
+  vim.api.nvim_set_keymap('n', '<leader>'..i, i..'gt', {noremap = true, silent = true})
 end
 
 -- -- Avoid selecting newline character when jumping to previous paragraph in visual mode

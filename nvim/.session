@@ -16,13 +16,18 @@ endif
 badd +1 ~/.dotfiles/nvim
 badd +1 lua/user/init.lua
 badd +17 lua/user/sessions.lua
-badd +24 lua/user/manager.lua
+badd +67 lua/user/manager.lua
 badd +1 lua/user/which-key.lua
-badd +0 lua/user/hydra.lua
+badd +3 lua/user/hydra.lua
+badd +8 /etc/passwd
+badd +7 lua/user/custom_functions.lua
+badd +15 lua/user/commands.lua
+badd +13 init.lua
+badd +4 ~/.dotfiles/zsh/.zshrc
 argglobal
 %argdel
 $argadd ~/.dotfiles/nvim
-edit lua/user/hydra.lua
+edit lua/user/custom_functions.lua
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -49,6 +54,7 @@ exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 exe '3resize ' . ((&lines * 20 + 22) / 44)
 exe 'vert 3resize ' . ((&columns * 93 + 93) / 187)
 argglobal
+balt lua/user/commands.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -59,20 +65,19 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 3 - ((2 * winheight(0) + 21) / 42)
+let s:l = 28 - ((27 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 3
-normal! 0
-lcd ~/.dotfiles/nvim
+keepjumps 28
+normal! 05|
 wincmd w
 argglobal
-if bufexists(fnamemodify("~/.dotfiles/nvim/lua/user/manager.lua", ":p")) | buffer ~/.dotfiles/nvim/lua/user/manager.lua | else | edit ~/.dotfiles/nvim/lua/user/manager.lua | endif
+if bufexists(fnamemodify("lua/user/manager.lua", ":p")) | buffer lua/user/manager.lua | else | edit lua/user/manager.lua | endif
 if &buftype ==# 'terminal'
-  silent file ~/.dotfiles/nvim/lua/user/manager.lua
+  silent file lua/user/manager.lua
 endif
-balt ~/.dotfiles/nvim/lua/user/sessions.lua
+balt lua/user/sessions.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -83,12 +88,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 24 - ((8 * winheight(0) + 10) / 21)
+let s:l = 67 - ((16 * winheight(0) + 10) / 21)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 24
-normal! 029|
+keepjumps 67
+normal! 020|
 lcd ~/.dotfiles/nvim
 wincmd w
 argglobal
@@ -135,6 +140,7 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
+nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :

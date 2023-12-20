@@ -1,19 +1,5 @@
 local Hydra = require('hydra')
 
--- Hydra({
---     name = 'Resize Window',
---     mode = 'n',  -- Normal mode
---     body = '<leader>o',  -- This is your prefix key
---     heads = {
---         { '+', ':resize +3<CR>', { desc = 'Increase height' }},
---         { '-', ':resize -3<CR>', { desc = 'Decrease height' }},
---         { 'c', '5<C-w><', { desc = 'Decrease width' }},
---         { 'e', '5<C-w>>', { desc = 'Increase width' }},
---         -- Add other commands or heads as needed
---         { 'q', nil, { exit = true, desc = 'Quit Hydra' }},  -- Exit the Hydra
---     }
--- })
-
 Hydra({
     name = 'Resize Window',
     mode = 'n',  -- Normal mode
