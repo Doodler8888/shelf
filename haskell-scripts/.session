@@ -14,9 +14,10 @@ else
   set shortmess=aoO
 endif
 badd +1 ~/.dotfiles/haskell-scripts
-badd +11 exe/bak.hs
-badd +42 scripts.cabal
-badd +0 exe/trash.hs
+badd +19 exe/bak.hs
+badd +20 scripts.cabal
+badd +1 exe/trash.hs
+badd +1 exe/cpd.hs
 argglobal
 %argdel
 $argadd ~/.dotfiles/haskell-scripts
@@ -27,6 +28,10 @@ set splitbelow splitright
 wincmd _ | wincmd |
 vsplit
 1wincmd h
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
 wincmd w
 let &splitbelow = s:save_splitbelow
 let &splitright = s:save_splitright
@@ -37,10 +42,13 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
+exe '1resize ' . ((&lines * 30 + 22) / 44)
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
+exe '2resize ' . ((&lines * 11 + 22) / 44)
 exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
+exe 'vert 3resize ' . ((&columns * 93 + 93) / 187)
 argglobal
-balt ~/.dotfiles/haskell-scripts
+balt scripts.cabal
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -51,20 +59,20 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 11 - ((10 * winheight(0) + 21) / 42)
+let s:l = 2 - ((1 * winheight(0) + 15) / 30)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 11
-normal! 016|
+keepjumps 2
+normal! 0
 lcd ~/.dotfiles/haskell-scripts
 wincmd w
 argglobal
-if bufexists(fnamemodify("~/.dotfiles/haskell-scripts/exe/trash.hs", ":p")) | buffer ~/.dotfiles/haskell-scripts/exe/trash.hs | else | edit ~/.dotfiles/haskell-scripts/exe/trash.hs | endif
+if bufexists(fnamemodify("~/.dotfiles/haskell-scripts/scripts.cabal", ":p")) | buffer ~/.dotfiles/haskell-scripts/scripts.cabal | else | edit ~/.dotfiles/haskell-scripts/scripts.cabal | endif
 if &buftype ==# 'terminal'
-  silent file ~/.dotfiles/haskell-scripts/exe/trash.hs
+  silent file ~/.dotfiles/haskell-scripts/scripts.cabal
 endif
-balt ~/.dotfiles/haskell-scripts/scripts.cabal
+balt ~/.dotfiles/haskell-scripts/exe/bak.hs
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -75,17 +83,43 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 21) / 42)
+let s:l = 30 - ((5 * winheight(0) + 5) / 11)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
-normal! 030|
+keepjumps 30
+normal! 026|
 lcd ~/.dotfiles/haskell-scripts
 wincmd w
-2wincmd w
+argglobal
+if bufexists(fnamemodify("~/.dotfiles/haskell-scripts/exe/cpd.hs", ":p")) | buffer ~/.dotfiles/haskell-scripts/exe/cpd.hs | else | edit ~/.dotfiles/haskell-scripts/exe/cpd.hs | endif
+if &buftype ==# 'terminal'
+  silent file ~/.dotfiles/haskell-scripts/exe/cpd.hs
+endif
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 5 - ((4 * winheight(0) + 21) / 42)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 5
+normal! 0
+lcd ~/.dotfiles/haskell-scripts
+wincmd w
+3wincmd w
+exe '1resize ' . ((&lines * 30 + 22) / 44)
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
+exe '2resize ' . ((&lines * 11 + 22) / 44)
 exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
+exe 'vert 3resize ' . ((&columns * 93 + 93) / 187)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

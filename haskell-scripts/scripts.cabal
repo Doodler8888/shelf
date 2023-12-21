@@ -16,9 +16,9 @@ build-type:         Simple
 common warnings
     ghc-options: -Wall
 
-executable trash
+executable cpd
     import:           warnings
-    main-is:          trash.hs
+    main-is:          cpd.hs
     -- other-modules:
     -- other-extensions:
     build-depends:    base >=4.18.1
@@ -27,6 +27,7 @@ executable trash
 		    , temporary
 		    , process
 		    , directory
+		    , text
     hs-source-dirs:   exe
     default-language: GHC2021
 

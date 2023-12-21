@@ -1,8 +1,8 @@
 source /home/wurfkreuz/.dotfiles/bash/scripts.sh
 export GOPATH=$HOME/go
-export PATH="$HOME/.nimble/bin:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.dotfiles:$HOME/.cabal/bin:$HOME/.ghcup/bin:$PATH"
-export EDITOR=/usr//local/bin/nvim
-export CDPATH=.:~:/usr/local:/etc:~/.dotfiles:~/.config:~/.projects
+export PATH="$HOME/.nimble/bin:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.dotfiles:$HOME/.cabal/bin:$HOME/.ghcup/bin:$HOME/.local/bin:$PATH"
+export EDITOR='/usr//local/bin/nvim'
+export CDPATH='.:~:/usr/local:/etc:~/.dotfiles:~/.config:~/.projects'
 export HISTFILE="$HOME/.zsh_history"
 export ZDOTDIR="/home/wurfkreuz/.dotfiles/zsh/"
 export STARSHIP_CONFIG="/home/wurfkreuz/.dotfiles/starship/starship.toml"
