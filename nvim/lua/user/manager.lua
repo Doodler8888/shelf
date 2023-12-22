@@ -63,7 +63,7 @@ local plugins = {
 	--     vim.keymap.set('i', '<C-a>', function () return vim.fn['codeium#Accept']() end, { expr = true })
 	--   end
 	-- },
-	'pearofducks/ansible-vim',
+	-- 'pearofducks/ansible-vim',
 	'lambdalisue/suda.vim',
 	'nanotee/zoxide.vim',
 }

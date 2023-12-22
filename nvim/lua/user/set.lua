@@ -50,6 +50,13 @@ vim.cmd [[ set viewoptions=folds,cursor ]]
 vim.cmd [[ autocmd BufWinLeave * silent! mkview ]]
 vim.cmd [[ autocmd BufWinEnter * silent! loadview ]]
 
+vim.cmd([[
+  augroup yaml_comment_indent
+    autocmd!
+    autocmd InsertEnter,BufRead * lua if vim.fn.getline('.'):match('^%s*#') then vim.bo.autoindent = false else vim.bo.autoindent = true end
+  augroup END
+]])
+
 -- vim.cmd [[ filetype plugin on ]]
 -- vim.cmd [[ set path=.,** ]]
 -- vim.cmd [[command! -nargs=1 Grep execute 'vimgrep /' . <q-args> . '/ **/*' | copen]]

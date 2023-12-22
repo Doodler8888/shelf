@@ -20,14 +20,14 @@ badd +67 lua/user/manager.lua
 badd +1 lua/user/which-key.lua
 badd +3 lua/user/hydra.lua
 badd +8 /etc/passwd
-badd +12 lua/user/custom_functions.lua
+badd +1 lua/user/custom_functions.lua
 badd +15 lua/user/commands.lua
 badd +13 init.lua
 badd +4 ~/.dotfiles/zsh/.zshrc
 argglobal
 %argdel
 $argadd ~/.dotfiles/nvim
-edit lua/user/custom_functions.lua
+edit lua/user/manager.lua
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -54,7 +54,7 @@ exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 exe '3resize ' . ((&lines * 20 + 22) / 44)
 exe 'vert 3resize ' . ((&columns * 93 + 93) / 187)
 argglobal
-balt lua/user/commands.lua
+balt lua/user/custom_functions.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -65,12 +65,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 35 - ((34 * winheight(0) + 21) / 42)
+let s:l = 67 - ((37 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 35
-normal! 08|
+keepjumps 67
+normal! 020|
 wincmd w
 argglobal
 if bufexists(fnamemodify("lua/user/manager.lua", ":p")) | buffer lua/user/manager.lua | else | edit lua/user/manager.lua | endif
