@@ -48,8 +48,8 @@ vim.api.nvim_set_keymap('n', '<Leader>fd', ':find ', {noremap = true})
 -- vim.api.nvim_set_keymap('n', '<Leader>zz', ':Z ', {noremap = true})
 
 -- Quit the terminal mode (but not the terminal emulation)
--- vim.api.nvim_set_keymap('t', '<S-Tab>', '<C-\\><C-n>', {noremap = true})
-vim.api.nvim_set_keymap('t', '<M-e>', '<C-\\><C-n>', {noremap = true})
+vim.api.nvim_set_keymap('t', '<S-Tab>', '<C-\\><C-n>', {noremap = true})
+-- vim.api.nvim_set_keymap('t', '<M-e>', '<C-\\><C-n>', {noremap = true})
 
 -- Toggle colorcolumn
 vim.cmd('command! Column execute "set colorcolumn=" . (&colorcolumn == "" ? "80" : "")')
