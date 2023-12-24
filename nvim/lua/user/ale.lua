@@ -15,5 +15,6 @@ vim.g.ale_linters = {
   haskell = {},
   nim = {},
   go = {},
+  yaml = {},
 }
 

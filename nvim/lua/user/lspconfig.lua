@@ -31,3 +31,15 @@ lspconfig.ansiblels.setup{
         debounce_text_changes = 150,
     }
 }
+
+lspconfig.yamlls.setup{
+    settings = {
+        yaml = {
+            schemas = {
+                -- kubernetes = "/*.yaml",
+		["https://json.schemastore.org/github-workflow.json"] = ".github/workflows/*.yaml",
+            },
+        },
+    },
+}
+

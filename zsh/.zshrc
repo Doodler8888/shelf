@@ -23,6 +23,7 @@ SAVEHIST=2000
 bindkey -v
 bindkey "^?" backward-delete-char
 
+alias fct="cd ~/.dotfiles/zsh/ && nvim functions.sh"
 alias j="zellij"
 alias hpr="cd /home/wurfkreuz/.dotfiles/hyprland/ && nvim hyprland.conf"
 alias str="cd /home/wurfkreuz/.dotfiles/starship/ && nvim starship.toml"
@@ -102,6 +103,7 @@ alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias nvm='cd ~/.dotfiles/nvim/ && nvim .'
 alias install='sudo pacman -Syu'
+alias remove='sudo pacman -R'
 alias orphaned='sudo pacman -Qtdq'
 alias hello='echo "Hello"'
 alias inpt='cd $HOME/.dotfiles/bash && nvim .inputrc'
