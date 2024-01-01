@@ -62,14 +62,15 @@ vim.api.nvim_set_keymap('v', '<', '<gv', { noremap = true, silent = true })
 vim.cmd([[
   command! Messages execute 'botright 10new' | execute 'redir @a' | execute 'messages' | execute 'redir END' | execute 'put a' | execute 'normal gg'
 ]])
+vim.api.nvim_set_keymap('n', '<Leader>mm', ':Messages<CR>', {noremap = true, silent = true})
 
 vim.api.nvim_set_keymap('i', '<C-f>', '<Esc>la', {noremap = true})
 vim.api.nvim_set_keymap('i', '<C-b>', '<Esc>ha', {noremap = true})
 vim.api.nvim_set_keymap('i', '<M-w>', '<Esc> wi', {noremap = true})
 vim.api.nvim_set_keymap('i', '<M-b>', '<Esc> bi', {noremap = true})
--- vim.api.nvim_set_keymap('i', '<C-o>', '<Nop>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<M-i>', '<Esc>I', {noremap = true})
 vim.api.nvim_set_keymap('i', '<M-a>', '<Esc>A', {noremap = true})
+-- vim.api.nvim_set_keymap('i', '<C-o>', '<Nop>', { noremap = true, silent = true })
 
 -- Create a new tab with 'Alt-T'
 vim.api.nvim_set_keymap('n', '<Leader>tn', ':tabnew<CR>', {noremap = true, silent = true})

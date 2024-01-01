@@ -13,9 +13,13 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +56 lua/user/manager.lua
+badd +35 lua/user/lspconfig.lua
+badd +58 lua/user/manager.lua
 badd +1 lua/user
 badd +51 lua/user/remap.lua
+badd +16 lua/user/ale.lua
+badd +16 lua/user/commands.lua
+badd +7 lua/user/cmp.lua
 argglobal
 %argdel
 $argadd ~
@@ -36,8 +40,8 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
-exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
+exe 'vert 1resize ' . ((&columns * 90 + 93) / 187)
+exe 'vert 2resize ' . ((&columns * 96 + 93) / 187)
 argglobal
 enew
 balt lua/user/manager.lua
@@ -52,6 +56,7 @@ setlocal fen
 lcd ~/.dotfiles/nvim
 wincmd w
 argglobal
+balt ~/.dotfiles/nvim/lua/user/cmp.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -62,16 +67,17 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 61 - ((31 * winheight(0) + 21) / 42)
+let s:l = 68 - ((38 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 61
+keepjumps 68
 normal! 020|
 lcd ~/.dotfiles/nvim
 wincmd w
-exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
-exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
+2wincmd w
+exe 'vert 1resize ' . ((&columns * 90 + 93) / 187)
+exe 'vert 2resize ' . ((&columns * 96 + 93) / 187)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

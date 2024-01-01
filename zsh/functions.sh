@@ -127,7 +127,7 @@ bindkey '^O' fd-lsearch
 
 fzf-nvim() {
     local file
-    file=$(fzf --height 40% --border)
+    file=$(fd --type f --hidden . / | fzf --height 40% --border)
 
     if [[ -n $file ]]; then
         # Check if the file is owned by root

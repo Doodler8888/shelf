@@ -23,7 +23,7 @@ SAVEHIST=2000
 bindkey -v
 bindkey "^?" backward-delete-char
 
-alias fct="cd ~/.dotfiles/zsh/ && nvim functions.sh"
+alias fnc="cd ~/.dotfiles/zsh/ && nvim functions.sh"
 alias j="zellij"
 alias hpr="cd /home/wurfkreuz/.dotfiles/hyprland/ && nvim hyprland.conf"
 alias str="cd /home/wurfkreuz/.dotfiles/starship/ && nvim starship.toml"
@@ -34,7 +34,7 @@ alias key='cd ~/.dotfiles/keyd/ && nvim default.conf'
 alias h='history'
 alias update_fonts='fc-cache -f -v'
 alias cr='cp -r'
-alias alcrt='cd ~/.dotfiles/alacritty && nvim ~/.dotfiles/alacritty/alacritty.yml'
+alias alc='cd ~/.dotfiles/alacritty && nvim ~/.dotfiles/alacritty/alacritty.toml'
 alias qtl='cd ~/.dotfiles/qtile && nvim ~/.dotfiles/qtile/config.py'
 alias v='nvim'
 alias v.='nvim .'

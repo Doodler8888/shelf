@@ -1,5 +1,3 @@
-# vim: filetype=yaml.ansible :
-
 - hosts: localhost
   tasks:
 
@@ -28,7 +26,7 @@
         src: '/home/{{ main_user.stdout }}/.config/nvim'
         dest: '/home/{{ item }}/.config/nvim'
         owner: "{{ item }}"
-        group: "{{ item }}" 
+        group: "{{ item }}"
         mode: '0744'
       loop: "{{ users.stdout_lines }}"
 

@@ -20,9 +20,13 @@ local plugins = {
 	  -- or                              , branch = '0.1.x',
 	  dependencies = { 'nvim-lua/plenary.nvim' }
 	},
+	{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
 	'rose-pine/neovim',
 	'anuvyklack/hydra.nvim',
 	'sbdchd/neoformat',
+	'hrsh7th/cmp-nvim-lsp',
+	'hrsh7th/cmp-path',
+	'hrsh7th/nvim-cmp',
 	-- {'romgrk/barbar.nvim',
 	--   dependencies = {
 	--     'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
@@ -57,6 +61,7 @@ local plugins = {
 	 'alaviss/nim.nvim',
 	 'LnL7/vim-nix',
 	 'dense-analysis/ale',
+	 'pocco81/auto-save.nvim',
 	-- {
 	--   'Exafunction/codeium.vim',
 	--   config = function ()

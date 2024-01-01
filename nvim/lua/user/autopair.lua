@@ -13,7 +13,7 @@ end
 -- Autopair
 _G.autopair = function()
   if vim.g.autopair_enabled == true then
-    vim.api.nvim_set_keymap("i", "'", "''<left>", {noremap = true, silent = true})
+    -- vim.api.nvim_set_keymap("i", "'", "''<left>", {noremap = true, silent = true})
     vim.api.nvim_set_keymap("i", "\"", "\"\"<left>", {noremap = true, silent = true})
     vim.api.nvim_set_keymap("i", "(", "()<left>", {noremap = true})
     vim.api.nvim_set_keymap("i", "[", "[]<left>", {noremap = true})
@@ -21,7 +21,7 @@ _G.autopair = function()
     -- vim.api.nvim_set_keymap("i", "{;", "{};<left><left>", {noremap = true})
   else
     -- Remove the auto-pairing by setting to self insertations
-    vim.api.nvim_set_keymap("i", "'", "'", {noremap = true, silent = true})
+    -- vim.api.nvim_set_keymap("i", "'", "'", {noremap = true, silent = true})
     vim.api.nvim_set_keymap("i", "\"", "\"", {noremap = true, silent = true})
     vim.api.nvim_set_keymap("i", "(", "(", {noremap = true})
     vim.api.nvim_set_keymap("i", "[", "[", {noremap = true})
@@ -48,4 +48,4 @@ for _, pair in ipairs(closing_pairs) do
     vim.api.nvim_set_keymap('i', '<M-'..pair..'>', pair, { noremap = true })
 end
 
-vim.api.nvim_set_keymap('n', '<F5>', ':!ormolu -m inplace %<CR>', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '<F5>', ':!ormolu -m inplace %<CR>', { noremap = true, silent = true })
