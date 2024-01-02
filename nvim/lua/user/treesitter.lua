@@ -63,6 +63,7 @@ require'nvim-treesitter.configs'.setup {
 }
 
 local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+
 parser_config.hypr = {
   install_info = {
     url = "https://github.com/luckasRanarison/tree-sitter-hypr",
@@ -70,4 +71,13 @@ parser_config.hypr = {
     branch = "master",
   },
   filetype = "hypr",
+}
+
+parser_config.nu = {
+  install_info = {
+    url = "https://github.com/nushell/tree-sitter-nu",
+    files = { "src/parser.c" },
+    branch = "main",
+  },
+  filetype = "nu",
 }

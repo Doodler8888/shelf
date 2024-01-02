@@ -186,3 +186,10 @@ for key in "$SSH_KEY_DIR"/*; do
         ssh-add "$key" > /dev/null 2>&1 
     fi
 done
+
+function preexec() {
+  if mountpoint -q ~/.remote; then
+      fusermount -u ~/.remote
+  fi
+}
+

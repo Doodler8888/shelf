@@ -16,7 +16,7 @@ local plugins = {
 	-- 'nvim-lua/popup.nvim',
 	'nvim-lua/plenary.nvim',
 	{
-	  'nvim-telescope/telescope.nvim', tag = '0.1.4',
+	  'nvim-telescope/telescope.nvim', tag = '0.1.5',
 	  -- or                              , branch = '0.1.x',
 	  dependencies = { 'nvim-lua/plenary.nvim' }
 	},
@@ -27,19 +27,6 @@ local plugins = {
 	'hrsh7th/cmp-nvim-lsp',
 	'hrsh7th/cmp-path',
 	'hrsh7th/nvim-cmp',
-	-- {'romgrk/barbar.nvim',
-	--   dependencies = {
-	--     'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
-	--     'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
-	--   },
-	--   init = function() vim.g.barbar_auto_setup = false end,
-	--   opts = {
-	--     -- lazy.nvim will automatically call setup for you. put your options here, anything missing will use the default:
-	--     -- animation = true,
-	--     -- insert_at_start = true,
-	--     -- …etc.
-	--   },
-	-- },
 	{
 	 'numToStr/Comment.nvim',
 	 opts = {
@@ -47,7 +34,15 @@ local plugins = {
 	 },
 	 lazy = false,
 	},
-	'neovim/nvim-lspconfig',
+	{
+	 'neovim/nvim-lspconfig',
+	  -- opts = {
+	  --   servers = {
+	  --     nushell = {},
+	  --     -- other config
+	  --   },
+	  -- },
+	},
 	{
 	  'nvim-treesitter/nvim-treesitter',
 	  build = ':TSUpdate'
