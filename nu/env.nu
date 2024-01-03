@@ -100,4 +100,9 @@ $env.NU_PLUGIN_DIRS = [
 # To add entries to PATH (on Windows you might use Path), you can use the following pattern:
 # $env.PATH = ($env.PATH | split row (char esep) | prepend '/some/path')
 
-zoxide init nushell | save -f ~/.zoxide.nu
+$env.EDITOR = nvim
+
+$env.PROMPT_INDICATOR = ' '
+$env.PROMPT_INDICATOR_VI_INSERT = ' '
+$env.PROMPT_INDICATOR_VI_NORMAL = ' '
+$env.PROMPT_COMMAND_RIGHT = ' '

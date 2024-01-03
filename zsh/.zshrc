@@ -187,9 +187,9 @@ for key in "$SSH_KEY_DIR"/*; do
     fi
 done
 
-function preexec() {
-  if mountpoint -q ~/.remote; then
-      fusermount -u ~/.remote
-  fi
-}
+# function preexec() {
+#   if mountpoint -q ~/.remote; then
+#       fusermount -u ~/.remote
+#   fi
+# }
 

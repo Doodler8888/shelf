@@ -73,10 +73,6 @@ lspconfig.yamlls.setup{
     },
 }
 
-vim.cmd [[
-  autocmd BufNewFile,BufRead *.nu setfiletype nu
-]]
-
 lspconfig.nushell.setup{
   cmd = { "nu", "--lsp" },
   filetypes = { "nu" },
