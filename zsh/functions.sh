@@ -168,4 +168,3 @@ for key in "$SSH_KEY_DIR"/*; do
         ssh-add "$key" > /dev/null 2>&1 
     fi
 done
-

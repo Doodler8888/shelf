@@ -107,6 +107,9 @@ alias remove='sudo pacman -R'
 alias orphaned='sudo pacman -Qtdq'
 alias hello='echo "Hello"'
 alias inpt='cd $HOME/.dotfiles/bash && nvim .inputrc'
+alias users="awk -F: '\$3>=1000 && \$1!=\"nobody\" && \$1!~/nixbld/ {print \$1}' /etc/passwd"  # Original: awk: cmd. line:1: >=1000 && !=nobody && !~/nixbld/ {print }
+alias books="cd ~/.secret_dotfiles/ansible/playbooks/"
+alias hosts="sudo -e /etc/ansible/hosts"
 
 # bindkey '^R' fzf_history_search
 
@@ -178,7 +181,7 @@ swww img "$HOME/Downloads/pictures/68747470733a2f2f692e696d6775722e636f6d2f4c657
 eval "$(starship init zsh)"
 
 if [ -z "$SSH_AUTH_SOCK" ] ; then
-    eval "$(ssh-agent -s)" 1> /dev/null
+    eval "$(ssh-agent -s)" 1> /dev/null # 'ssh-agent -s' start a new ssh agent and print out env variables for it. But because it only prints them out, they have to be evaluated.
 fi
 SSH_KEY_DIR="$HOME/.ssh/keys"
 for key in "$SSH_KEY_DIR"/*; do

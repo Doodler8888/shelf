@@ -57,6 +57,8 @@ vim.cmd([[
   augroup END
 ]])
 
+-- vim.cmd [[ let g:suda_smart_edit = 1 ]]
+
 -- vim.cmd [[ filetype plugin on ]]
 -- vim.cmd [[ set path=.,** ]]
 -- vim.cmd [[command! -nargs=1 Grep execute 'vimgrep /' . <q-args> . '/ **/*' | copen]]
@@ -73,6 +75,5 @@ vim.cmd([[
 -- -- keybinding for the command to quickly toggle 'colorcolumn'
 -- vim.api.nvim_set_keymap('n', '<F6>', ':ToggleColorColumn<CR>', { noremap = true, silent = true })
 --
--- vim.cmd [[ let g:suda_smart_edit = 1 ]]
 --
 -- -- vim.o.autochdir = true

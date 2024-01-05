@@ -13,7 +13,6 @@ vim.opt.rtp:prepend(lazypath)
 
 
 local plugins = {
-	-- 'nvim-lua/popup.nvim',
 	'nvim-lua/plenary.nvim',
 	{
 	  'nvim-telescope/telescope.nvim', tag = '0.1.5',
@@ -36,12 +35,6 @@ local plugins = {
 	},
 	{
 	 'neovim/nvim-lspconfig',
-	  -- opts = {
-	  --   servers = {
-	  --     nushell = {},
-	  --     -- other config
-	  --   },
-	  -- },
 	},
 	{
 	  'nvim-treesitter/nvim-treesitter',
@@ -63,8 +56,6 @@ local plugins = {
 	--     vim.keymap.set('i', '<C-a>', function () return vim.fn['codeium#Accept']() end, { expr = true })
 	--   end
 	-- },
-	-- 'pearofducks/ansible-vim',
-	'lambdalisue/suda.vim',
 	'nanotee/zoxide.vim',
 }
 
