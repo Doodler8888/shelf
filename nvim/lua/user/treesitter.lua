@@ -11,6 +11,7 @@ require'nvim-treesitter.configs'.setup {
 
   highlight = {
     enable = true,
+    disable = { "terraform" },
     additional_vim_regex_highlighting = false,
   },
     textobjects = {

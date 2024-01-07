@@ -34,4 +34,3 @@ function TrimWhitespace()
 end
 
 vim.api.nvim_set_keymap('i', '<C-d>', '<cmd>lua TrimWhitespace()<CR>', { noremap = true, silent = true })
-

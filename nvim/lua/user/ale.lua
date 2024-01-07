@@ -16,5 +16,6 @@ vim.g.ale_linters = {
   nim = {},
   go = {},
   yaml = {},
+  terraform = {},
 }
 

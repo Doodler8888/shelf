@@ -1,5 +1,3 @@
-# #!/usr/bin/env nu
-
 $env.config = {
 keybindings: [
         {

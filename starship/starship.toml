@@ -51,3 +51,6 @@ disabled = true
 
 [haskell]
 disabled = true
+
+[terraform]
+disabled = true

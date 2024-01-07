@@ -1,4 +1,5 @@
 source /home/wurfkreuz/.dotfiles/bash/scripts.sh
+source /home/wurfkreuz/.secret_dotfiles/zsh/keys.sh
 export GOPATH=$HOME/go
 export PATH="$HOME/.nimble/bin:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.dotfiles:$HOME/.cabal/bin:$HOME/.ghcup/bin:$HOME/.local/bin:$PATH"
 export EDITOR='/usr//local/bin/nvim'
@@ -8,7 +9,6 @@ export ZDOTDIR="/home/wurfkreuz/.dotfiles/zsh/"
 export STARSHIP_CONFIG="/home/wurfkreuz/.dotfiles/starship/starship.toml"
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git --exclude .snapshots --exclude var --exclude opt --exclude lib --exclude lib64 --exclude mnt --exclude proc --exclude run --exclude sbin --exclude srv --exclude sys --exclude tmp . /'
 export PATH="$PATH:/home/wurfkreuz/.ghcup/hls/2.4.0.0/bin"
-
 
 # zstyle ':completion:*' menu select
 # zstyle ':completion:*' special-dirs true

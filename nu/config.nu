@@ -431,18 +431,17 @@ $env.config = {
                 ]
             }
         }
-        # {
-        #     name: move_to_line_end_or_take_history_hint
-        #     modifier: alt
-        #     keycode: char_a
-        #     mode: [emacs, vi_normal, vi_insert]
-        #     event: {
-        #         until: [
-        #             {send: historyhintcomplete}
-        #             {edit: movetolineend}
-        #         ]
-        #     }
-        # }
+        {
+            name: move_to_line_end
+            modifier: alt
+            keycode: char_a
+            mode: [emacs, vi_normal, vi_insert]
+            event: {
+                until: [
+                    {edit: movetolineend}
+                ]
+            }
+        }
         {
             name: move_to_line_start
             modifier: control
@@ -708,12 +707,16 @@ alias la = ls -la
 alias dot = cd ~/.dotfiles
 alias v = nvim
 alias v. = nvim .
+alias rf = rm -rf
 def nvm [] { cd ~/.dotfiles/nvim; nvim . }
 def nush [] { cd ~/.dotfiles/nu; nvim config.nu }
 def alc [] { cd ~/.dotfiles/alacritty; nvim alacritty.toml }
 def zsh [] { cd ~/.dotfiles/zsh/; nvim .zshrc }
+def push [] { git add .; git commit -m "n"; git push}
 
 swww init err> /dev/null
 swww img ~/Downloads/pictures/68747470733a2f2f692e696d6775722e636f6d2f4c65756836776d2e676966.gif
 
-source ~/.dotfiles/nu/keybindings.nu
+# ls | where name != 'd1' | each { mv $in.name "./d1" }
+# open /etc/passwd | lines | split column : | where column3 == "1000" | get column1
+# open /etc/passwd | lines | split column ':' | where { ($in.column3 | into int) >= 1000 } | get column1

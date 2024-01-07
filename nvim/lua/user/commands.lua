@@ -16,3 +16,7 @@ vim.cmd('command! Emc cd $HOME/.emacs.d | edit config.org')
 vim.cmd('command! Zlj cd $HOME/.dotfiles/zellij | edit config.kdl')
 vim.cmd('command! Nu cd $HOME/.dotfiles/nu | edit config.nu')
 vim.cmd('command! Hosts cd /etc/ansible | edit hosts')
+vim.cmd('command! Books cd $HOME/.secret_dotfiles/ansible/playbooks')
+vim.cmd('command! Books cd $HOME/.secret_dotfiles/zsh | edit keys.sh')
+vim.cmd('command! Str cd $HOME/.dotfiles/starship/ | edit starship.toml')
+
