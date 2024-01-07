@@ -5,7 +5,6 @@ import System.Directory (renamePath)
 import System.Environment (getArgs)
 import Turtle
 
--- Simplified renaming logic
 renameBak :: FilePath -> FilePath
 renameBak filePath =
   let name = format fp filePath

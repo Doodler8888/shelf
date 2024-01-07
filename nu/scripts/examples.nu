@@ -1,4 +1,4 @@
-open /etc/passwd | lines | split column ':' | where { ($in.column3 | into int) >= 1000 } | get column1
+# open /etc/passwd | lines | split column ':' | where { ($in.column3 | into int) >= 1000 } | get column1
 
 # '$in' represents a line (the current item of a pipe) because i used 'lines'.
 # And if i don't write '$in' before acessing column3 it will switch
@@ -24,3 +24,24 @@ open /etc/passwd | lines | split column ':' | where { ($in.column3 | into int) >
 # open file.csv \
 # | update date {|row| $row.date | into datetime | format date "%F"} \
 # | save file2.csv
+
+
+# doctl projects list | lines | first 1
+
+# The first command in NuShell is used to return the first number of rows from the
+# input.
+
+
+def checkBak [filename: string] {
+ let name = (echo $filename | path basename)
+ if (echo $name | str contains '.bak') {
+   echo "File $filename ends with '.bak'"
+ } else {
+   echo "File $filename does not end with '.bak'"
+ }
+}
+
+# The path basename command in Nushell gets the final component of a path,
+# essentially giving you the filename from the full file path. For example, if
+# filePath is /home/user/documents/myfile.txt, path basename will return
+# myfile.txt.

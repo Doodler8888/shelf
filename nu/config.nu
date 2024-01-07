@@ -708,11 +708,43 @@ alias dot = cd ~/.dotfiles
 alias v = nvim
 alias v. = nvim .
 alias rf = rm -rf
+alias nudir = cd ~/.dotfiles/nu
+alias md = mkdir
 def nvm [] { cd ~/.dotfiles/nvim; nvim . }
 def nush [] { cd ~/.dotfiles/nu; nvim config.nu }
 def alc [] { cd ~/.dotfiles/alacritty; nvim alacritty.toml }
 def zsh [] { cd ~/.dotfiles/zsh/; nvim .zshrc }
 def push [] { git add .; git commit -m "n"; git push}
+
+# def dolist [args] {
+#    doctl projects list --format $args
+# }
+
+def dolist [args?] {
+ if $args == null {
+   doctl projects list
+ } else if $args == 'list' {
+   doctl projects list | lines | first 1
+ } else {
+   doctl projects list --format $args
+ }
+}
+
+# The question mark is used to show that the function can be used without a
+# parameter. I can also write it like this: '[args?: string]'.
+
+
+def checkBakRename [filename: string] {
+ let name = (echo $filename | path basename)
+ if (echo $name | str contains '.bak') {
+ let new_name = $name | str replace '.bak' ''
+ mv $filename $new_name
+ } else {
+ let new_name = $name + '.bak'
+ mv $filename $new_name
+ }
+}
+
 
 swww init err> /dev/null
 swww img ~/Downloads/pictures/68747470733a2f2f692e696d6775722e636f6d2f4c65756836776d2e676966.gif
