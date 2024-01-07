@@ -697,6 +697,25 @@ $env.config = {
             mode: emacs
             event: {edit: capitalizechar}
         }
+	{
+	    name: fuzzy_history_fzf
+	    modifier: control
+	    keycode: char_k
+	    mode: [emacs , vi_normal, vi_insert]
+	    event: {
+	      send: executehostcommand
+	      cmd: "commandline (
+		history 
+		  | each { |it| $it.command } 
+		  | uniq 
+		  | reverse 
+		  | str join (char -i 0) 
+		  | fzf --read0 --tiebreak=chunk --layout=reverse  --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --bind alt-up:preview-up,alt-down:preview-down --height=70% -q (commandline) 
+		  | decode utf-8 
+		  | str trim
+	      )"
+        }
+       }
     ]
 }
 
@@ -745,6 +764,45 @@ def checkBakRename [filename: string] {
  }
 }
 
+def fzf_list_path [] {
+ let file = ( ^ls | fzf --no-multi )
+ if $file != '' {
+   echo $file
+ }
+}
+
+def gbs [] {
+  let branch = (
+    git branch |
+    split row "\n" |
+    str trim |
+    where ($it !~ '\*') |
+    where ($it != '') |
+    str join (char nl) |
+    fzf --no-multi
+  )
+  if $branch != '' {
+    git switch $branch
+  }
+}
+
+def gbd [] {
+  let branches = (
+    git branch |
+    split row "\n" |
+    str trim |
+    where ($it !~ '\*') |
+    where ($it != '') |
+    str join (char nl) |
+    fzf --multi |
+    split row "\n" |
+    where ($it != '')
+  )
+  if ($branches | length) > 0 {
+    $branches | each { |branch| git branch -d $branch }
+    ""
+  }
+}
 
 swww init err> /dev/null
 swww img ~/Downloads/pictures/68747470733a2f2f692e696d6775722e636f6d2f4c65756836776d2e676966.gif
