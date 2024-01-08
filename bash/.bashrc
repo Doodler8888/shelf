@@ -146,7 +146,6 @@ fzf_nvim_with_sudo() {
 
     if [[ -n "$file" ]]; then
         if [[ ! -w "$file" ]]; then
-            # Use sudoedit which respects the SUDO_EDITOR, VISUAL or EDITOR environment variables
             SUDO_EDITOR="nvim" sudoedit "$file"
         else
             nvim "$file"

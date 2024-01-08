@@ -320,13 +320,13 @@ $env.config = {
             mode: [emacs, vi_normal, vi_insert]
             event: { send: searchhistory }
         }
-        {
-            name: open_command_editor
-            modifier: control
-            keycode: char_e
-            mode: [emacs, vi_normal, vi_insert]
-            event: { send: openeditor }
-        }
+        # {
+        #     name: open_command_editor
+        #     modifier: control
+        #     keycode: char_e
+        #     mode: [emacs, vi_normal, vi_insert]
+        #     event: { send: openeditor }
+        # }
         {
             name: move_up
             modifier: none
@@ -468,18 +468,18 @@ $env.config = {
                 ]
             }
         }
-        {
-            name: move_down
-            modifier: control
-            keycode: char_t
-            mode: [emacs, vi_normal, vi_insert]
-            event: {
-                until: [
-                    {send: menudown}
-                    {send: down}
-                ]
-            }
-        }
+        # {
+        #     name: move_down
+        #     modifier: control
+        #     keycode: char_t
+        #     mode: [emacs, vi_normal, vi_insert]
+        #     event: {
+        #         until: [
+        #             {send: menudown}
+        #             {send: down}
+        #         ]
+        #     }
+        # }
         {
             name: delete_one_character_backward
             modifier: none
@@ -548,19 +548,19 @@ $env.config = {
                 ]
             }
         }
-        {
-            name: move_right_or_take_history_hint
-            modifier: control
-            keycode: char_f
-            mode: [emacs, vi_insert]
-            event: {
-                until: [
-                    # {send: historyhintcomplete}
-                    # {send: menuright}
-                    {send: right}
-                ]
-            }
-        }
+        # {
+        #     name: move_right_or_take_history_hint
+        #     modifier: control
+        #     keycode: char_f
+        #     mode: [emacs, vi_insert]
+        #     event: {
+        #         until: [
+        #             # {send: historyhintcomplete}
+        #             # {send: menuright}
+        #             {send: right}
+        #         ]
+        #     }
+        # }
         {
             name: redo_change
             modifier: control
@@ -596,13 +596,13 @@ $env.config = {
             mode: emacs
             event: {edit: cuttoend}
         }
-        {
-            name: cut_line_from_start
-            modifier: control
-            keycode: char_u
-            mode: emacs
-            event: {edit: cutfromstart}
-        }
+        # {
+        #     name: cut_line_from_start
+        #     modifier: control
+        #     keycode: char_u
+        #     mode: emacs
+        #     event: {edit: cutfromstart}
+        # }
         {
             name: swap_graphemes
             modifier: control
@@ -669,13 +669,13 @@ $env.config = {
             mode: emacs
             event: {edit: backspaceword}
         }
-        {
-            name: cut_word_to_right
-            modifier: alt
-            keycode: char_d
-            mode: emacs
-            event: {edit: cutwordright}
-        }
+        # {
+        #     name: cut_word_to_right
+        #     modifier: alt
+        #     keycode: char_d
+        #     mode: emacs
+        #     event: {edit: cutwordright}
+        # }
         {
             name: upper_case_word
             modifier: alt
@@ -697,44 +697,84 @@ $env.config = {
             mode: emacs
             event: {edit: capitalizechar}
         }
-	{
-	    name: fuzzy_history_fzf
+	# {
+	#     name: fuzzy_history_fzf
+	#     modifier: control
+	#     keycode: 
+	#     mode: [emacs , vi_normal, vi_insert]
+	#     event: {
+	#       send: executehostcommand
+	#       cmd: "commandline (
+	# 	history 
+	# 	  | each { |it| $it.command } 
+	# 	  | uniq 
+	# 	  | reverse 
+	# 	  | str join (char -i 0) 
+	# 	  | fzf --read0 --tiebreak=chunk --layout=reverse  --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --bind alt-up:preview-up,alt-down:preview-down --height=70% -q (commandline) 
+	# 	  | decode utf-8 
+	# 	  | str trim
+	#       )"
+ #        }
+ #       }
+       {
+	    name: zellij_sessions
 	    modifier: control
-	    keycode: char_k
-	    mode: [emacs , vi_normal, vi_insert]
+	    keycode: char_s
+	    mode: [emacs vi_normal vi_insert]
 	    event: {
 	      send: executehostcommand
-	      cmd: "commandline (
-		history 
-		  | each { |it| $it.command } 
-		  | uniq 
-		  | reverse 
-		  | str join (char -i 0) 
-		  | fzf --read0 --tiebreak=chunk --layout=reverse  --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --bind alt-up:preview-up,alt-down:preview-down --height=70% -q (commandline) 
-		  | decode utf-8 
-		  | str trim
-	      )"
-        }
+	      cmd: 'zellij attach (zellij list-sessions | lines | split column -r '\s+' | get column1 | to text | fzf --ansi) out> /dev/null' # The output from the command is colorized. Without the --ansi option, the symbols that colorise the output would be also printed out without interpretation.
+	}
+       }
+       {
+	    name: fzf_cd
+	    modifier: control
+	    keycode: char_z
+	    mode: [emacs vi_normal vi_insert]
+	    event: {
+	      send: executehostcommand
+	      cmd: '(fd --type d --hidden . / | fzf) | cd $in'
+	}
+       }
+       {
+	    name: nvim_search
+	    modifier: control
+	    keycode: char_e
+	    mode: [emacs vi_normal vi_insert]
+	    event: {
+	      send: executehostcommand
+	      cmd: 'nvim_fzf'
+	}
        }
        {
 	    name: insert_file
-	    modifier: alt
+	    modifier: control
 	    keycode: char_y
 	    mode: [emacs vi_normal vi_insert]
 	    event: {
 	      send: executehostcommand
-	      cmd: "commandline --insert (fzf --tiebreak=chunk --layout=reverse  --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --height=70% | decode utf-8 | str trim)"
+	      cmd: "commandline --insert (fd --type f --hidden . | fzf --height 40% --border)" # cmd: "commandline --insert (fd --type f --hidden . / | fzf --height 40% --border)"
+	}
+       }
+       {
+	    name: insert_path
+	    modifier: control
+	    keycode: char_f
+	    mode: [emacs vi_normal vi_insert]
+	    event: {
+	      send: executehostcommand
+	      cmd: "commandline --insert (fd --type f --hidden . / | fzf --height 40% --border)"
 	}
        }
        {
 	    name: insert_sudo
 	    modifier: control
-	    keycode: char_s
+	    keycode: char_u
 	    mode: [emacs, vi_insert, vi_normal]
 	    event: [
 	      { edit: MoveToStart }
 	      { send: ExecuteHostCommand,
-		cmd: 'if (commandline | split row -r '\s+' | first) != `sudo` { commandline --insert `sudo `;commandline --cursor-end; }'
+		cmd: 'if (commandline | split row -r '\s+' | first) != `sudo` { commandline --insert `sudo `;commandline --cursor-end; }' # I would assume 'sudo' gets inserted at the very start because the information about the current cursor position gets lost once i use the 'first' command in the 'commandline | split row -r '\s+' | first' pipe. 
 	      }
 	    ]
        }
@@ -747,6 +787,16 @@ $env.config = {
 	      send: executehostcommand,
 	      cmd: "source ($nu.env-path);source ($nu.config-path)" # In the original code parenthesis with the path variables were inclosed in single quotes and '$' is outside of double qoutes at the very start of the command.
  	}
+       }
+       {
+	    name: insert_last_arg_from_prev_cmd
+	    modifier: alt
+	    keycode: char_.
+	    mode: [emacs, vi_normal, vi_insert]
+	    event: {
+		send: executeHostCommand
+		cmd: "commandline --insert (history | last | get command | parse --regex '(?P<arg>[^ ]+)$' | get arg | first)"
+        }
        }
     ]
 }
@@ -784,6 +834,16 @@ def dolist [args?] {
 # The question mark is used to show that the function can be used without a
 # parameter. I can also write it like this: '[args?: string]'.
 
+# cmd: 'if (ls -l (fd --type f --hidden . / | fzf) | get user | to text) == "root" {echo "first step"}'
+
+def nvim_fzf [] {
+  let fzf_item = (fd --type f --hidden . / | fzf)
+  if (ls -l $fzf_item | get user | to text) == "root" {
+    sudo -e $fzf_item
+    } else {
+    nvim $fzf_item
+    }
+  }
 
 def bak [filename: string] {
  let name = (echo $filename | path basename)
@@ -793,13 +853,6 @@ def bak [filename: string] {
  } else {
  let new_name = $name + '.bak'
  mv $filename $new_name
- }
-}
-
-def fzf_list_path [] {
- let file = ( ^ls | fzf --no-multi )
- if $file != '' {
-   echo $file
  }
 }
 

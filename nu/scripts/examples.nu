@@ -36,3 +36,14 @@
 # essentially giving you the filename from the full file path. For example, if
 # filePath is /home/user/documents/myfile.txt, path basename will return
 # myfile.txt.
+
+
+# # You need to put --env on definition
+# def --env "johnny jump" [code] {
+#   let path = (johnny path $code)
+#   cd $path
+# }
+
+
+zellij list-sessions | lines | split column -r '\s+'
+
