@@ -716,6 +716,38 @@ $env.config = {
 	      )"
         }
        }
+       {
+	    name: insert_file
+	    modifier: alt
+	    keycode: char_y
+	    mode: [emacs vi_normal vi_insert]
+	    event: {
+	      send: executehostcommand
+	      cmd: "commandline --insert (fzf --tiebreak=chunk --layout=reverse  --multi --preview='echo {..}' --preview-window='bottom:3:wrap' --height=70% | decode utf-8 | str trim)"
+	}
+       }
+       {
+	    name: insert_sudo
+	    modifier: control
+	    keycode: char_s
+	    mode: [emacs, vi_insert, vi_normal]
+	    event: [
+	      { edit: MoveToStart }
+	      { send: ExecuteHostCommand,
+		cmd: 'if (commandline | split row -r '\s+' | first) != `sudo` { commandline --insert `sudo `;commandline --cursor-end; }'
+	      }
+	    ]
+       }
+       {
+	    name: reload_config
+	    modifier: none
+	    keycode: f5
+	    mode: [emacs vi_normal vi_insert]
+	    event: {
+	      send: executehostcommand,
+	      cmd: "source ($nu.env-path);source ($nu.config-path)" # In the original code parenthesis with the path variables were inclosed in single quotes and '$' is outside of double qoutes at the very start of the command.
+ 	}
+       }
     ]
 }
 
@@ -753,7 +785,7 @@ def dolist [args?] {
 # parameter. I can also write it like this: '[args?: string]'.
 
 
-def checkBakRename [filename: string] {
+def bak [filename: string] {
  let name = (echo $filename | path basename)
  if (echo $name | str contains '.bak') {
  let new_name = $name | str replace '.bak' ''

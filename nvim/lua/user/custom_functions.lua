@@ -34,3 +34,17 @@ function TrimWhitespace()
 end
 
 vim.api.nvim_set_keymap('i', '<C-d>', '<cmd>lua TrimWhitespace()<CR>', { noremap = true, silent = true })
+
+
+local function change_to_buffer_dir()
+  -- Get the current buffer's full path
+  local bufname = vim.api.nvim_buf_get_name(0)
+  -- Extract the directory from the buffer's full path
+  local buftdir = vim.fn.fnamemodify(bufname, ':p:h')
+  -- Change the Neovim's current working directory to the buffer's directory
+  vim.cmd('cd ' .. buftdir)
+end
+
+-- Create a Neovim command called "CdToBufferDir" that invokes the function
+vim.api.nvim_create_user_command('Cd', change_to_buffer_dir, {})
+

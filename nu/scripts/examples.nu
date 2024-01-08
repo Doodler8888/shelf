@@ -32,15 +32,6 @@
 # input.
 
 
-def checkBak [filename: string] {
- let name = (echo $filename | path basename)
- if (echo $name | str contains '.bak') {
-   echo "File $filename ends with '.bak'"
- } else {
-   echo "File $filename does not end with '.bak'"
- }
-}
-
 # The path basename command in Nushell gets the final component of a path,
 # essentially giving you the filename from the full file path. For example, if
 # filePath is /home/user/documents/myfile.txt, path basename will return
