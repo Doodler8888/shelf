@@ -43,7 +43,3 @@
 #   let path = (johnny path $code)
 #   cd $path
 # }
-
-
-zellij list-sessions | lines | split column -r '\s+'
-

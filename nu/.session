@@ -14,10 +14,13 @@ else
   set shortmess=aoO
 endif
 badd +1 ~
-badd +710 config.nu
+badd +256 config.nu
 badd +191 ~/.dotfiles/zsh/.zshrc
-badd +54 ~/.dotfiles/bash/.bashrc
+badd +146 ~/.dotfiles/bash/.bashrc
 badd +18 ~/.dotfiles/bash/scripts.sh
+badd +48 scripts/examples.nu
+badd +1 functions.nu
+badd +570 keybindings.nu
 argglobal
 %argdel
 $argadd ~
@@ -41,6 +44,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
 exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 argglobal
+balt scripts/examples.nu
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -51,17 +55,17 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 722 - ((8 * winheight(0) + 21) / 42)
+let s:l = 807 - ((25 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 722
-normal! 027|
+keepjumps 807
+normal! 010|
 wincmd w
 argglobal
-if bufexists(fnamemodify("~/.dotfiles/bash/.bashrc", ":p")) | buffer ~/.dotfiles/bash/.bashrc | else | edit ~/.dotfiles/bash/.bashrc | endif
+if bufexists(fnamemodify("~/.dotfiles/nu", ":p")) | buffer ~/.dotfiles/nu | else | edit ~/.dotfiles/nu | endif
 if &buftype ==# 'terminal'
-  silent file ~/.dotfiles/bash/.bashrc
+  silent file ~/.dotfiles/nu
 endif
 setlocal fdm=manual
 setlocal fde=0
@@ -73,12 +77,13 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 182 - ((35 * winheight(0) + 21) / 42)
+let s:l = 11 - ((10 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 182
-normal! 015|
+keepjumps 11
+normal! 0
+lcd ~/.dotfiles/nu
 wincmd w
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
 exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
