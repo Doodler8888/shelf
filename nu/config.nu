@@ -785,7 +785,7 @@ $env.config = {
 	    mode: [emacs vi_normal vi_insert]
 	    event: {
 	      send: executehostcommand,
-	      cmd: "source ($nu.env-path);source ($nu.config-path)" # In the original code parenthesis with the path variables were inclosed in single quotes and '$' is outside of double qoutes at the very ktart of the commandk
+	      cmd: "source ($nu.env-path);source ($nu.config-path);source ~/.dotfiles/nu/functions.nu" # In the original code parenthesis with the path variables were inclosed in single quotes and '$' is outside of double qoutes at the very ktart of the commandk
  	}
        }
        {
@@ -812,6 +812,8 @@ alias rf = rm -rf
 alias nudir = cd ~/.dotfiles/nu
 alias md = mkdir
 alias off = poweroff
+alias install = sudo pacman -Syu
+alias backup = sudo timeshift --create --comments
 def now [] { date now | to text | str replace " +0300 (now)" "" }
 def --env nvm [] { cd ~/.dotfiles/nvim; nvim . }
 def --env nush [] { cd ~/.dotfiles/nu; nvim config.nu }

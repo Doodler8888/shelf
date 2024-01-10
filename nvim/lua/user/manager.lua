@@ -26,6 +26,7 @@ local plugins = {
 	'hrsh7th/cmp-nvim-lsp',
 	'hrsh7th/cmp-path',
 	'hrsh7th/nvim-cmp',
+	'hrsh7th/cmp-cmdline',
 	{
 	 'numToStr/Comment.nvim',
 	 opts = {

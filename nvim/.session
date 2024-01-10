@@ -3,7 +3,7 @@ let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd ~/.dotfiles/nu
+cd ~/.dotfiles/nvim
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
@@ -13,15 +13,13 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +788 config.nu
-badd +1 ~/config.nu
-badd +6 functions.nu
-badd +180 ~/.dotfiles/zsh/.zshrc
-badd +151 ~/.dotfiles/zsh/functions.sh
+badd +1 ~/.dotfiles/nvim
+badd +0 lua/user/cmp.lua
+badd +0 lua/user/manager.lua
 argglobal
 %argdel
-$argadd ~/config.nu
-edit config.nu
+$argadd ~/.dotfiles/nvim
+edit lua/user/cmp.lua
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -38,10 +36,9 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 90 + 93) / 187)
-exe 'vert 2resize ' . ((&columns * 96 + 93) / 187)
+exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
+exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 argglobal
-balt ~/.dotfiles/zsh/.zshrc
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -52,24 +49,19 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 773 - ((9 * winheight(0) + 21) / 42)
+let s:l = 14 - ((13 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 773
-let s:c = 47 - ((32 * winwidth(0) + 45) / 90)
-if s:c > 0
-  exe 'normal! ' . s:c . '|zs' . 47 . '|'
-else
-  normal! 047|
-endif
+keepjumps 14
+normal! 0
+lcd ~/.dotfiles/nvim
 wincmd w
 argglobal
-if bufexists(fnamemodify("functions.nu", ":p")) | buffer functions.nu | else | edit functions.nu | endif
+if bufexists(fnamemodify("~/.dotfiles/nvim/lua/user/manager.lua", ":p")) | buffer ~/.dotfiles/nvim/lua/user/manager.lua | else | edit ~/.dotfiles/nvim/lua/user/manager.lua | endif
 if &buftype ==# 'terminal'
-  silent file functions.nu
+  silent file ~/.dotfiles/nvim/lua/user/manager.lua
 endif
-balt config.nu
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -80,16 +72,17 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 6 - ((5 * winheight(0) + 21) / 42)
+let s:l = 28 - ((14 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 6
-normal! 025|
+keepjumps 28
+normal! 0
+lcd ~/.dotfiles/nvim
 wincmd w
 2wincmd w
-exe 'vert 1resize ' . ((&columns * 90 + 93) / 187)
-exe 'vert 2resize ' . ((&columns * 96 + 93) / 187)
+exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
+exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
@@ -105,6 +98,7 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
+nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :

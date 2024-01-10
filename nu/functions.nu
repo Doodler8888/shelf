@@ -1,8 +1,10 @@
-def DO_list [args?] {
+def DO [args?] {
  if $args == null {
    doctl projects list
  } else if $args == 'list' {
-   doctl projects list | lines | first 1
+   doctl projects list | lines | first 1 | split column -r '\s{2,}' | values | flatten 
+ } else if $args == 'p' {
+   doctl projects list --format Name,ID
  } else {
    doctl projects list --format $args
  }
@@ -82,22 +84,4 @@ def fzf_zellij [] {
 # ls | where name != 'd1' | each { mv $in.name "./d1" }
 # open /etc/passwd | lines | split column ':' | where { ($in.column3 | into int) >= 1000 } | get column1
 # 'zellij attach (zellij list-sessions | lines | split column -r '\s+' | get column1 | to text | fzf --ansi)'
-
-
-# doctl projects list | lines | first 1 | split column -r '\s{2,}' | each { get $in }
-# doctl projects list | lines | first 1 | split column -r '\s{2,}' | each { get $in }
-# #
-# # doctl projects list | lines | first 1 | split column -r '\s{2,}' | collect { |x| $x.0 }
-# #
-# doctl projects list | lines | first 1 | split column -r '\s{2,}' | echo $in.0 | to text | values
-# ls | enumerate | each { |it| $"Number ($it.index) is size ($it.item.size)" }
-# #
-# #
-# # doctl projects list | lines | first 1 | split column -r '\s{2,}' | each { |it| get $it }
-# #
-# # doctl projects list | lines | first 1 | parse -r '\s{2,}' | each { echo $in }
-# #
-# #
-#
-#  # [{A: A1, B: B0}] | each { get 0.($in) }
-#
+# doctl projects list | lines | first 1 | split column -r '\s{2,}' | values | flatten # Or instead of flatten i could transpose this table (or other kinds of strucrutured data) so that i would have only i column with all values using 'transpose -i'.
