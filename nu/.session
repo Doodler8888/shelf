@@ -13,17 +13,12 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 ~
-badd +256 config.nu
-badd +191 ~/.dotfiles/zsh/.zshrc
-badd +146 ~/.dotfiles/bash/.bashrc
-badd +18 ~/.dotfiles/bash/scripts.sh
-badd +48 scripts/examples.nu
-badd +1 functions.nu
-badd +570 keybindings.nu
+badd +1 ~/config.nu
+badd +821 config.nu
+badd +95 functions.nu
 argglobal
 %argdel
-$argadd ~
+$argadd ~/config.nu
 edit config.nu
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
@@ -44,7 +39,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
 exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 argglobal
-balt scripts/examples.nu
+balt ~/config.nu
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -55,18 +50,19 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 807 - ((25 * winheight(0) + 21) / 42)
+let s:l = 822 - ((30 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 807
-normal! 010|
+keepjumps 822
+normal! 0
 wincmd w
 argglobal
-if bufexists(fnamemodify("~/.dotfiles/nu", ":p")) | buffer ~/.dotfiles/nu | else | edit ~/.dotfiles/nu | endif
+if bufexists(fnamemodify("functions.nu", ":p")) | buffer functions.nu | else | edit functions.nu | endif
 if &buftype ==# 'terminal'
-  silent file ~/.dotfiles/nu
+  silent file functions.nu
 endif
+balt config.nu
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -77,14 +73,14 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 11 - ((10 * winheight(0) + 21) / 42)
+let s:l = 86 - ((24 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 11
+keepjumps 86
 normal! 0
-lcd ~/.dotfiles/nu
 wincmd w
+2wincmd w
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
 exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 tabnext 1

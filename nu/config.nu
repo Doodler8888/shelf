@@ -536,31 +536,31 @@ $env.config = {
             mode: emacs
             event: {send: enter}
         }
-        {
-            name: move_left
-            modifier: control
-            keycode: char_b
-            mode: [emacs, vi_insert]
-            event: {
-                until: [
-                    {send: menuleft}
-                    {send: left}
-                ]
-            }
-        }
         # {
-        #     name: move_right_or_take_history_hint
+        #     name: move_left
         #     modifier: control
-        #     keycode: char_f
+        #     keycode: char_b
         #     mode: [emacs, vi_insert]
         #     event: {
         #         until: [
-        #             # {send: historyhintcomplete}
-        #             # {send: menuright}
-        #             {send: right}
+        #             {send: menuleft}
+        #             {send: left}
         #         ]
         #     }
         # }
+        {
+            name: move_right # _or_take_history_hint
+            modifier: control
+            keycode: char_f
+            mode: [emacs, vi_insert]
+            event: {
+                until: [
+                    # {send: historyhintcomplete}
+                    # {send: menuright}
+                    {send: right}
+                ]
+            }
+        }
         {
             name: redo_change
             modifier: control
@@ -603,13 +603,13 @@ $env.config = {
         #     mode: emacs
         #     event: {edit: cutfromstart}
         # }
-        {
-            name: swap_graphemes
-            modifier: control
-            keycode: char_t
-            mode: emacs
-            event: {edit: swapgraphemes}
-        }
+        # {
+        #     name: swap_graphemes
+        #     modifier: control
+        #     keycode: char_t
+        #     mode: emacs
+        #     event: {edit: swapgraphemes}
+        # }
         {
             name: move_one_word_left
             modifier: alt
@@ -718,19 +718,18 @@ $env.config = {
  #       }
        {
 	    name: zellij_sessions
-	    modifier: control
+	    modifier: alt
 	    keycode: char_s
 	    mode: [emacs vi_normal vi_insert]
 	    event: {
 	      send: executehostcommand
 	      cmd: 'fzf_zellij'
-	      # cmd: 'zellij attach (zellij list-sessions | lines | split column -r '\s+' | get column1 | to text | fzf --ansi)'
 	}
        }
        {
 	    name: fzf_cd
 	    modifier: control
-	    keycode: char_z
+	    keycode: char_t
 	    mode: [emacs vi_normal vi_insert]
 	    event: {
 	      send: executehostcommand
@@ -760,7 +759,7 @@ $env.config = {
        {
 	    name: insert_path
 	    modifier: control
-	    keycode: char_f
+	    keycode: char_s
 	    mode: [emacs vi_normal vi_insert]
 	    event: {
 	      send: executehostcommand
@@ -786,7 +785,7 @@ $env.config = {
 	    mode: [emacs vi_normal vi_insert]
 	    event: {
 	      send: executehostcommand,
-	      cmd: "source ($nu.env-path);source ($nu.config-path)" # In the original code parenthesis with the path variables were inclosed in single quotes and '$' is outside of double qoutes at the very start of the command.
+	      cmd: "source ($nu.env-path);source ($nu.config-path)" # In the original code parenthesis with the path variables were inclosed in single quotes and '$' is outside of double qoutes at the very ktart of the commandk
  	}
        }
        {
@@ -812,11 +811,15 @@ alias v. = nvim .
 alias rf = rm -rf
 alias nudir = cd ~/.dotfiles/nu
 alias md = mkdir
+alias off = poweroff
+def now [] { date now | to text | str replace " +0300 (now)" "" }
 def --env nvm [] { cd ~/.dotfiles/nvim; nvim . }
 def --env nush [] { cd ~/.dotfiles/nu; nvim config.nu }
 def --env alc [] { cd ~/.dotfiles/alacritty; nvim alacritty.toml }
 def --env zsh [] { cd ~/.dotfiles/zsh/; nvim .zshrc }
 def --env push [] { git add .; git commit -m "n"; git push}
+
+alias t = echo "test"
 
 swww init err> /dev/null
 swww img ~/Downloads/pictures/68747470733a2f2f692e696d6775722e636f6d2f4c65756836776d2e676966.gif

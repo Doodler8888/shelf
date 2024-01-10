@@ -1,4 +1,4 @@
-def dolist [args?] {
+def DO_list [args?] {
  if $args == null {
    doctl projects list
  } else if $args == 'list' {
@@ -66,32 +66,38 @@ def gbd [] {
   }
 }
 
-# def fzf_zellij [] {
-#   let session = zellij list-sessions 
-#     | lines 
-#     | split column -r '\s+' 
-#     | get column1 
-#     | to text 
-#     | fzf --ansi 
-#   if ($session | length) != "" {
-#     zellij attach $session
-#   }
-# }
-
 def fzf_zellij [] {
  let session = zellij list-sessions 
   | lines 
   | split column -r '\s+' 
   | get column1 
   | to text 
-  | fzf --ansi 
- if $session == "" { # Initially i tried to do this 'if ($session | length) != "" {' without return, but it didn't solve the problems with "ambigious selection" input. Also, modifying it to use return also helped me to ...
-
+  | fzf --height=10 --layout=reverse --border --ansi 
+ if $session == "" { # Initially i tried to do this 'if ($session | length) != "" {' without return, but it didn't solve the problems with "ambigious selection" input. Also, modifying it to use return also helped me to fix a situation where even if i press escape in the fzf window, a session name still gets used to enter a zellij session.
   return
  }
  zellij attach $session
 }
 
 # ls | where name != 'd1' | each { mv $in.name "./d1" }
-# open /etc/passwd | lines | split column : | where column3 == "1000" | get column1
 # open /etc/passwd | lines | split column ':' | where { ($in.column3 | into int) >= 1000 } | get column1
+# 'zellij attach (zellij list-sessions | lines | split column -r '\s+' | get column1 | to text | fzf --ansi)'
+
+
+# doctl projects list | lines | first 1 | split column -r '\s{2,}' | each { get $in }
+# doctl projects list | lines | first 1 | split column -r '\s{2,}' | each { get $in }
+# #
+# # doctl projects list | lines | first 1 | split column -r '\s{2,}' | collect { |x| $x.0 }
+# #
+# doctl projects list | lines | first 1 | split column -r '\s{2,}' | echo $in.0 | to text | values
+# ls | enumerate | each { |it| $"Number ($it.index) is size ($it.item.size)" }
+# #
+# #
+# # doctl projects list | lines | first 1 | split column -r '\s{2,}' | each { |it| get $it }
+# #
+# # doctl projects list | lines | first 1 | parse -r '\s{2,}' | each { echo $in }
+# #
+# #
+#
+#  # [{A: A1, B: B0}] | each { get 0.($in) }
+#
