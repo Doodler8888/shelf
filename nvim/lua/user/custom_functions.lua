@@ -36,15 +36,179 @@ end
 vim.api.nvim_set_keymap('i', '<C-d>', '<cmd>lua TrimWhitespace()<CR>', { noremap = true, silent = true })
 
 
+-- local function change_to_buffer_dir()
+--   -- Get the current buffer's full path
+--   local bufname = vim.api.nvim_buf_get_name(0)
+--   -- Extract the directory from the buffer's full path
+--   local buftdir = vim.fn.fnamemodify(bufname, ':p:h')
+--   -- Change the Neovim's current working directory to the buffer's directory
+--   vim.cmd('cd ' .. buftdir)
+-- end
+
 local function change_to_buffer_dir()
-  -- Get the current buffer's full path
-  local bufname = vim.api.nvim_buf_get_name(0)
-  -- Extract the directory from the buffer's full path
-  local buftdir = vim.fn.fnamemodify(bufname, ':p:h')
-  -- Change the Neovim's current working directory to the buffer's directory
+  -- Check if the current buffer is a netrw buffer
+  local is_netrw = vim.fn.exists("g:netrw_dir") == 1
+  local buftdir
+
+  if is_netrw then
+    -- In netrw, the current directory is stored in a global variable
+    buftdir = vim.g.netrw_dir
+  else
+    -- Get the current buffer's full path
+    local bufname = vim.api.nvim_buf_get_name(0)
+    -- Extract the directory from the buffer's full path
+    buftdir = vim.fn.fnamemodify(bufname, ':p:h')
+  end
+
+  -- Change Neovim's current working directory to the buffer's directory
   vim.cmd('cd ' .. buftdir)
 end
 
 -- Create a Neovim command called "CdToBufferDir" that invokes the function
 vim.api.nvim_create_user_command('Cd', change_to_buffer_dir, {})
+
+
+-- Define the custom 'f' function for normal and operator-pending mode
+local function custom_find_next_char(char, op_mode)
+    local current_pos = vim.api.nvim_win_get_cursor(0)
+    local found = false
+    local line_count = vim.api.nvim_buf_line_count(0)
+
+    while current_pos[1] <= line_count and not found do
+        -- Perform the 'f' action with the provided character
+        vim.cmd('normal! f' .. char)
+        local new_pos = vim.api.nvim_win_get_cursor(0)
+        if new_pos[1] ~= current_pos[1] or new_pos[2] ~= current_pos[2] then
+            found = true
+        else
+            if op_mode then
+                -- If in operator-pending mode, extend the selection to the next line
+                vim.cmd('normal! j^')
+            else
+                -- Move to the first non-blank character of the next line
+                vim.cmd('normal! j0')
+            end
+            current_pos = vim.api.nvim_win_get_cursor(0)
+        end
+    end
+end
+
+-- Create a Lua function that waits for the next key press and calls 'custom_find_next_char'
+local function custom_find_f(op_mode)
+    local char = vim.fn.nr2char(vim.fn.getchar())
+    custom_find_next_char(char, op_mode)
+end
+
+-- Map the 'f' key to the custom Lua function for normal and operator-pending mode
+vim.api.nvim_set_keymap('n', 'f', '', { noremap = true, silent = true, callback = function() custom_find_f(false) end })
+vim.api.nvim_set_keymap('x', 'f', '', { noremap = true, silent = true, callback = function() custom_find_f(false) end })
+vim.api.nvim_set_keymap('o', 'f', '', { noremap = true, silent = true, callback = function() custom_find_f(true) end })
+
+
+-- Define the custom 'F' function for normal and operator-pending mode
+local function custom_find_prev_char(char, op_mode)
+    local current_pos = vim.api.nvim_win_get_cursor(0)
+    local found = false
+
+    while current_pos[1] >= 1 and not found do
+        -- Perform the 'F' action with the provided character
+        vim.cmd('normal! F' .. char)
+        local new_pos = vim.api.nvim_win_get_cursor(0)
+        if new_pos[1] ~= current_pos[1] or new_pos[2] ~= current_pos[2] then
+            found = true
+        else
+            if op_mode then
+                -- If in operator-pending mode, extend the selection to the previous line
+                vim.cmd('normal! k$')
+            else
+                -- Move to the last non-blank character of the previous line
+                vim.cmd('normal! k$')
+            end
+            current_pos = vim.api.nvim_win_get_cursor(0)
+        end
+    end
+end
+
+-- Create a Lua function that waits for the next key press and calls 'custom_find_prev_char'
+local function custom_find_F(op_mode)
+    local char = vim.fn.nr2char(vim.fn.getchar())
+    custom_find_prev_char(char, op_mode)
+end
+
+-- Map the 'F' key to the custom Lua function for normal and operator-pending mode
+vim.api.nvim_set_keymap('n', 'F', '', { noremap = true, silent = true, callback = function() custom_find_F(false) end })
+vim.api.nvim_set_keymap('x', 'F', '', { noremap = true, silent = true, callback = function() custom_find_F(false) end })
+vim.api.nvim_set_keymap('o', 'F', '', { noremap = true, silent = true, callback = function() custom_find_F(true) end })
+
+
+-- Define the custom 't' function for normal and operator-pending mode
+local function custom_to_before_char(char, op_mode)
+   local current_pos = vim.api.nvim_win_get_cursor(0)
+   local found = false
+   local line_count = vim.api.nvim_buf_line_count(0)
+
+   while current_pos[1] <= line_count and not found do
+       -- Perform the 't' action with the provided character
+       vim.cmd('normal! t' .. char)
+       local new_pos = vim.api.nvim_win_get_cursor(0)
+       if new_pos[1] ~= current_pos[1] or new_pos[2] ~= current_pos[2] then
+           found = true
+       else
+           if op_mode then
+               -- If in operator-pending mode, extend the selection to the next line
+               vim.cmd('normal! j^')
+           else
+               -- Move to the first non-blank character of the next line
+               vim.cmd('normal! j0')
+           end
+           current_pos = vim.api.nvim_win_get_cursor(0)
+       end
+   end
+end
+
+-- Create a Lua function that waits for the next key press and calls 'custom_to_before_char'
+local function custom_to_t(op_mode)
+   local char = vim.fn.nr2char(vim.fn.getchar())
+   custom_to_before_char(char, op_mode)
+end
+
+-- Map the 't' key to the custom Lua function for normal and operator-pending mode
+vim.api.nvim_set_keymap('n', 't', '', { noremap = true, silent = true, callback = function() custom_to_t(false) end })
+vim.api.nvim_set_keymap('x', 't', '', { noremap = true, silent = true, callback = function() custom_to_t(false) end })
+vim.api.nvim_set_keymap('o', 't', '', { noremap = true, silent = true, callback = function() custom_to_t(true) end })
+
+-- Similarly, for 'T' command
+local function custom_to_after_char(char, op_mode)
+   local current_pos = vim.api.nvim_win_get_cursor(0)
+   local found = false
+
+   while current_pos[1] >= 1 and not found do
+       -- Perform the 'T' action with the provided character
+       vim.cmd('normal! T' .. char)
+       local new_pos = vim.api.nvim_win_get_cursor(0)
+       if new_pos[1] ~= current_pos[1] or new_pos[2] ~= current_pos[2] then
+           found = true
+       else
+           if op_mode then
+               -- If in operator-pending mode, extend the selection to the previous line
+               vim.cmd('normal! k$')
+           else
+               -- Move to the last non-blank character of the previous line
+               vim.cmd('normal! k$')
+           end
+           current_pos = vim.api.nvim_win_get_cursor(0)
+       end
+   end
+end
+
+-- Create a Lua function that waits for the next key press and calls 'custom_to_after_char'
+local function custom_to_T(op_mode)
+   local char = vim.fn.nr2char(vim.fn.getchar())
+   custom_to_after_char(char, op_mode)
+end
+
+-- Map the 'T' key to the custom Lua function for normal and operator-pending mode
+vim.api.nvim_set_keymap('n', 'T', '', { noremap = true, silent = true, callback = function() custom_to_T(false) end })
+vim.api.nvim_set_keymap('x', 'T', '', { noremap = true, silent = true, callback = function() custom_to_T(false) end })
+vim.api.nvim_set_keymap('o', 'T', '', { noremap = true, silent = true, callback = function() custom_to_T(true) end })
 

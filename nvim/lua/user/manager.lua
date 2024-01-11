@@ -22,11 +22,7 @@ local plugins = {
 	{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
 	'rose-pine/neovim',
 	'anuvyklack/hydra.nvim',
-	'sbdchd/neoformat',
-	'hrsh7th/cmp-nvim-lsp',
-	'hrsh7th/cmp-path',
-	'hrsh7th/nvim-cmp',
-	'hrsh7th/cmp-cmdline',
+	-- 'sbdchd/neoformat',
 	{
 	 'numToStr/Comment.nvim',
 	 opts = {
@@ -46,9 +42,7 @@ local plugins = {
 	 -- after = "nvim-treesitter",
 	 -- requires = "nvim-treesitter/nvim-treesitter",
 	},
-	 'hashivim/vim-terraform',
-	 'alaviss/nim.nvim',
-	 'LnL7/vim-nix',
+	 -- 'hashivim/vim-terraform',
 	 'dense-analysis/ale',
 	 'pocco81/auto-save.nvim',
 	-- {
@@ -58,6 +52,10 @@ local plugins = {
 	--   end
 	-- },
 	'nanotee/zoxide.vim',
+	'hrsh7th/cmp-nvim-lsp',
+	'hrsh7th/cmp-path',
+	'hrsh7th/nvim-cmp',
+	'hrsh7th/cmp-cmdline',
 }
 
 require("lazy").setup(plugins, opts)

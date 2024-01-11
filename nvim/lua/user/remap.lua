@@ -81,19 +81,6 @@ for i = 1, 9 do
   vim.api.nvim_set_keymap('n', '<leader>'..i, i..'gt', {noremap = true, silent = true})
 end
 
--- -- Avoid selecting newline character when jumping to previous paragraph in visual mode
--- vim.api.nvim_set_keymap('x', '[{', ':<C-U>normal! gv[{v<CR>', {noremap = true})
---
--- -- Avoid selecting newline character when jumping to next paragraph in visual mode
--- vim.api.nvim_set_keymap('x', '}]', ':<C-U>normal! gv}]v<CR>', {noremap = true})-- Avoid selecting newline character when jumping to previous paragraph in visual mode
--- vim.api.nvim_set_keymap('x', '[{', ':<C-U>normal! gv[{v<CR>', {noremap = true})
---
--- -- Avoid selecting newline character when jumping to next paragraph in visual mode
--- vim.api.nvim_set_keymap('x', '}]', ':<C-U>normal! gv}]v<CR>', {noremap = true})-- Avoid selecting newline character when jumping to previous paragraph in visual mode
--- vim.api.nvim_set_keymap('x', '[{', ':<C-U>normal! gv[{v<CR>', {noremap = true})
---
--- -- Avoid selecting newline character when jumping to next paragraph in visual mode
--- vim.api.nvim_set_keymap('x', '}]', ':<C-U>normal! gv}]v<CR>', {noremap = true})
+-- vim.api.nvim_set_keymap('n', '<Leader>ee', ':SudaWrite ', {noremap = true})
 
-vim.api.nvim_set_keymap('n', '<Leader>ee', ':SudaWrite ', {noremap = true})
 

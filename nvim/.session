@@ -14,8 +14,11 @@ else
   set shortmess=aoO
 endif
 badd +1 ~/.dotfiles/nvim
-badd +0 lua/user/cmp.lua
-badd +0 lua/user/manager.lua
+badd +8 lua/user/cmp.lua
+badd +1 lua/user/manager.lua
+badd +1 lua/user/lspconfig.lua
+badd +2 lua/user/lsp.lua
+badd +86 lua/user/remap.lua
 argglobal
 %argdel
 $argadd ~/.dotfiles/nvim
@@ -39,6 +42,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
 exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 argglobal
+balt lua/user/remap.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -49,11 +53,11 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 14 - ((13 * winheight(0) + 21) / 42)
+let s:l = 12 - ((11 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 14
+keepjumps 12
 normal! 0
 lcd ~/.dotfiles/nvim
 wincmd w
@@ -62,6 +66,7 @@ if bufexists(fnamemodify("~/.dotfiles/nvim/lua/user/manager.lua", ":p")) | buffe
 if &buftype ==# 'terminal'
   silent file ~/.dotfiles/nvim/lua/user/manager.lua
 endif
+balt ~/.dotfiles/nvim/lua/user/cmp.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -72,15 +77,14 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 28 - ((14 * winheight(0) + 21) / 42)
+let s:l = 58 - ((36 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 28
+keepjumps 58
 normal! 0
 lcd ~/.dotfiles/nvim
 wincmd w
-2wincmd w
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
 exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 tabnext 1

@@ -266,13 +266,13 @@ $env.config = {
             mode: [emacs, vi_normal, vi_insert]
             event: { send: menuprevious }
         }
-        {
-            name: next_page_menu
-            modifier: control
-            keycode: char_x
-            mode: emacs
-            event: { send: menupagenext }
-        }
+        # {
+        #     name: next_page_menu
+        #     modifier: control
+        #     keycode: char_x
+        #     mode: emacs
+        #     event: { send: menupagenext }
+        # }
         {
             name: undo_or_previous_page_menu
             modifier: control
@@ -536,18 +536,18 @@ $env.config = {
             mode: emacs
             event: {send: enter}
         }
-        # {
-        #     name: move_left
-        #     modifier: control
-        #     keycode: char_b
-        #     mode: [emacs, vi_insert]
-        #     event: {
-        #         until: [
-        #             {send: menuleft}
-        #             {send: left}
-        #         ]
-        #     }
-        # }
+        {
+            name: move_left
+            modifier: control
+            keycode: char_b
+            mode: [emacs, vi_insert]
+            event: {
+                until: [
+                    {send: menuleft}
+                    {send: left}
+                ]
+            }
+        }
         {
             name: move_right # _or_take_history_hint
             modifier: control
