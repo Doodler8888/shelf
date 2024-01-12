@@ -14,7 +14,7 @@ cmp.setup {
 -- cmdline setup
 cmp.setup.cmdline(':', {
   sources = {
-    { name = 'cmdline', max_item_count = 4, keyword_pattern = [[^[^w]\w*$]] },
+    { name = 'cmdline', max_item_count = 4, keyword_pattern = [[^[^sw]\s*\w*$]] },
   },
   mappings = cmp.mapping.preset.cmdline(),
   options = {

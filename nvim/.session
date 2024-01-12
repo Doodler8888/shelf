@@ -14,15 +14,16 @@ else
   set shortmess=aoO
 endif
 badd +1 ~/.dotfiles/nvim
-badd +8 lua/user/cmp.lua
+badd +17 lua/user/cmp.lua
 badd +1 lua/user/manager.lua
 badd +1 lua/user/lspconfig.lua
-badd +2 lua/user/lsp.lua
+badd +1 lua/user/lsp.lua
 badd +86 lua/user/remap.lua
+badd +91 lua/user/custom_functions.lua
 argglobal
 %argdel
 $argadd ~/.dotfiles/nvim
-edit lua/user/cmp.lua
+edit lua/user/custom_functions.lua
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -42,7 +43,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
 exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 argglobal
-balt lua/user/remap.lua
+balt lua/user/lsp.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -53,11 +54,11 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 12 - ((11 * winheight(0) + 21) / 42)
+let s:l = 91 - ((32 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 12
+keepjumps 91
 normal! 0
 lcd ~/.dotfiles/nvim
 wincmd w
@@ -77,12 +78,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 58 - ((36 * winheight(0) + 21) / 42)
+let s:l = 26 - ((10 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 58
-normal! 0
+keepjumps 26
+normal! 029|
 lcd ~/.dotfiles/nvim
 wincmd w
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
@@ -102,7 +103,6 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
-nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :

@@ -68,147 +68,96 @@ end
 vim.api.nvim_create_user_command('Cd', change_to_buffer_dir, {})
 
 
--- Define the custom 'f' function for normal and operator-pending mode
-local function custom_find_next_char(char, op_mode)
-    local current_pos = vim.api.nvim_win_get_cursor(0)
-    local found = false
-    local line_count = vim.api.nvim_buf_line_count(0)
+function Print_diagnostics_to_buffer()
+  -- Create a new buffer
+  local bufnr = vim.api.nvim_create_buf(false, true)
 
-    while current_pos[1] <= line_count and not found do
-        -- Perform the 'f' action with the provided character
-        vim.cmd('normal! f' .. char)
-        local new_pos = vim.api.nvim_win_get_cursor(0)
-        if new_pos[1] ~= current_pos[1] or new_pos[2] ~= current_pos[2] then
-            found = true
-        else
-            if op_mode then
-                -- If in operator-pending mode, extend the selection to the next line
-                vim.cmd('normal! j^')
-            else
-                -- Move to the first non-blank character of the next line
-                vim.cmd('normal! j0')
-            end
-            current_pos = vim.api.nvim_win_get_cursor(0)
-        end
-    end
+  -- Get the diagnostics from the LSP
+  local diagnostics = vim.lsp.diagnostic.get()
+
+  -- Open the new buffer in a new split
+  vim.api.nvim_command("split | buffer " .. bufnr)
+
+  -- Iterate over the diagnostics and print them into the new buffer
+  for _, diagnostic in ipairs(diagnostics) do
+      for _, item in ipairs(diagnostic.items) do
+          local msg = string.format("%s: %s", item.source, item.message)
+          vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, {msg})
+      end
+  end
 end
 
--- Create a Lua function that waits for the next key press and calls 'custom_find_next_char'
-local function custom_find_f(op_mode)
-    local char = vim.fn.nr2char(vim.fn.getchar())
-    custom_find_next_char(char, op_mode)
+-- Bind the function to the key combination <leader>d
+vim.api.nvim_set_keymap('n', '<leader>dd', ':lua Print_diagnostics_to_buffer()<CR>', { noremap = true, silent = true })
+
+
+function ShowMessagesInNewBuffer()
+  -- Capture the output of the :messages command
+  local messages_output = vim.api.nvim_exec('messages', true)
+  local lines = {}
+  for s in messages_output:gmatch("[^\r\n]+") do
+    table.insert(lines, s)
+  end
+
+  -- Create a new buffer and open it in a new window
+  vim.api.nvim_command('enew')
+  local bufnr = vim.api.nvim_get_current_buf()
+
+  -- Set buffer options to make it a scratch/temporary buffer
+  vim.api.nvim_buf_set_option(bufnr, 'buftype', 'nofile')
+  vim.api.nvim_buf_set_option(bufnr, 'bufhidden', 'hide')
+  vim.api.nvim_buf_set_option(bufnr, 'swapfile', false)
+
+  -- Make the buffer writable before putting the messages
+  vim.api.nvim_buf_set_option(bufnr, 'modifiable', true)
+
+  -- Insert the captured messages into the buffer
+  vim.api.nvim_put(lines, '', false, true)
+
+  -- Scroll to the start of the buffer
+  vim.api.nvim_command('normal! gg')
+
+  -- Finally, set the buffer to read-only to prevent editing
+  vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
 end
 
--- Map the 'f' key to the custom Lua function for normal and operator-pending mode
-vim.api.nvim_set_keymap('n', 'f', '', { noremap = true, silent = true, callback = function() custom_find_f(false) end })
-vim.api.nvim_set_keymap('x', 'f', '', { noremap = true, silent = true, callback = function() custom_find_f(false) end })
-vim.api.nvim_set_keymap('o', 'f', '', { noremap = true, silent = true, callback = function() custom_find_f(true) end })
+-- You can bind the function to a command in Neovim
+vim.api.nvim_create_user_command('ShowMessages', ShowMessagesInNewBuffer, {})
+vim.api.nvim_set_keymap('n', '<Leader>mm', ':ShowMessages<CR>', {noremap = true, silent = true})
 
 
--- Define the custom 'F' function for normal and operator-pending mode
-local function custom_find_prev_char(char, op_mode)
-    local current_pos = vim.api.nvim_win_get_cursor(0)
-    local found = false
+function ShowDiagnosticsInNewBuffer()
+  -- Get the current diagnostics for the buffer
+  local diagnostics = vim.diagnostic.get(0)
+  local lines = {}
 
-    while current_pos[1] >= 1 and not found do
-        -- Perform the 'F' action with the provided character
-        vim.cmd('normal! F' .. char)
-        local new_pos = vim.api.nvim_win_get_cursor(0)
-        if new_pos[1] ~= current_pos[1] or new_pos[2] ~= current_pos[2] then
-            found = true
-        else
-            if op_mode then
-                -- If in operator-pending mode, extend the selection to the previous line
-                vim.cmd('normal! k$')
-            else
-                -- Move to the last non-blank character of the previous line
-                vim.cmd('normal! k$')
-            end
-            current_pos = vim.api.nvim_win_get_cursor(0)
-        end
-    end
+  for _, diag in ipairs(diagnostics) do
+    -- Format each diagnostic message
+    table.insert(lines, string.format("%s:%d:%d: %s", diag.source, diag.lnum + 1, diag.col + 1, diag.message))
+  end
+
+  -- Create a new buffer and open it in a new window
+  vim.api.nvim_command('enew')
+  local bufnr = vim.api.nvim_get_current_buf()
+
+  -- Set buffer options to make it a scratch/temporary buffer
+  vim.api.nvim_buf_set_option(bufnr, 'buftype', 'nofile')
+  vim.api.nvim_buf_set_option(bufnr, 'bufhidden', 'hide')
+  vim.api.nvim_buf_set_option(bufnr, 'swapfile', false)
+
+  -- Make the buffer writable before putting the diagnostics
+  vim.api.nvim_buf_set_option(bufnr, 'modifiable', true)
+
+  -- Insert the diagnostic messages into the buffer
+  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+
+  -- Scroll to the start of the buffer
+  vim.api.nvim_command('normal! gg')
+
+  -- Finally, set the buffer to read-only to prevent editing
+  vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
 end
 
--- Create a Lua function that waits for the next key press and calls 'custom_find_prev_char'
-local function custom_find_F(op_mode)
-    local char = vim.fn.nr2char(vim.fn.getchar())
-    custom_find_prev_char(char, op_mode)
-end
-
--- Map the 'F' key to the custom Lua function for normal and operator-pending mode
-vim.api.nvim_set_keymap('n', 'F', '', { noremap = true, silent = true, callback = function() custom_find_F(false) end })
-vim.api.nvim_set_keymap('x', 'F', '', { noremap = true, silent = true, callback = function() custom_find_F(false) end })
-vim.api.nvim_set_keymap('o', 'F', '', { noremap = true, silent = true, callback = function() custom_find_F(true) end })
-
-
--- Define the custom 't' function for normal and operator-pending mode
-local function custom_to_before_char(char, op_mode)
-   local current_pos = vim.api.nvim_win_get_cursor(0)
-   local found = false
-   local line_count = vim.api.nvim_buf_line_count(0)
-
-   while current_pos[1] <= line_count and not found do
-       -- Perform the 't' action with the provided character
-       vim.cmd('normal! t' .. char)
-       local new_pos = vim.api.nvim_win_get_cursor(0)
-       if new_pos[1] ~= current_pos[1] or new_pos[2] ~= current_pos[2] then
-           found = true
-       else
-           if op_mode then
-               -- If in operator-pending mode, extend the selection to the next line
-               vim.cmd('normal! j^')
-           else
-               -- Move to the first non-blank character of the next line
-               vim.cmd('normal! j0')
-           end
-           current_pos = vim.api.nvim_win_get_cursor(0)
-       end
-   end
-end
-
--- Create a Lua function that waits for the next key press and calls 'custom_to_before_char'
-local function custom_to_t(op_mode)
-   local char = vim.fn.nr2char(vim.fn.getchar())
-   custom_to_before_char(char, op_mode)
-end
-
--- Map the 't' key to the custom Lua function for normal and operator-pending mode
-vim.api.nvim_set_keymap('n', 't', '', { noremap = true, silent = true, callback = function() custom_to_t(false) end })
-vim.api.nvim_set_keymap('x', 't', '', { noremap = true, silent = true, callback = function() custom_to_t(false) end })
-vim.api.nvim_set_keymap('o', 't', '', { noremap = true, silent = true, callback = function() custom_to_t(true) end })
-
--- Similarly, for 'T' command
-local function custom_to_after_char(char, op_mode)
-   local current_pos = vim.api.nvim_win_get_cursor(0)
-   local found = false
-
-   while current_pos[1] >= 1 and not found do
-       -- Perform the 'T' action with the provided character
-       vim.cmd('normal! T' .. char)
-       local new_pos = vim.api.nvim_win_get_cursor(0)
-       if new_pos[1] ~= current_pos[1] or new_pos[2] ~= current_pos[2] then
-           found = true
-       else
-           if op_mode then
-               -- If in operator-pending mode, extend the selection to the previous line
-               vim.cmd('normal! k$')
-           else
-               -- Move to the last non-blank character of the previous line
-               vim.cmd('normal! k$')
-           end
-           current_pos = vim.api.nvim_win_get_cursor(0)
-       end
-   end
-end
-
--- Create a Lua function that waits for the next key press and calls 'custom_to_after_char'
-local function custom_to_T(op_mode)
-   local char = vim.fn.nr2char(vim.fn.getchar())
-   custom_to_after_char(char, op_mode)
-end
-
--- Map the 'T' key to the custom Lua function for normal and operator-pending mode
-vim.api.nvim_set_keymap('n', 'T', '', { noremap = true, silent = true, callback = function() custom_to_T(false) end })
-vim.api.nvim_set_keymap('x', 'T', '', { noremap = true, silent = true, callback = function() custom_to_T(false) end })
-vim.api.nvim_set_keymap('o', 'T', '', { noremap = true, silent = true, callback = function() custom_to_T(true) end })
-
+-- You can bind the function to a command in Neovim
+vim.api.nvim_create_user_command('ShowDiagnostics', ShowDiagnosticsInNewBuffer, {})
+vim.api.nvim_set_keymap('n', '<Leader>md', ':ShowMessages<CR>', {noremap = true, silent = true})

@@ -1,8 +1,5 @@
 local lspconfig = require('lspconfig')
 
-vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '<leader>k', vim.lsp.buf.hover, opts)
-
 
 -- Haskell
 

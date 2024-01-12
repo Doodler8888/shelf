@@ -50,4 +50,3 @@ vim.api.nvim_create_autocmd("FileType", { -- Had an unexpected behavior with the
     vim.opt_local.formatoptions:remove("t")
   end,
 })
-

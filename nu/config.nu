@@ -806,14 +806,17 @@ append "~/.cargo/bin" | append "~/test")
 
 alias la = ls -la
 alias dot = cd ~/.dotfiles
+alias Down = cd ~/Downloads
 alias v = nvim
 alias v. = nvim .
 alias rf = rm -rf
 alias nudir = cd ~/.dotfiles/nu
 alias md = mkdir
+alias t = touch
 alias off = poweroff
 alias install = sudo pacman -Syu
 alias backup = sudo timeshift --create --comments
+def rmf [] { ls -la | where type == 'file' | each { rm $in.name } | null }
 def now [] { date now | to text | str replace " +0300 (now)" "" }
 def --env nvm [] { cd ~/.dotfiles/nvim; nvim . }
 def --env nush [] { cd ~/.dotfiles/nu; nvim config.nu }
