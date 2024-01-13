@@ -2,10 +2,6 @@ require("user")
 
 vim.o.clipboard = "unnamedplus"
 
--- Terraform ls
-vim.api.nvim_exec([[
-  autocmd BufNewFile,BufRead *.tf setfiletype terraform
-]], false)
 
 -- vim.g.codeium_no_map_tab = 1
 

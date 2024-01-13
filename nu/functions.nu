@@ -16,9 +16,14 @@ def DO [args?] {
 # cmd: 'if (ls -l (fd --type f --hidden . / | fzf) | get user | to text) == "root" {echo "first step"}'
 
 def nvim_fzf [] {
-  let fzf_item = (fd --type f --hidden . / | fzf)
+  let fzf_item = (fd --type f --hidden . / --exclude .git --exclude .snapshots
+  --exclude var --exclude opt --exclude lib --exclude lib64 --exclude mnt
+  --exclude proc --exclude run --exclude sbin --exclude srv --exclude sys
+  --exclude tmp | fzf)
   if (ls -l $fzf_item | get user | to text) == "root" {
     sudo -e $fzf_item
+    } else if $fzf_item == "" {
+      return
     } else {
     nvim $fzf_item
     }

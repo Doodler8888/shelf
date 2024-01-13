@@ -1,15 +1,19 @@
 local lspconfig = require('lspconfig')
 
 
+vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+-- vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, { noremap = true, silent = true })
+
+
 -- Haskell
 
 lspconfig.hls.setup{
     cmd = { "haskell-language-server-wrapper", "--lsp" },
-    on_attach = function(client, bufnr)
-        local function BufSetOption(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-        -- Enable completion triggered by <c-x><c-o>
-        BufSetOption('omnifunc', 'v:lua.vim.lsp.omnifunc')
-    end,
+    -- on_attach = function(client, bufnr)
+    --     local function BufSetOption(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+    --     -- Enable completion triggered by <c-x><c-o>
+    --     BufSetOption('omnifunc', 'v:lua.vim.lsp.omnifunc')
+    -- end,
     flags = {
         debounce_text_changes = 150,
     },
@@ -21,14 +25,7 @@ lspconfig.hls.setup{
 }
 
 
--- Ansible
-
--- vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
---     pattern = "*-playbook.yaml",
---     callback = function()
---         vim.bo.filetype = "ansible"
---     end,
--- })
+-- Ansible/Yaml
 
 vim.api.nvim_create_augroup("YAMLConfig", { clear = true })
 
@@ -67,6 +64,17 @@ lspconfig.yamlls.setup{
     },
 }
 
+
+-- Nushell
+
+vim.api.nvim_create_autocmd("FileType", { -- Had an unexpected behavior with the custom nu type, where the autoformatiing was getting triggered on the 80th character.
+  pattern = "nu",
+  callback = function()
+    -- Remove 't' from formatoptions to prevent auto text wrapping while typing
+    vim.opt_local.formatoptions:remove("t")
+  end,
+})
+
 vim.cmd [[
   autocmd BufNewFile,BufRead *.nu setfiletype nu
 ]]
@@ -77,6 +85,14 @@ lspconfig.nushell.setup{
   single_file_support = true,
   -- root_dir = util.find_git_ancestor,
 }
+
+
+-- Terraform
+
+vim.api.nvim_exec([[
+  autocmd BufNewFile,BufRead *.tf setfiletype terraform
+]], false)
+
 
 -- lspconfig.terraformls.setup{
 --     filetype = { "tf", "terraform"}

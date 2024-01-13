@@ -106,3 +106,12 @@ $env.PROMPT_INDICATOR = ' '
 $env.PROMPT_INDICATOR_VI_INSERT = ' '
 $env.PROMPT_INDICATOR_VI_NORMAL = ' '
 $env.PROMPT_COMMAND_RIGHT = ' '
+
+
+$env.PATH = ($env.PATH | split row (char esep) 
+  | append "/usr/local/bin" 
+  | append "~/.cargo/bin" 
+  | append "~/test" 
+  | append "~/.cabal/bin"
+  | append "~/.ghcup/bin"
+)

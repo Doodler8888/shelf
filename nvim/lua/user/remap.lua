@@ -10,37 +10,30 @@ vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
+
 -- Void a pasted upon word
 vim.keymap.set("x", "<leader>p", [["_dP]])
+
 -- Start replacing the word that you was on
 vim.keymap.set("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+
 -- Make a file executable
 vim.keymap.set("n", "<leader>xx", "<cmd>!chmod +x %<CR>", { silent = true })
--- Buffers
-vim.keymap.set("n", '<Tab>', ":b#<CR>")
 
-vim.api.nvim_set_keymap('i', '<S-Tab>', [[<C-\><C-o>:normal! 4X<CR>]], { noremap = true, silent = true })
+-- Buffers
+vim.keymap.set("n", '<S-Tab>', ":b#<CR>")
 
 -- Disable Control+c  
 vim.api.nvim_set_keymap('n', '<C-c>', '<Nop>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('i', '<C-c>', '<Nop>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<C-c>', '<Nop>', { noremap = true, silent = true })
 
--- -- Splits
--- vim.api.nvim_set_keymap('n', '<M-v>', ':rightbelow vertical split .<CR>', {noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<M-s>', ':belowright split .<CR>', {noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<M-h>', '<C-w>h', {noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<M-l>', '<C-w>l', {noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<M-k>', '<C-w>k', {noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<M-j>', '<C-w>j', {noremap = true, silent = true})
--- vim.api.nvim_set_keymap('n', '<M-w>', ':close<CR>', {noremap = true, silent = true})
-
-vim.api.nvim_set_keymap('n', '<Leader>fd', ':find ', {noremap = true})
--- vim.api.nvim_set_keymap('n', '<Leader>zz', ':Z ', {noremap = true})
+-- vim.api.nvim_set_keymap('n', '<Leader>fd', ':find ', {noremap = true})
 
 -- Quit the terminal mode (but not the terminal emulation)
 vim.api.nvim_set_keymap('t', '<S-Tab>', '<C-\\><C-n>', {noremap = true})
--- vim.api.nvim_set_keymap('t', '<M-e>', '<C-\\><C-n>', {noremap = true})
+
+-- vim.api.nvim_set_keymap('i', '<S-Tab>', [[<C-\><C-o>:normal! 4X<CR>]], { noremap = true, silent = true })
 
 -- Toggle colorcolumn
 vim.cmd('command! Column execute "set colorcolumn=" . (&colorcolumn == "" ? "80" : "")')

@@ -42,11 +42,3 @@ vim.cmd([[autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatop
 vim.cmd [[ set viewoptions=folds,cursor ]]
 vim.cmd [[ autocmd BufWinLeave * silent! mkview ]]
 vim.cmd [[ autocmd BufWinEnter * silent! loadview ]]
-
-vim.api.nvim_create_autocmd("FileType", { -- Had an unexpected behavior with the custom nu type, where the autoformatiing was getting triggered on the 80th character.
-  pattern = "nu",
-  callback = function()
-    -- Remove 't' from formatoptions to prevent auto text wrapping while typing
-    vim.opt_local.formatoptions:remove("t")
-  end,
-})

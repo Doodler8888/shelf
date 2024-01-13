@@ -306,13 +306,13 @@ $env.config = {
             mode: [emacs, vi_normal, vi_insert]
             event: { send: ctrld }
         }
-        {
-            name: clear_screen
-            modifier: control
-            keycode: char_l
-            mode: [emacs, vi_normal, vi_insert]
-            event: { send: clearscreen }
-        }
+        # {
+        #     name: clear_screen
+        #     modifier: control
+        #     keycode: char_l
+        #     mode: [emacs, vi_normal, vi_insert]
+        #     event: { send: clearscreen }
+        # }
         {
             name: search_history
             modifier: control
@@ -729,7 +729,7 @@ $env.config = {
        {
 	    name: fzf_cd
 	    modifier: control
-	    keycode: char_t
+	    keycode: char_s
 	    mode: [emacs vi_normal vi_insert]
 	    event: {
 	      send: executehostcommand
@@ -747,23 +747,23 @@ $env.config = {
 	}
        }
        {
-	    name: insert_file
+	    name: insert_full_path
 	    modifier: control
 	    keycode: char_y
 	    mode: [emacs vi_normal vi_insert]
 	    event: {
 	      send: executehostcommand
-	      cmd: "commandline --insert (fd --type f --hidden . | fzf --height 40% --border)" # cmd: "commandline --insert (fd --type f --hidden . / | fzf --height 40% --border)"
+	      cmd: "commandline --insert (fd --type f --hidden . / | fzf --height 40% --border)" # cmd: "commandline --insert (fd --type f --hidden . / | fzf --height 40% --border)"
 	}
        }
        {
 	    name: insert_path
 	    modifier: control
-	    keycode: char_s
+	    keycode: char_l
 	    mode: [emacs vi_normal vi_insert]
 	    event: {
 	      send: executehostcommand
-	      cmd: "commandline --insert (fd --type f --hidden . / | fzf --height 40% --border)"
+	      cmd: "commandline --insert (fd --type f --hidden . | fzf --height 40% --border)"
 	}
        }
        {
@@ -801,9 +801,6 @@ $env.config = {
     ]
 }
 
-$env.PATH = ($env.PATH | split row (char esep) | append "/usr/local/bin" |
-append "~/.cargo/bin" | append "~/test")
-
 alias la = ls -la
 alias dot = cd ~/.dotfiles
 alias Down = cd ~/Downloads
@@ -813,6 +810,7 @@ alias rf = rm -rf
 alias nudir = cd ~/.dotfiles/nu
 alias md = mkdir
 alias t = touch
+alias z = z 
 alias off = poweroff
 alias install = sudo pacman -Syu
 alias backup = sudo timeshift --create --comments
@@ -830,3 +828,4 @@ swww init err> /dev/null
 swww img ~/Downloads/pictures/68747470733a2f2f692e696d6775722e636f6d2f4c65756836776d2e676966.gif
 
 source ~/.dotfiles/nu/functions.nu
+source ~/.dotfiles/nu/zoxide.nu

@@ -23,8 +23,30 @@ local plugins = {
 	{ 'nvim-telescope/telescope-fzf-native.nvim', build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build' },
 	'rose-pine/neovim',
 	'anuvyklack/hydra.nvim',
-	'chrisbra/improvedft',
-	-- 'sbdchd/neoformat',
+	'backdround/improved-ft.nvim',
+	-- 'stevearc/conform.nvim',
+	'ibhagwan/fzf-lua',
+	{
+	  "kylechui/nvim-surround",
+	  version = "*", -- Use for stability; omit to use `main` branch for the latest features
+	  event = "VeryLazy",
+	  config = function()
+	    require("nvim-surround").setup({
+	      -- Configuration here, or leave empty to use defaults
+	    })
+	  end
+	},
+	{
+	  'windwp/nvim-autopairs',
+	  event = "InsertEnter",
+	  opts = {} -- this is equalent to setup({}) function
+	},
+	{
+	  "benlubas/wrapping-paper.nvim",
+	  dependencies = {
+	    "MunifTanjim/nui.nvim",
+	  },
+	},
 	{
 	 'numToStr/Comment.nvim',
 	 opts = {
@@ -44,7 +66,7 @@ local plugins = {
 	 -- after = "nvim-treesitter",
 	 -- requires = "nvim-treesitter/nvim-treesitter",
 	},
-	 -- 'hashivim/vim-terraform',
+	 'hashivim/vim-terraform',
 	 'dense-analysis/ale',
 	 'pocco81/auto-save.nvim',
 	-- {
