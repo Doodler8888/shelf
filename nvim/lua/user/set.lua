@@ -1,3 +1,5 @@
+vim.o.clipboard = "unnamedplus"
+
 vim.opt.nu = true vim.opt.relativenumber = true
 
 vim.opt.smartindent = true
@@ -42,3 +44,15 @@ vim.cmd([[autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatop
 vim.cmd [[ set viewoptions=folds,cursor ]]
 vim.cmd [[ autocmd BufWinLeave * silent! mkview ]]
 vim.cmd [[ autocmd BufWinEnter * silent! loadview ]]
+
+-- vim.g.codeium_no_map_tab = 1
+
+vim.cmd [[
+  command! StopAllLSP lua for _, client in ipairs(vim.lsp.get_active_clients()) do vim.lsp.stop_client(client) end
+]]
+
+-- Equalize window sizes after Neovim starts
+vim.api.nvim_create_autocmd("VimEnter", {
+    pattern = "*",
+    command = "horizontal wincmd =",
+})

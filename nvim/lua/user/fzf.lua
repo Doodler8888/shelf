@@ -1,10 +1,27 @@
 require('fzf-lua').setup {
-  -- other configuration options
   'telescope',
+  -- hls = {
+  --   border = "FloatBorder",
+  --   cursorline = "FloatBorder",
+  --   cursor = "FloatBorder",
+  -- },
+  -- fzf_colors = {
+  --   ["gutter"] = {"bg", "CursorLine"},
+  --   -- ["bg+"] = {"bg", "Normal"},
+  -- },
+  -- fzf_opts = {
+  --   ['--color', 'bg+:#1E1E1E']
+  --   ['--color', 'gutter:#3E3D32']
+  -- }
   files = {
     cmd = "fd --type f --hidden --follow --exclude .git --exclude .snapshots --exclude var --exclude opt --exclude lib --exclude lib64 --exclude mnt --exclude proc --exclude run --exclude sbin --exclude srv --exclude sys --exclude tmp",
   },
   winopts = {
+    -- hl = {
+    --   border = "FloatBorder",
+    --   cursorline = "FloatBorder",
+    --   cursor = "FloatBorder",
+    -- },
     height = 0.55,
     width = 0.50,
     border = 'rounded', -- or 'double', 'rounded', 'sharp', etc.
@@ -13,16 +30,16 @@ require('fzf-lua').setup {
       hidden = 'hidden', -- Disable the preview window
     },
   },
-  -- other configuration settings
 }
 
 vim.api.nvim_set_keymap("n", "<leader>ff", ":lua vim.cmd('FzfLua files')<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>fh", ":FzfLua files cwd=~/<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>fr", ":FzfLua files cwd=/<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<leader>fs", ":FzfLua grep_project<CR>", { noremap = true })
 
 vim.keymap.set({ "i" }, "<C-y>",
   function() require("fzf-lua").complete_path({
-    cmd = "fd --type f --hidden . / --follow --exclude .git --exclude .snapshots --exclude var --exclude opt --exclude lib --exclude lib64 --exclude mnt --exclude proc --exclude run --exclude sbin --exclude srv --exclude sys --exclude tmp",
+    cmd = "fd --hidden . / --follow --exclude .git --exclude .snapshots --exclude var --exclude opt --exclude lib --exclude lib64 --exclude mnt --exclude proc --exclude run --exclude sbin --exclude srv --exclude sys --exclude tmp",
   }) end,
   { silent = true, desc = "Fuzzy complete path" })
 
@@ -41,7 +58,23 @@ vim.keymap.set({ "i" }, "<C-l>", function()
 
   -- Run the fd command with the dynamic path fragment
   require("fzf-lua").complete_path({
-    cmd = string.format("fd --type f --hidden", vim.fn.shellescape(path_fragment))
+    cmd = string.format("fd --hidden", vim.fn.shellescape(path_fragment))
   })
 end, { silent = true, desc = "Fuzzy complete path" })
 
+
+vim.g.fzf_colors = {
+  ["fg"] = {"fg", "Normal"},
+  ["bg"] = {"bg", "Normal"},
+  ["hl"] = {"fg", "Comment"},
+  ["fg+"] = {"fg", "CursorLine", "CursorColumn", "Normal"},
+  ["bg+"] = {"bg", "CursorLine", "CursorColumn"},
+  ["hl+"] = {"fg", "Statement"},
+  ["info"] = {"fg", "PreProc"},
+  ["border"] = {"fg", "Ignore"},
+  ["prompt"] = {"fg", "Conditional"},
+  ["pointer"] = {"fg", "Exception"},
+  ["marker"] = {"fg", "Keyword"},
+  ["spinner"] = {"fg", "Label"},
+  ["header"] = {"fg", "Comment"}
+}

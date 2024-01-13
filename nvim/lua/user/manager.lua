@@ -27,6 +27,15 @@ local plugins = {
 	-- 'stevearc/conform.nvim',
 	'ibhagwan/fzf-lua',
 	{
+	  "folke/trouble.nvim",
+	  dependencies = { "nvim-tree/nvim-web-devicons" },
+	  opts = {
+	    -- your configuration comes here
+	    -- or leave it empty to use the default settings
+	    -- refer to the configuration section below
+	  },
+	},
+	{
 	  "kylechui/nvim-surround",
 	  version = "*", -- Use for stability; omit to use `main` branch for the latest features
 	  event = "VeryLazy",

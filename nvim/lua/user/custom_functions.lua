@@ -126,38 +126,38 @@ vim.api.nvim_create_user_command('ShowMessages', ShowMessagesInNewBuffer, {})
 vim.api.nvim_set_keymap('n', '<Leader>mm', ':ShowMessages<CR>', {noremap = true, silent = true})
 
 
-function ShowDiagnosticsInNewBuffer()
-  -- Get the current diagnostics for the buffer
-  local diagnostics = vim.diagnostic.get(0)
-  local lines = {}
-
-  for _, diag in ipairs(diagnostics) do
-    -- Format each diagnostic message
-    table.insert(lines, string.format("%s:%d:%d: %s", diag.source, diag.lnum + 1, diag.col + 1, diag.message))
-  end
-
-  -- Create a new buffer and open it in a new window
-  vim.api.nvim_command('enew')
-  local bufnr = vim.api.nvim_get_current_buf()
-
-  -- Set buffer options to make it a scratch/temporary buffer
-  vim.api.nvim_buf_set_option(bufnr, 'buftype', 'nofile')
-  vim.api.nvim_buf_set_option(bufnr, 'bufhidden', 'hide')
-  vim.api.nvim_buf_set_option(bufnr, 'swapfile', false)
-
-  -- Make the buffer writable before putting the diagnostics
-  vim.api.nvim_buf_set_option(bufnr, 'modifiable', true)
-
-  -- Insert the diagnostic messages into the buffer
-  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
-
-  -- Scroll to the start of the buffer
-  vim.api.nvim_command('normal! gg')
-
-  -- Finally, set the buffer to read-only to prevent editing
-  vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
-end
-
--- You can bind the function to a command in Neovim
-vim.api.nvim_create_user_command('ShowDiagnostics', ShowDiagnosticsInNewBuffer, {})
-vim.api.nvim_set_keymap('n', '<Leader>md', ':ShowMessages<CR>', {noremap = true, silent = true})
+-- function ShowDiagnosticsInNewBuffer()
+--   -- Get the current diagnostics for the buffer
+--   local diagnostics = vim.diagnostic.get(0)
+--   local lines = {}
+--
+--   for _, diag in ipairs(diagnostics) do
+--     -- Format each diagnostic message
+--     table.insert(lines, string.format("%s:%d:%d: %s", diag.source, diag.lnum + 1, diag.col + 1, diag.message))
+--   end
+--
+--   -- Create a new buffer and open it in a new window
+--   vim.api.nvim_command('enew')
+--   local bufnr = vim.api.nvim_get_current_buf()
+--
+--   -- Set buffer options to make it a scratch/temporary buffer
+--   vim.api.nvim_buf_set_option(bufnr, 'buftype', 'nofile')
+--   vim.api.nvim_buf_set_option(bufnr, 'bufhidden', 'hide')
+--   vim.api.nvim_buf_set_option(bufnr, 'swapfile', false)
+--
+--   -- Make the buffer writable before putting the diagnostics
+--   vim.api.nvim_buf_set_option(bufnr, 'modifiable', true)
+--
+--   -- Insert the diagnostic messages into the buffer
+--   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+--
+--   -- Scroll to the start of the buffer
+--   vim.api.nvim_command('normal! gg')
+--
+--   -- Finally, set the buffer to read-only to prevent editing
+--   vim.api.nvim_buf_set_option(bufnr, 'modifiable', false)
+-- end
+--
+-- -- You can bind the function to a command in Neovim
+-- vim.api.nvim_create_user_command('ShowDiagnostics', ShowDiagnosticsInNewBuffer, {})
+-- vim.api.nvim_set_keymap('n', '<Leader>md', ':ShowMessages<CR>', {noremap = true, silent = true})
