@@ -14,3 +14,7 @@ Hydra({
     }
 })
 
+vim.cmd [[
+  highlight HydraBlue guifg=#eb6f92 guibg=#1d1f21 ctermfg=9 ctermbg=0
+  highlight HydraRed guifg=#c4a7e7 guibg=#1d1f21 ctermfg=12 ctermbg=0
+]]

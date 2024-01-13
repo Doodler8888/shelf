@@ -7,7 +7,7 @@ ft.setup({
 
   -- Ignores case of the given characters.
   -- default: false
-  ignore_char_case = true,
+  ignore_char_case = false,
 
   -- Takes a last hop direction into account during repetition hops
   -- default: false
