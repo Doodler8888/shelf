@@ -63,18 +63,75 @@ vim.keymap.set({ "i" }, "<C-l>", function()
 end, { silent = true, desc = "Fuzzy complete path" })
 
 
-vim.g.fzf_colors = {
-  ["fg"] = {"fg", "Normal"},
-  ["bg"] = {"bg", "Normal"},
-  ["hl"] = {"fg", "Comment"},
-  ["fg+"] = {"fg", "CursorLine", "CursorColumn", "Normal"},
-  ["bg+"] = {"bg", "CursorLine", "CursorColumn"},
-  ["hl+"] = {"fg", "Statement"},
-  ["info"] = {"fg", "PreProc"},
-  ["border"] = {"fg", "Ignore"},
-  ["prompt"] = {"fg", "Conditional"},
-  ["pointer"] = {"fg", "Exception"},
-  ["marker"] = {"fg", "Keyword"},
-  ["spinner"] = {"fg", "Label"},
-  ["header"] = {"fg", "Comment"}
-}
+-- vim.g.fzf_colors = {
+--   ["fg"] = {"fg", "Normal"},
+--   ["bg"] = {"bg", "Normal"},
+--   ["hl"] = {"fg", "Comment"},
+--   ["fg+"] = {"fg", "CursorLine", "CursorColumn", "Normal"},
+--   ["bg+"] = {"bg", "CursorLine", "CursorColumn"},
+--   ["hl+"] = {"fg", "Statement"},
+--   ["info"] = {"fg", "PreProc"},
+--   ["border"] = {"fg", "Ignore"},
+--   ["prompt"] = {"fg", "Conditional"},
+--   ["pointer"] = {"fg", "Exception"},
+--   ["marker"] = {"fg", "Keyword"},
+--   ["spinner"] = {"fg", "Label"},
+--   ["header"] = {"fg", "Comment"}
+-- }
+
+
+_G.fzf_home_dirs = function(opts)
+  local fzf_lua = require'fzf-lua'
+  opts = opts or {}
+  opts.prompt = "Home Directories> "
+  opts.fn_transform = function(x)
+    return fzf_lua.utils.ansi_codes.magenta(x)
+  end
+  opts.actions = {
+    ['default'] = function(selected)
+      vim.cmd("cd " .. selected[1])
+      vim.cmd("Oil " .. selected[1])
+    end
+  }
+  -- Add a dot before the path to search for all directories within the home directory
+  fzf_lua.fzf_exec("fd --type d . --hidden --exclude .git ~", opts)
+end
+
+_G.fzf_root_dirs = function(opts)
+  local fzf_lua = require'fzf-lua'
+  opts = opts or {}
+  opts.prompt = "Root Directories> "
+  opts.fn_transform = function(x)
+    return fzf_lua.utils.ansi_codes.magenta(x)
+  end
+  opts.actions = {
+    ['default'] = function(selected)
+      vim.cmd("cd " .. selected[1])
+      vim.cmd("Oil " .. selected[1])
+    end
+  }
+  -- Add a dot before the path to search for all directories within the root directory
+  fzf_lua.fzf_exec("fd --type d --hidden --exclude .git . /", opts)
+end
+
+_G.fzf_current_dirs = function(opts)
+  local fzf_lua = require'fzf-lua'
+  opts = opts or {}
+  opts.prompt = "Current Directories> "
+  opts.actions = {
+    ['default'] = function(selected)
+      vim.cmd('Oil ' .. selected[1])
+    end
+  }
+  fzf_lua.fzf_exec("fd --type d --hidden --exclude .git", opts)
+end
+
+-- Map our providers to user commands
+vim.cmd([[command! -nargs=* HomeDirs lua _G.fzf_home_dirs()]])
+vim.cmd([[command! -nargs=* RootDirs lua _G.fzf_root_dirs()]])
+vim.cmd([[command! -nargs=* CurrentDirs lua _G.fzf_current_dirs()]])
+
+-- Map our providers to keybinds
+vim.keymap.set('n', '<Leader>fdh', _G.fzf_home_dirs)
+vim.keymap.set('n', '<Leader>fdr', _G.fzf_root_dirs)
+vim.keymap.set('n', '<Leader>fdc', _G.fzf_current_dirs)

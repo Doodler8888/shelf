@@ -802,6 +802,7 @@ $env.config = {
 }
 
 alias la = ls -la
+alias lD = ls -lD
 alias dot = cd ~/.dotfiles
 alias Down = cd ~/Downloads
 alias v = nvim

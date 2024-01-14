@@ -15,15 +15,15 @@ else
 endif
 badd +1 ~/.dotfiles/nvim
 badd +18 lua/user/init.lua
-badd +81 lua/user/manager.lua
-badd +27 lua/user/telescope.lua
+badd +18 lua/user/manager.lua
+badd +54 lua/user/telescope.lua
 badd +1 init.lua
 badd +6 lua/user/wrapper.lua
 badd +3 lua/user/set.lua
 badd +4 lua/user/lspconfig.lua
 badd +1 lua/user/test/test123
 badd +1 lua/user/surround.lua
-badd +27 lua/user/remap.lua
+badd +48 lua/user/remap.lua
 badd +2 lua/user/ft.lua
 badd +5 lua/user/conform.lua
 badd +1 lua/user/omnicompletion
@@ -32,14 +32,16 @@ badd +5 lua/user/cmp.lua
 badd +1 lua/user/lsp.lua
 badd +2 lua/user/sessions.lua
 badd +5 /etc/passwd
-badd +76 lua/user/fzf.lua
+badd +83 lua/user/fzf.lua
 badd +1 lua/user/cmd-completion.nvim
 badd +1 lua/user/cmd-completion.lua
 badd +163 lua/user/custom_functions.lua
+badd +18 lua/user/autopair.lua
+badd +8 ftplugin/go.lua
 argglobal
 %argdel
 $argadd ~/.dotfiles/nvim
-edit lua/user/manager.lua
+edit lua/user/telescope.lua
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -59,7 +61,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
 exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 argglobal
-balt lua/user/custom_functions.lua
+balt init.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -70,20 +72,19 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 29 - ((14 * winheight(0) + 21) / 42)
+let s:l = 40 - ((9 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 29
-normal! 029|
-lcd ~/.dotfiles/nvim
+keepjumps 40
+normal! 044|
 wincmd w
 argglobal
-if bufexists(fnamemodify("~/.dotfiles/nvim/lua/user/fzf.lua", ":p")) | buffer ~/.dotfiles/nvim/lua/user/fzf.lua | else | edit ~/.dotfiles/nvim/lua/user/fzf.lua | endif
+if bufexists(fnamemodify("lua/user/fzf.lua", ":p")) | buffer lua/user/fzf.lua | else | edit lua/user/fzf.lua | endif
 if &buftype ==# 'terminal'
-  silent file ~/.dotfiles/nvim/lua/user/fzf.lua
+  silent file lua/user/fzf.lua
 endif
-balt ~/.dotfiles/nvim/lua/user/init.lua
+balt lua/user/autopair.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -94,12 +95,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 2 - ((1 * winheight(0) + 21) / 42)
+let s:l = 40 - ((8 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 2
-normal! 03|
+keepjumps 40
+normal! 0
 lcd ~/.dotfiles/nvim
 wincmd w
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)

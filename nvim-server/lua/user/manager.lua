@@ -13,7 +13,6 @@ vim.opt.rtp:prepend(lazypath)
 
 
 local plugins = {
-	-- 'nvim-lua/popup.nvim',
 	'nvim-lua/plenary.nvim',
 	{
 	  'nvim-telescope/telescope.nvim', tag = '0.1.5',
@@ -21,17 +20,27 @@ local plugins = {
 	  dependencies = { 'nvim-lua/plenary.nvim' }
 	},
 	'rose-pine/neovim',
-	'anuvyklack/hydra.nvim',
-	-- 'sbdchd/neoformat',
-	'hrsh7th/cmp-nvim-lsp',
-	'hrsh7th/cmp-path',
-	'hrsh7th/nvim-cmp',
 	{
 	 'numToStr/Comment.nvim',
 	 opts = {
 	  -- add any options here
 	 },
 	 lazy = false,
+	},
+	{
+	  'windwp/nvim-autopairs',
+	  event = "InsertEnter",
+	  opts = {} -- this is equalent to setup({}) function
+	},
+	{
+	  "kylechui/nvim-surround",
+	  version = "*", -- Use for stability; omit to use `main` branch for the latest features
+	  event = "VeryLazy",
+	  config = function()
+	    require("nvim-surround").setup({
+	      -- Configuration here, or leave empty to use defaults
+	    })
+	  end
 	},
 	{
 	 'neovim/nvim-lspconfig',
@@ -43,19 +52,8 @@ local plugins = {
 	  -- },
 	},
 	 'hashivim/vim-terraform',
-	 'alaviss/nim.nvim',
-	 'LnL7/vim-nix',
 	 'dense-analysis/ale',
 	 'pocco81/auto-save.nvim',
-	-- {
-	--   'Exafunction/codeium.vim',
-	--   config = function ()
-	--     vim.keymap.set('i', '<C-a>', function () return vim.fn['codeium#Accept']() end, { expr = true })
-	--   end
-	-- },
-	-- 'pearofducks/ansible-vim',
-	'lambdalisue/suda.vim',
-	'nanotee/zoxide.vim',
 }
 
 require("lazy").setup(plugins, opts)

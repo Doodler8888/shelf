@@ -1,5 +1,5 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>fe", vim.cmd.Ex)
+-- vim.keymap.set("n", "<leader>fe", vim.cmd.Ex)
 -- vim.api.nvim_set_keymap('n', 'gq', [[<Cmd>normal! gq<CR>]], { noremap = true, silent = true })
 -- vim.api.nvim_set_keymap('n', '<leader>ff', "<cmd>lua require('fzf-lua').files({ cwd = '~/.git' })<CR>", { noremap = true, silent = true })
 
