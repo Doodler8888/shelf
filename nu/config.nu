@@ -753,7 +753,7 @@ $env.config = {
 	    mode: [emacs vi_normal vi_insert]
 	    event: {
 	      send: executehostcommand
-	      cmd: "commandline --insert (fd --type f --hidden . / | fzf --height 40% --border)" # cmd: "commandline --insert (fd --type f --hidden . / | fzf --height 40% --border)"
+	      cmd: "commandline --insert (fd --hidden . / | fzf --height 40% --border)" # cmd: "commandline --insert (fd --type f --hidden . / | fzf --height 40% --border)"
 	}
        }
        {
@@ -763,7 +763,7 @@ $env.config = {
 	    mode: [emacs vi_normal vi_insert]
 	    event: {
 	      send: executehostcommand
-	      cmd: "commandline --insert (fd --type f --hidden . | fzf --height 40% --border)"
+	      cmd: "commandline --insert (fd --hidden . | fzf --height 40% --border)"
 	}
        }
        {

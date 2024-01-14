@@ -14,5 +14,4 @@ require("user.wrapper")
 require("user.ft")
 require("user.sessions")
 require("user.fzf")
-require("user.oil")
-
+require("user.snippets")

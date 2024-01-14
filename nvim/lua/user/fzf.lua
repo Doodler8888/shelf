@@ -90,7 +90,7 @@ _G.fzf_home_dirs = function(opts)
   opts.actions = {
     ['default'] = function(selected)
       vim.cmd("cd " .. selected[1])
-      vim.cmd("Oil " .. selected[1])
+      vim.cmd("Ex " .. selected[1])
     end
   }
   -- Add a dot before the path to search for all directories within the home directory
@@ -107,7 +107,7 @@ _G.fzf_root_dirs = function(opts)
   opts.actions = {
     ['default'] = function(selected)
       vim.cmd("cd " .. selected[1])
-      vim.cmd("Oil " .. selected[1])
+      vim.cmd("Ex " .. selected[1])
     end
   }
   -- Add a dot before the path to search for all directories within the root directory
@@ -120,7 +120,7 @@ _G.fzf_current_dirs = function(opts)
   opts.prompt = "Current Directories> "
   opts.actions = {
     ['default'] = function(selected)
-      vim.cmd('Oil ' .. selected[1])
+      vim.cmd('Ex ' .. selected[1])
     end
   }
   fzf_lua.fzf_exec("fd --type d --hidden --exclude .git", opts)

@@ -1,7 +1,5 @@
 vim.g.mapleader = " "
--- vim.keymap.set("n", "<leader>fe", vim.cmd.Ex)
--- vim.api.nvim_set_keymap('n', 'gq', [[<Cmd>normal! gq<CR>]], { noremap = true, silent = true })
--- vim.api.nvim_set_keymap('n', '<leader>ff', "<cmd>lua require('fzf-lua').files({ cwd = '~/.git' })<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "<leader>fe", vim.cmd.Ex)
 
 vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv")
 vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
@@ -12,7 +10,7 @@ vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
 -- Void a pasted upon word
-vim.keymap.set("x", "<leader>p", [["_dP]])
+vim.keymap.set("x", "<C-y>", [["_dP]])
 
 -- Start replacing the word that you was on
 vim.keymap.set("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])

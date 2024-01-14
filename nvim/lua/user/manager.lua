@@ -24,8 +24,6 @@ local plugins = {
 	'rose-pine/neovim',
 	'anuvyklack/hydra.nvim',
 	'backdround/improved-ft.nvim',
-	'stevearc/oil.nvim',
-	-- 'stevearc/conform.nvim',
 	'ibhagwan/fzf-lua',
 	{
 	  "folke/trouble.nvim",
@@ -86,6 +84,10 @@ local plugins = {
 	--   end
 	-- },
 	'nanotee/zoxide.vim',
+	-- 'hrsh7th/cmp-nvim-lsp',
+	-- 'hrsh7th/nvim-cmp',
+	-- 'saadparwaiz1/cmp_luasnip',
+	-- 'L3MON4D3/LuaSnip',
 }
 
 require("lazy").setup(plugins, opts)
