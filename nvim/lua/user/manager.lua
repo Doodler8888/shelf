@@ -13,7 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 
 
 local plugins = {
-	'nvim-lua/plenary.nvim',
+        'nvim-lua/plenary.nvim',
 	'nvim-tree/nvim-web-devicons',
 	{
 	  'nvim-telescope/telescope.nvim', tag = '0.1.5',
@@ -25,6 +25,8 @@ local plugins = {
 	'anuvyklack/hydra.nvim',
 	'backdround/improved-ft.nvim',
 	'ibhagwan/fzf-lua',
+	'stevearc/oil.nvim',
+	'stevearc/resession.nvim',
 	{
 	  "folke/trouble.nvim",
 	  dependencies = { "nvim-tree/nvim-web-devicons" },

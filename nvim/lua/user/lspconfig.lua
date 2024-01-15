@@ -5,6 +5,30 @@ vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
 -- vim.keymap.set('n', '<leader>gd', vim.lsp.buf.definition, { noremap = true, silent = true })
 
 
+-- Lua
+
+lspconfig.lua_ls.setup{
+   cmd = { "lua-language-server" },
+   settings = {
+       Lua = {
+           runtime = {
+               version = 'LuaJIT',
+               path = vim.split(package.path, ';'),
+           },
+           diagnostics = {
+               globals = {'vim', 'opts'},
+           },
+           workspace = {
+               library = {
+                  [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                  [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true,
+               },
+           },
+       },
+   },
+}
+
+
 -- Haskell
 
 lspconfig.hls.setup{

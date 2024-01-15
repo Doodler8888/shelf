@@ -87,3 +87,8 @@ vim.api.nvim_set_keymap('n', '<leader>ss', ':SaveSession<CR>', { noremap = true,
 
 -- Key binding for OpenSession
 vim.api.nvim_set_keymap('n', '<leader>sl', ':OpenSession<CR>', { noremap = true, silent = true })
+
+vim.api.nvim_create_autocmd("VimLeavePre", {
+  callback = SaveSession
+})
+

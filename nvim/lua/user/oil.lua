@@ -137,4 +137,4 @@ require("oil").setup({
 })
 
 
--- vim.keymap.set("n", "<leader>fe", vim.cmd.Oil)
+vim.keymap.set("n", "<leader>fe", vim.cmd.Oil)
