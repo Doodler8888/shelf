@@ -86,6 +86,10 @@ def fzf_zellij [] {
  zellij attach $session
 }
 
+
+# if (echo $env.SSH_AUTH_SOCK? | describe) == "nothing" {
+#   echo "priv"
+# }
 # ls | where name != 'd1' | each { mv $in.name "./d1" }
 # open /etc/passwd | lines | split column ':' | where { ($in.column3 | into int) >= 1000 } | get column1
 # 'zellij attach (zellij list-sessions | lines | split column -r '\s+' | get column1 | to text | fzf --ansi)'

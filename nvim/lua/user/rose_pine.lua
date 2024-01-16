@@ -42,16 +42,17 @@ require('rose-pine').setup({
 	-- Change specific vim highlight groups
 	-- https://github.com/rose-pine/neovim/wiki/Recipes
 	highlight_groups = {
-		ColorColumn = { bg = 'subtle', blend = 35 },
-		CursorLine = { bg = 'foam', blend = 10 },
-		CursorLineLn = { bg = 'foam', blend = 10 },
-		StatusLine = { fg = 'love', bg = 'love', blend = 10 },
-		StatusLineNC = { link = "StatusLine" },
-		-- FloatBorder = { fg = 'iris', bg = 'none' },
-		FloatBorder = { fg = 'highlight_med', bg = 'none' },
-		TabLine = { bg = 'none' },
-		TabLineFill = { bg = 'none' },
-		TabLineSel = { --[[ fg = 'love', ]] bg = 'muted', blend = 25 }
+		ColorColumn = { bg = 'subtle', blend = 35, bold = false },
+		CursorLine = { bg = 'foam', blend = 10, bold = false },
+		CursorLineLn = { bg = 'foam', blend = 10, bold = false },
+		StatusLine = { fg = 'love', bg = 'love', blend = 10, bold = false },
+		StatusLineNC = { link = "StatusLine", bold = false },
+		-- FloatBorder = { fg = 'iris', bg = 'none' bold = false },
+		FloatBorder = { fg = 'highlight_med', bg = 'none', bold = false },
+		TabLine = { bg = 'none', bold = false },
+		TabLineFill = { bg = 'none', bold = false },
+		TabLineSel = { bg = 'muted', blend = 25, bold = false },
+		Title = { bold = false }, -- responsible for the split counter
 }
 })
 

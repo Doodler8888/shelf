@@ -823,13 +823,9 @@ def --env alc [] { cd ~/.dotfiles/alacritty; nvim alacritty.toml }
 def --env zsh [] { cd ~/.dotfiles/zsh/; nvim .zshrc }
 def --env push [] { git add .; git commit -m "n"; git push}
 
-if (echo $env.SSH_AUTH_SOCK? | describe) == "nothing" {
-  echo "priv"
-}
-
-
 swww init err> /dev/null
 swww img ~/Downloads/pictures/68747470733a2f2f692e696d6775722e636f6d2f4c65756836776d2e676966.gif
 
 source ~/.dotfiles/nu/functions.nu
 source ~/.dotfiles/nu/zoxide.nu
+source ~/.dotfiles/nu/ssh-agent.nu
