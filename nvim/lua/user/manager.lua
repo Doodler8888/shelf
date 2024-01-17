@@ -26,7 +26,13 @@ local plugins = {
 	'backdround/improved-ft.nvim',
 	'ibhagwan/fzf-lua',
 	'stevearc/oil.nvim',
-	'stevearc/resession.nvim',
+	{
+	  "folke/persistence.nvim",
+	  event = "BufReadPre", -- this will only start session saving when an actual file was opened
+	  opts = {
+	    -- add any custom options here
+	  }
+	},
 	{
 	  "folke/trouble.nvim",
 	  dependencies = { "nvim-tree/nvim-web-devicons" },
@@ -86,10 +92,8 @@ local plugins = {
 	--   end
 	-- },
 	'nanotee/zoxide.vim',
-	-- 'hrsh7th/cmp-nvim-lsp',
 	-- 'hrsh7th/nvim-cmp',
-	-- 'saadparwaiz1/cmp_luasnip',
-	-- 'L3MON4D3/LuaSnip',
+	-- 'hrsh7th/cmp-path',
 }
 
 require("lazy").setup(plugins, opts)

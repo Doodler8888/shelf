@@ -47,15 +47,18 @@ require('rose-pine').setup({
 		CursorLineLn = { bg = 'foam', blend = 10, bold = false },
 		StatusLine = { fg = 'love', bg = 'love', blend = 10, bold = false },
 		StatusLineNC = { link = "StatusLine", bold = false },
-		-- FloatBorder = { fg = 'iris', bg = 'none' bold = false },
 		FloatBorder = { fg = 'highlight_med', bg = 'none', bold = false },
 		TabLine = { bg = 'none', bold = false },
 		TabLineFill = { bg = 'none', bold = false },
 		TabLineSel = { bg = 'muted', blend = 25, bold = false },
 		Title = { bold = false }, -- responsible for the split counter
+		MatchParen = { bg = 'muted', fg = 'muted' },
+		Search = { bg = 'muted', fg = '#1d1f21' },
+
 }
 })
 
 -- Set colorscheme after options
 vim.cmd('colorscheme rose-pine')
+
 

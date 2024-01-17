@@ -113,11 +113,11 @@ lspconfig.nushell.setup{
 
 -- Terraform
 
-vim.api.nvim_exec([[
-  autocmd BufNewFile,BufRead *.tf setfiletype terraform
-]], false)
+-- vim.api.nvim_exec([[
+--   autocmd BufNewFile,BufRead *.tf setfiletype terraform
+-- ]], false)
 
 
--- lspconfig.terraformls.setup{
---     filetype = { "tf", "terraform"}
--- }
+lspconfig.terraformls.setup{
+    filetype = { "tf", "terraform"}
+}

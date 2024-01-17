@@ -15,7 +15,7 @@ else
 endif
 badd +1 ~/.dotfiles/nvim
 badd +14 lua/user/init.lua
-badd +83 lua/user/manager.lua
+badd +33 lua/user/manager.lua
 badd +25 lua/user/telescope.lua
 badd +1 init.lua
 badd +6 lua/user/wrapper.lua
@@ -28,7 +28,7 @@ badd +2 lua/user/ft.lua
 badd +5 lua/user/conform.lua
 badd +1 lua/user/omnicompletion
 badd +1 lua/user/omnicompletion.lua
-badd +5 lua/user/cmp.lua
+badd +12 lua/user/cmp.lua
 badd +1 lua/user/lsp.lua
 badd +75 lua/user/sessions.lua
 badd +5 /etc/passwd
@@ -38,7 +38,7 @@ badd +1 lua/user/cmd-completion.lua
 badd +163 lua/user/custom_functions.lua
 badd +18 lua/user/autopair.lua
 badd +8 ftplugin/go.lua
-badd +49 lua/user/rose_pine.lua
+badd +12 lua/user/rose_pine.lua
 badd +1 repro.lua
 badd +12 lua/user/autosave.lua
 argglobal
@@ -47,7 +47,7 @@ $argadd ~/.dotfiles/nvim
 set stal=2
 tabnew +setlocal\ bufhidden=wipe
 tabrewind
-edit lua/user/rose_pine.lua
+edit lua/user/manager.lua
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -67,7 +67,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
 exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 argglobal
-balt lua/user/init.lua
+balt lua/user/cmp.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -78,12 +78,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 54 - ((28 * winheight(0) + 20) / 41)
+let s:l = 33 - ((32 * winheight(0) + 20) / 41)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 54
-normal! 072|
+keepjumps 33
+normal! 018|
 wincmd w
 argglobal
 if bufexists(fnamemodify("lua/user/init.lua", ":p")) | buffer lua/user/init.lua | else | edit lua/user/init.lua | endif
