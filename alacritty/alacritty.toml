@@ -15,6 +15,10 @@ magenta = "0xB48EAD"
 cyan = "0x8FBCBB"
 white = "0xD8DEE9"
 
+# [colors.cursor]
+# text =  '#1d1f21'
+# cursor = '#403d52'
+
 [colors.bright]
 black = "0x3B4252"
 red = "0xD06F79"

@@ -804,6 +804,7 @@ $env.config = {
 alias la = ls -la
 alias lD = ls -lD
 alias dot = cd ~/.dotfiles
+alias sans = cd ~/.secret_dotfiles/ansible
 alias Down = cd ~/Downloads
 alias v = nvim
 alias v. = nvim .
@@ -815,6 +816,9 @@ alias z = z
 alias off = poweroff
 alias install = sudo pacman -Syu
 alias backup = sudo timeshift --create --comments
+alias d = cd
+alias tu = tofu init -upgrade
+
 def rmf [] { ls -la | where type == 'file' | each { rm $in.name } | null }
 def now [] { date now | to text | str replace " +0300 (now)" "" }
 def --env nvm [] { cd ~/.dotfiles/nvim; nvim . }

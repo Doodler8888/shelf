@@ -3,7 +3,7 @@ let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd ~/.dotfiles/nu
+cd ~/.dotfiles/ansible
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
@@ -13,18 +13,13 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 ~/.dotfiles/nu
-badd +826 config.nu
-badd +88 functions.nu
-badd +182 ~/.dotfiles/zsh/.zshrc
-badd +21 ssh-agent.nu
+badd +7 nvim-playbook.yaml
+badd +0 user_creation.yml
+badd +0 user_git_ssh.yml
 argglobal
 %argdel
-$argadd ~/.dotfiles/nu
-set stal=2
-tabnew +setlocal\ bufhidden=wipe
-tabrewind
-edit config.nu
+$argadd .
+edit user_git_ssh.yml
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -44,7 +39,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
 exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 argglobal
-balt ~/.dotfiles/zsh/.zshrc
+balt nvim-playbook.yaml
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -55,19 +50,18 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 826 - ((17 * winheight(0) + 20) / 41)
+let s:l = 36 - ((28 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 826
-normal! 06|
+keepjumps 36
+normal! 0
 wincmd w
 argglobal
-if bufexists(fnamemodify("ssh-agent.nu", ":p")) | buffer ssh-agent.nu | else | edit ssh-agent.nu | endif
+if bufexists(fnamemodify("user_creation.yml", ":p")) | buffer user_creation.yml | else | edit user_creation.yml | endif
 if &buftype ==# 'terminal'
-  silent file ssh-agent.nu
+  silent file user_creation.yml
 endif
-balt functions.nu
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -78,48 +72,24 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 20 - ((19 * winheight(0) + 20) / 41)
+let s:l = 1 - ((0 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 20
-let s:c = 40 - ((34 * winwidth(0) + 46) / 93)
-if s:c > 0
-  exe 'normal! ' . s:c . '|zs' . 40 . '|'
-else
-  normal! 040|
-endif
-lcd ~/.dotfiles/nu
+keepjumps 1
+normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
 exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
-tabnext
-edit ~/.dotfiles/zsh/.zshrc
-argglobal
-setlocal fdm=manual
-setlocal fde=0
-setlocal fmr={{{,}}}
-setlocal fdi=#
-setlocal fdl=0
-setlocal fml=1
-setlocal fdn=20
-setlocal fen
-silent! normal! zE
-let &fdl = &fdl
-let s:l = 183 - ((18 * winheight(0) + 20) / 41)
-if s:l < 1 | let s:l = 1 | endif
-keepjumps exe s:l
-normal! zt
-keepjumps 183
-normal! 0
 tabnext 1
-set stal=1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
 endif
 unlet! s:wipebuf
 set winheight=1 winwidth=20
 let &shortmess = s:shortmess_save
+let &winminheight = s:save_winminheight
+let &winminwidth = s:save_winminwidth
 let s:sx = expand("<sfile>:p:r")."x.vim"
 if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)

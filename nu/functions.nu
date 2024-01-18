@@ -5,6 +5,8 @@ def DO [args?] {
    doctl projects list | lines | first 1 | split column -r '\s{2,}' | values | flatten 
  } else if $args == 'p' {
    doctl projects list --format Name,ID
+ } else if $args == 'keys' {
+   doctl compute ssh-key list
  } else {
    doctl projects list --format $args
  }

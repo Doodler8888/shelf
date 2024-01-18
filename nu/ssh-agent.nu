@@ -17,7 +17,7 @@ if ($sshAgentFilePath | path exists) and ($"/proc/((open $sshAgentFilePath).SSH_
 let ssh_key_dir = $env.HOME + "/.ssh/keys"
 for key in (ls $ssh_key_dir) {
   if ($key.name != "*.pub" and $key.type == "file") {
-    ssh-add $key.name
+    ssh-add $key.name out+err> /dev/null
   }
 }
 
