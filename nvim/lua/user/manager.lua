@@ -92,8 +92,8 @@ local plugins = {
 	--   end
 	-- },
 	'nanotee/zoxide.vim',
-	-- 'hrsh7th/nvim-cmp',
-	-- 'hrsh7th/cmp-path',
+	'hrsh7th/nvim-cmp',
+	'hrsh7th/cmp-path',
 }
 
 require("lazy").setup(plugins, opts)

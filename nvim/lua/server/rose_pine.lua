@@ -57,7 +57,6 @@ require('rose-pine').setup({
 		Substitute = { link = "Visual" },
 		CurSearch = { link = "Visual" },
 		TermCursor = { link = "Visual" },
-		Directory = { fg = 'foam', bold = false },
 
 }
 })
