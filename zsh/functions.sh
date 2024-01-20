@@ -146,13 +146,26 @@ zle -N fzf-nvim
 bindkey '^E' fzf-nvim
 
 
-ss() {
+ss-widget() {
+    # Invalidate the ZLE buffer and create a "fake" terminal session
+    zle -I
     local session
     session=$(zellij list-sessions | fzf --height=10 --layout=reverse --border --ansi)
     if [[ -n "$session" ]]; then
         zellij attach "$(echo "$session" | awk '{print $1}')"
     fi
 }
+
+zle -N ss-widget
+bindkey '^[s' ss-widget
+
+# ss() {
+#     local session
+#     session=$(zellij list-sessions | fzf --height=10 --layout=reverse --border --ansi)
+#     if [[ -n "$session" ]]; then
+#         zellij attach "$(echo "$session" | awk '{print $1}')"
+#     fi
+# }
 # zle -N attach_zellij_session
 # bindkey '^S' attach_zellij_session
 

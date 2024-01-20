@@ -821,8 +821,8 @@ alias tu = tofu init -upgrade
 
 def rmf [] { ls -la | where type == 'file' | each { rm $in.name } | null }
 def now [] { date now | to text | str replace " +0300 (now)" "" }
-def --env nvm [] { cd ~/.dotfiles/nvim; nvim . }
-def --env nush [] { cd ~/.dotfiles/nu; nvim config.nu }
+def rust [] { rustup show | lines | where $it =~ 'rustc' | to text }
+def --env mdd [arg] { mkdir $arg; cd $arg }
 def --env alc [] { cd ~/.dotfiles/alacritty; nvim alacritty.toml }
 def --env zsh [] { cd ~/.dotfiles/zsh/; nvim .zshrc }
 def --env push [] { git add .; git commit -m "n"; git push}
@@ -831,5 +831,6 @@ swww init err> /dev/null
 swww img ~/Downloads/pictures/68747470733a2f2f692e696d6775722e636f6d2f4c65756836776d2e676966.gif
 
 source ~/.dotfiles/nu/functions.nu
-source ~/.dotfiles/nu/zoxide.nu
-source ~/.dotfiles/nu/ssh-agent.nu
+source ~/.dotfiles/nu/scripts/zoxide.nu
+source ~/.dotfiles/nu/scripts/ssh-agent.nu
+source ~/.secret_dotfiles/nu/env.nu

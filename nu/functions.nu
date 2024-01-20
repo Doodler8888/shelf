@@ -89,6 +89,13 @@ def fzf_zellij [] {
 }
 
 
+
+
+
+
+
+
+
 # if (echo $env.SSH_AUTH_SOCK? | describe) == "nothing" {
 #   echo "priv"
 # }
@@ -97,3 +104,7 @@ def fzf_zellij [] {
 # 'zellij attach (zellij list-sessions | lines | split column -r '\s+' | get column1 | to text | fzf --ansi)'
 # doctl projects list | lines | first 1 | split column -r '\s{2,}' | values | flatten # Or instead of flatten i could transpose this table (or other kinds of strucrutured data) so that i would have only i column with all values using 'transpose -i'.
 # ~/test ls -la | where type == 'file' | each { rm $in.name } | null # If i just write 'rm $in', rm would have to perform a deletion using a non-string as an argument, which is incorrect. That's why it is '$in.name'. 'null' in the end makes the command not to make any output like 'empty list' after the pipe is performed.
+
+# $it is just an item (which is a line in this case), where $in represents a list of items.
+# rustup show | lines | where $it =~ 'rustc'
+# rustup show | lines | where {$in =~ 'rustc'}

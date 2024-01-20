@@ -121,3 +121,15 @@ lspconfig.nushell.setup{
 lspconfig.terraformls.setup{
     filetype = { "tf", "terraform"}
 }
+
+-- Rust
+
+lspconfig.rust_analyzer.setup{
+    settings = {
+        ["rust-analyzer"] = {
+            checkOnSave = {
+                command = "cargo"
+            }
+        }
+    }
+}

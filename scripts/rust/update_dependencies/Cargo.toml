@@ -1,0 +1,12 @@
+[package]
+name = "update_dependencies"
+version = "0.1.0"
+edition = "2021"
+
+[[bin]]
+name = "update_dependencies"
+path = "src/main.rs"
+
+[dependencies]
+toml_edit = "0.13.1"
+regex = "1.5.4"
