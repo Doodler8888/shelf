@@ -11,14 +11,10 @@ def --env main [file] {
  # print "Latest versions:" $latest_dep_versions
 
  let new_file_content = open --raw $file
- $new_file_content
+ # $new_file_content
  | lines
  | skip until { |it| $it == '[dependencies]' }
  | parse --regex '\=\s*\"(?P<version>[^\"]+)\"'
- # | default version ""
- # | each { |it| $it.version }
-
- # | parse --regex '= \"(?P<version>[^\"]+)\"'
 
 }
 
