@@ -15,8 +15,8 @@ def --env main [file] {
  | lines
  | skip until { |it| $it == '[dependencies]' }
  | parse --regex '\=\s*\"(?P<version>[^\"]+)\"'
- | default version ""
- | each { |it| $it.version }
+ # | default version ""
+ # | each { |it| $it.version }
 
  # | parse --regex '= \"(?P<version>[^\"]+)\"'
 
