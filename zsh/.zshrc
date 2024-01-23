@@ -1,7 +1,7 @@
 source /home/wurfkreuz/.dotfiles/bash/scripts.sh
 source /home/wurfkreuz/.secret_dotfiles/zsh/keys.sh
 export GOPATH=$HOME/go
-export PATH="$HOME/.nimble/bin:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.dotfiles:$HOME/.cabal/bin:$HOME/.ghcup/bin:$HOME/.local/bin:$PATH"
+export PATH="$HOME/.nimble/bin:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.dotfiles:$HOME/.cabal/bin:$HOME/.ghcup/bin:$HOME/.local/bin:/usr/lib:$PATH"
 export EDITOR='/usr//local/bin/nvim'
 export CDPATH='.:~:/usr/local:/etc:~/.dotfiles:~/.config:~/.projects'
 export HISTFILE="$HOME/.zsh_history"
@@ -29,7 +29,8 @@ alias hpr="cd /home/wurfkreuz/.dotfiles/hyprland/ && nvim hyprland.conf"
 alias str="cd /home/wurfkreuz/.dotfiles/starship/ && nvim starship.toml"
 alias scripts='cd /home/wurfkreuz/.dotfiles/bash/ && nvim scripts.sh'
 alias rename='perl-rename'
-alias d='sudo'
+alias u='sudo'
+alias d='cd'
 alias key='cd ~/.dotfiles/keyd/ && nvim default.conf'
 alias h='history'
 alias update_fonts='fc-cache -f -v'
@@ -108,6 +109,8 @@ alias inpt='cd $HOME/.dotfiles/bash && nvim .inputrc'
 alias users="awk -F: '\$3>=1000 && \$1!=\"nobody\" && \$1!~/nixbld/ {print \$1}' /etc/passwd"  # Original: awk: cmd. line:1: >=1000 && !=nobody && !~/nixbld/ {print }
 alias books="cd ~/.secret_dotfiles/ansible/playbooks/"
 alias hosts="sudo -e /etc/ansible/hosts"
+alias scr="cd ~/.dotfiles/scripts/"
+alias off="poweroff"
 
 # bindkey '^R' fzf_history_search
 
@@ -173,8 +176,15 @@ zstyle ':autocomplete:*' ignored-input '##'
 # bindkey "^R" history-incremental-pattern-search-backward
 # bindkey '^R' history-incremental-search-backward
 
-swww init 2> /dev/null
-swww img "$HOME/Downloads/pictures/68747470733a2f2f692e696d6775722e636f6d2f4c65756836776d2e676966.gif"
+# swww init 2> /dev/null
+# swww img "$HOME/Downloads/pictures/68747470733a2f2f692e696d6775722e636f6d2f4c65756836776d2e676966.gif"
+if ! pgrep -x "swww-daemon" > /dev/null; then
+    swww init 2> /dev/null
+    swww img "$HOME/Downloads/pictures/68747470733a2f2f692e696d6775722e636f6d2f4c65756836776d2e676966.gif"
+fi
+
+
+
 
 eval "$(starship init zsh)"
 

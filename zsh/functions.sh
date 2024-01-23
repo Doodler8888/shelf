@@ -107,7 +107,7 @@ fd-search() {
  zle reset-prompt
 }
 zle -N fd-search
-bindkey '^F' fd-search
+bindkey '^Y' fd-search
 
 
 fd-lsearch() {
@@ -146,28 +146,15 @@ zle -N fzf-nvim
 bindkey '^E' fzf-nvim
 
 
-ss-widget() {
-    # Invalidate the ZLE buffer and create a "fake" terminal session
-    zle -I
+ss() {
     local session
     session=$(zellij list-sessions | fzf --height=10 --layout=reverse --border --ansi)
     if [[ -n "$session" ]]; then
         zellij attach "$(echo "$session" | awk '{print $1}')"
     fi
 }
-
-zle -N ss-widget
-bindkey '^[s' ss-widget
-
-# ss() {
-#     local session
-#     session=$(zellij list-sessions | fzf --height=10 --layout=reverse --border --ansi)
-#     if [[ -n "$session" ]]; then
-#         zellij attach "$(echo "$session" | awk '{print $1}')"
-#     fi
-# }
-# zle -N attach_zellij_session
-# bindkey '^S' attach_zellij_session
+zle -N attach_zellij_session
+bindkey '^S' attach_zellij_session
 
 
 if [ -z "$SSH_AUTH_SOCK" ] ; then
