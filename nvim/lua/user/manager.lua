@@ -30,13 +30,6 @@ local plugins = {
 	"ibhagwan/fzf-lua",
 	"stevearc/oil.nvim",
 	"stevearc/conform.nvim",
-	{
-		"folke/persistence.nvim",
-		event = "BufReadPre", -- this will only start session saving when an actual file was opened
-		opts = {
-			-- add any custom options here
-		},
-	},
 	'saecki/crates.nvim',
 	{
 		"folke/trouble.nvim",

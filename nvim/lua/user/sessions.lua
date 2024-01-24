@@ -68,38 +68,40 @@ end
 
 function AutoloadSession()
   vim.defer_fn(function()
-    -- Check for floating windows
-    local has_float = false
-    for _, win in ipairs(vim.api.nvim_list_wins()) do
-      if vim.api.nvim_win_get_config(win).relative ~= "" then
-        has_float = true
-        break
-      end
-    end
-
-    -- If no floating window is present, show the session loading prompt
-    if not has_float then
-      print('Load session? (1 for yes, 2 for no): ')
-      local char = vim.fn.getchar()
-      local answer = vim.fn.nr2char(char)
-      if answer == '1' then
-        local root_dir = FindSessionDir()
-        if root_dir then
-          local session_file = root_dir .. '/.session'
-          if vim.fn.filereadable(session_file) == 1 then
-            vim.cmd('source ' .. vim.fn.fnameescape(session_file))
-            print('Session loaded from: ' .. session_file)
-          else
-            print('Session file not found: ' .. session_file)
+    local root_dir = FindSessionDir()
+    if root_dir then
+      local session_file = root_dir .. '/.session'
+      if vim.fn.filereadable(session_file) == 1 then
+        -- Check for floating windows
+        local has_float = false
+        for _, win in ipairs(vim.api.nvim_list_wins()) do
+          if vim.api.nvim_win_get_config(win).relative ~= "" then
+            has_float = true
+            break
           end
         end
-      elseif answer == '2' then
-        print('Session load skipped.')
+
+        -- If no floating window is present, show the session loading prompt
+        if not has_float then
+          print('Load session? (1 for yes, 2 for no): ')
+          local char = vim.fn.getchar()
+          local answer = vim.fn.nr2char(char)
+          if answer == '1' then
+            vim.cmd('source ' .. vim.fn.fnameescape(session_file))
+            print('Session loaded from: ' .. session_file)
+          elseif answer == '2' then
+            print('Session load skipped.')
+          else
+            print('Invalid input. Session not loaded.')
+          end
+        else
+          print('A floating window is present. Session prompt skipped.')
+        end
       else
-        print('Invalid input. Session not loaded.')
+        print('No session file found at ' .. session_file .. '. Prompt skipped.')
       end
     else
-      print('A floating window is present. Session prompt skipped.')
+      print('No session directory set. Prompt skipped.')
     end
   end, 1000) -- Delay in milliseconds, adjust as needed
 end

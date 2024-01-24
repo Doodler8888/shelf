@@ -14,10 +14,11 @@ else
   set shortmess=aoO
 endif
 badd +33 lua/user/manager.lua
-badd +1 lua/user/sessions.lua
+badd +126 lua/user/sessions.lua
+badd +20 lua/user/init.lua
 argglobal
 %argdel
-$argadd ./
+$argadd ~/.dotfiles/nvim/
 edit lua/user/manager.lua
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
@@ -38,6 +39,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
 exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 argglobal
+balt lua/user/init.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -71,11 +73,11 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 69 - ((9 * winheight(0) + 21) / 42)
+let s:l = 103 - ((26 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 69
+keepjumps 103
 normal! 0
 wincmd w
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
