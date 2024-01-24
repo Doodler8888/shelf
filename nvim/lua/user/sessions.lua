@@ -1,6 +1,10 @@
 -- Global variable to store the session directory
 SessionDir = nil
 
+-- Global variable to store if a session is loaded
+SessionLoaded = false
+
+
 function SetSessionDir()
   local current_dir = vim.fn.getcwd()
   local new_dir = vim.fn.input('Set session directory: ', current_dir, 'dir')
@@ -42,6 +46,11 @@ end
 
 -- Function to save the session
 function SaveSession()
+  if not SessionLoaded then -- Check if a session has been loaded
+    print('No session was loaded, so no session will be saved on exit.')
+    return
+  end
+
   local root_dir = FindSessionDir()
   if root_dir then
     local session_file = root_dir .. '/.session'
@@ -49,6 +58,7 @@ function SaveSession()
     print('Session saved to: ' .. session_file)
   end
 end
+
 
 -- Modified load_session function to return a boolean
 function LoadSession()
@@ -58,6 +68,7 @@ function LoadSession()
     if vim.fn.filereadable(session_file) == 1 then
       vim.cmd('source ' .. vim.fn.fnameescape(session_file))
       print('Session loaded from: ' .. session_file)
+      SessionLoaded = true -- Set the flag to true when a session is loaded
       return true
     else
       print('Session file not found: ' .. session_file)
@@ -65,6 +76,7 @@ function LoadSession()
   end
   return false
 end
+
 
 function AutoloadSession()
   vim.defer_fn(function()
@@ -83,14 +95,15 @@ function AutoloadSession()
 
         -- If no floating window is present, show the session loading prompt
         if not has_float then
-          print('Load session? (1 for yes, 2 for no): ')
+          -- print('Load session? (1 for yes, 2 for no): ')
+          print('Press "Enter" to load a session.')
           local char = vim.fn.getchar()
-          local answer = vim.fn.nr2char(char)
-          if answer == '1' then
+          -- local answer = vim.fn.nr2char(char)
+          if char == 13 then
             vim.cmd('source ' .. vim.fn.fnameescape(session_file))
             print('Session loaded from: ' .. session_file)
-          elseif answer == '2' then
-            print('Session load skipped.')
+          -- elseif answer == '2' then
+          --   print('Session load skipped.')
           else
             print('Invalid input. Session not loaded.')
           end
@@ -103,7 +116,7 @@ function AutoloadSession()
     else
       print('No session directory set. Prompt skipped.')
     end
-  end, 1000) -- Delay in milliseconds, adjust as needed
+  end, 100) -- Delay in milliseconds, adjust as needed
 end
 
 -- Set up an autocommand to call AutoloadSession when Neovim has finished starting up

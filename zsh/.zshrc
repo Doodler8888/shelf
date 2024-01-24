@@ -111,6 +111,8 @@ alias books="cd ~/.secret_dotfiles/ansible/playbooks/"
 alias hosts="sudo -e /etc/ansible/hosts"
 alias scr="cd ~/.dotfiles/scripts/"
 alias off="poweroff"
+alias run="cargo run"
+alias build="cargo build"
 
 # bindkey '^R' fzf_history_search
 
