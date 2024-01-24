@@ -13,12 +13,13 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +33 lua/user/manager.lua
+badd +1 ~/.dotfiles/nvim
+badd +54 lua/user/manager.lua
 badd +126 lua/user/sessions.lua
 badd +20 lua/user/init.lua
 argglobal
 %argdel
-$argadd ~/.dotfiles/nvim/
+$argadd ~/.dotfiles/nvim
 edit lua/user/manager.lua
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
@@ -50,12 +51,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 33 - ((20 * winheight(0) + 21) / 42)
+let s:l = 52 - ((31 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 33
-normal! 09|
+keepjumps 52
+normal! 010|
 wincmd w
 argglobal
 if bufexists(fnamemodify("lua/user/sessions.lua", ":p")) | buffer lua/user/sessions.lua | else | edit lua/user/sessions.lua | endif
@@ -73,13 +74,14 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 103 - ((26 * winheight(0) + 21) / 42)
+let s:l = 5 - ((4 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 103
+keepjumps 5
 normal! 0
 wincmd w
+2wincmd w
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
 exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 tabnext 1
@@ -97,7 +99,6 @@ if filereadable(s:sx)
 endif
 let &g:so = s:so_save | let &g:siso = s:siso_save
 set hlsearch
-nohlsearch
 doautoall SessionLoadPost
 unlet SessionLoad
 " vim: set ft=vim :

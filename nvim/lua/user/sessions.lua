@@ -95,15 +95,12 @@ function AutoloadSession()
 
         -- If no floating window is present, show the session loading prompt
         if not has_float then
-          -- print('Load session? (1 for yes, 2 for no): ')
           print('Press "Enter" to load a session.')
           local char = vim.fn.getchar()
-          -- local answer = vim.fn.nr2char(char)
           if char == 13 then
             vim.cmd('source ' .. vim.fn.fnameescape(session_file))
             print('Session loaded from: ' .. session_file)
-          -- elseif answer == '2' then
-          --   print('Session load skipped.')
+            SessionLoaded = true  -- Ensure SessionLoaded is set to true
           else
             print('Invalid input. Session not loaded.')
           end
@@ -118,6 +115,7 @@ function AutoloadSession()
     end
   end, 100) -- Delay in milliseconds, adjust as needed
 end
+
 
 -- Set up an autocommand to call AutoloadSession when Neovim has finished starting up
 vim.api.nvim_create_autocmd("VimEnter", {
