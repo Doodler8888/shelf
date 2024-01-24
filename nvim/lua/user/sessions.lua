@@ -67,13 +67,50 @@ function LoadSession()
 end
 
 function AutoloadSession()
-  LoadSession()
+  vim.defer_fn(function()
+    -- Check for floating windows
+    local has_float = false
+    for _, win in ipairs(vim.api.nvim_list_wins()) do
+      if vim.api.nvim_win_get_config(win).relative ~= "" then
+        has_float = true
+        break
+      end
+    end
+
+    -- If no floating window is present, show the session loading prompt
+    if not has_float then
+      print('Load session? (1 for yes, 2 for no): ')
+      local char = vim.fn.getchar()
+      local answer = vim.fn.nr2char(char)
+      if answer == '1' then
+        local root_dir = FindSessionDir()
+        if root_dir then
+          local session_file = root_dir .. '/.session'
+          if vim.fn.filereadable(session_file) == 1 then
+            vim.cmd('source ' .. vim.fn.fnameescape(session_file))
+            print('Session loaded from: ' .. session_file)
+          else
+            print('Session file not found: ' .. session_file)
+          end
+        end
+      elseif answer == '2' then
+        print('Session load skipped.')
+      else
+        print('Invalid input. Session not loaded.')
+      end
+    else
+      print('A floating window is present. Session prompt skipped.')
+    end
+  end, 1000) -- Delay in milliseconds, adjust as needed
 end
 
--- Rest of your code remains the same
+-- Set up an autocommand to call AutoloadSession when Neovim has finished starting up
+vim.api.nvim_create_autocmd("VimEnter", {
+  callback = AutoloadSession
+})
 
--- Call AutoloadSession when Neovim starts
-AutoloadSession()
+-- -- Call AutoloadSession when Neovim starts
+-- AutoloadSession()
 
 -- Update the command names to avoid any conflicts and ensure they are unique
 vim.api.nvim_create_user_command('SaveSession', SaveSession, {})
