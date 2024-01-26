@@ -160,7 +160,6 @@ fzf_insert_path() {
     local file
     file=$(fd --type f --hidden . | fzf --height 40% --border)
     if [[ -n "$file" ]]; then
-        # Append the selected file path to the current command line
         READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT}$file${READLINE_LINE:$READLINE_POINT}"
         READLINE_POINT=$(( READLINE_POINT + ${#file} ))
     fi
@@ -171,7 +170,6 @@ fzf_list_path() {
     local file
     file=$(fd --hidden . / | fzf --height 40% --border)
     if [[ -n "$file" ]]; then
-        # Append the selected file path to the current command line
         READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT}$file${READLINE_LINE:$READLINE_POINT}"
         READLINE_POINT=$(( READLINE_POINT + ${#file} ))
     fi

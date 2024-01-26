@@ -19,16 +19,17 @@
       ansible.builtin.file:
         path: "/home/{{ main_user.stdout }}/.ssh/config"
         state: touch
+        mode: '644'
 
     - name: Generate ssh key
-      command: "ssh-keygen -t rsa -b 2048 -f /home/{{ main_user.stdout }}/.ssh/git -q -N ''"
+      ansible.builtin.command: "ssh-keygen -t rsa -b 2048 -f /home/{{ main_user.stdout }}/.ssh/git -q -N ''"
       args:
         creates: "/home/{{ main_user.stdout }}/.ssh/git"
-      become: yes
+      become: true
       become_user: "{{ main_user.stdout }}"
 
     - name: Create the ssh config file
-      blockinfile:
+      ansible.builtin.blockinfile:
         path: "/home/{{ main_user.stdout }}/.ssh/config"
         block: |
           Host *
@@ -44,11 +45,11 @@
         group: "{{ main_user.stdout }}"
         mode: '0644'
 
-    - name: add name credential of the main user to git
-      command: 'git config --global user.name "wurfkreuz"'
+    - name: Add name credential of the main user to git
+      ansible.builtin.command: 'git config --global user.name "wurfkreuz"'
 
-    - name: add email credential of the main user to git
-      command: 'git config --global user.email "wurfkreuz@mail.ru"'
+    - name: Add email credential of the main user to git
+      ansible.builtin.command: 'git config --global user.email "wurfkreuz@mail.ru"'
 
 
 # By default, 'command' and shell tasks in Ansible are assumed to change the

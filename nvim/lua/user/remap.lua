@@ -10,7 +10,9 @@ vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
 -- Void a pasted upon word
-vim.keymap.set("x", "<C-y>", [["_dP]])
+-- vim.keymap.set("x", "<C-y>", [["_dP]])
+vim.keymap.set("x", "p", '"_dP', { noremap = true, silent = true })
+vim.keymap.set("x", "<C-y>", 'p', { noremap = true, silent = true })
 
 -- Start replacing the word that you was on
 vim.keymap.set("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
