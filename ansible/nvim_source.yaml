@@ -1,0 +1,38 @@
+- hosts: localhost
+  vars:
+    user_home: "{{ ansible_env.HOME }}"  # Capture the initiating user's home directory
+  tasks:
+    - name: Ensure local source directory exists
+      file:
+        path: "{{ user_home }}/.source"
+        state: directory
+        mode: '0755'
+
+    - name: Install Neovim build dependencies
+      become: yes
+      pacman:
+        name:
+          - git
+          - ninja
+          - cmake
+          - unzip
+        state: present
+
+    - name: Clone Neovim repository
+      git:
+        repo: 'https://github.com/neovim/neovim.git'
+        dest: "{{ user_home }}/.source/neovim"
+        version: master
+
+    - name: Compile Neovim from source
+      command:
+        cmd: make CMAKE_BUILD_TYPE=Release
+        chdir: "{{ user_home }}/.source/neovim"
+        creates: "{{ user_home }}/.source/neovim/build/bin/nvim"
+
+    - name: Install Neovim binary
+      become: yes
+      command:
+        cmd: make install
+        chdir: "{{ user_home }}/.source/neovim"
+
