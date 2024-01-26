@@ -146,6 +146,7 @@ zle -N fzf-nvim
 bindkey '^E' fzf-nvim
 
 
+eval "$(zellij setup --generate-auto-start)"
 ss() {
     local session
     session=$(zellij list-sessions | fzf --height=10 --layout=reverse --border --ansi)
@@ -153,8 +154,8 @@ ss() {
         zellij attach "$(echo "$session" | awk '{print $1}')"
     fi
 }
-zle -N attach_zellij_session
-bindkey '^S' attach_zellij_session
+zle -N ss
+bindkey '^S' ss
 
 
 if [ -z "$SSH_AUTH_SOCK" ] ; then

@@ -89,13 +89,6 @@ def fzf_zellij [] {
 }
 
 
-
-
-
-
-
-
-
 # if (echo $env.SSH_AUTH_SOCK? | describe) == "nothing" {
 #   echo "priv"
 # }
@@ -108,3 +101,12 @@ def fzf_zellij [] {
 # $it is just an item (which is a line in this case), where $in represents a list of items.
 # rustup show | lines | where $it =~ 'rustc'
 # rustup show | lines | where {$in =~ 'rustc'}
+
+# //  [ 4 5 6 ] | each {$in}
+# // can be rewritten as:
+# > [ 4 5 6 ] | each {}
+# ╭───┬───╮
+# │ 0 │ 4 │
+# │ 1 │ 5 │
+# │ 2 │ 6 │
+# ╰───┴───╯

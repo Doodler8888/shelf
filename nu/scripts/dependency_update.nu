@@ -1,4 +1,4 @@
-def --env main [file] {
+def main [file] {
 
 
 let latest_dep_versions = open --raw $file
@@ -9,82 +9,23 @@ let latest_dep_versions = open --raw $file
  | compact
  | each { cargo search $in | lines | first | split row ' ' | get 2 | str trim --char '"' }
 
-# print "Latest versions:" $latest_dep_versions
 
 let $current_dep_versions = open --raw $file
  | lines
  | skip until { |it| $it == '[dependencies]' }
- | parse --regex '\=\s*\"(?P<version>[^\"]+)\"' | values | flatten
+ | parse -r '=\s*"([^"]+)"' | values | flatten
 
-# print "Current versions:" $current_dep_versions
+mut $index = 0
+let $length = ($current_dep_versions | length)
 
-let version_map = $current_dep_versions 
- | zip $latest_dep_versions 
- | each { |pair| { current: $pair.0, latest: $pair.1 } } 
- | flatten
+while $index < $length {
+  let $current_version = ($current_dep_versions | get $index)
+  let $latest_version = ($latest_dep_versions | get $index)
 
-let content = open --raw $file | lines
+  # let updated_file = open --raw $file | str replace ($current_version) ($latest_version) | save -f $file
+  open --raw $file | str replace ($current_version) ($latest_version) | save -f $file
 
-# let updated_content = $content | each { |line|
-#    let line_replaced = $version_map | each { |version|
-#      let cur = $version.current
-#      let lat = $version.latest
-#      if ($line | str contains $cur) {
-#        $line | update $cur $lat
-#      } else {
-#        $line
-#      }
-# }
-# }
-#
-# print $updated_content
-#
-# let updated_content = $content | each { |line|
-#    let line_replaced = $version_map | each { |version|
-#      let cur = $version.current
-#      let lat = $version.latest
-#      if ($line | str contains $cur) {
-#        $line | str replace $cur $lat
-#      } else {
-#        $line
-#      }
-#    }
-#    $line_replaced | get 0
-# }
-#
-# print $updated_content
-
-print "This is a version map:" $version_map
-
-# let updated_content = $content | each { |line|
-#   mut line_replaced = $line
-#   $version_map | each { |version|
-#     let cur = $version.current
-#     let lat = $version.latest
-#     if ($line | str contains $cur) {
-#       line_replaced = ($line | str replace $cur $lat )
-#     }
-#   }
-# }
-
-let updated_content = $content | each { |line|
- mut line_replaced = $line
- $version_map | each { |version|
-    let cur = $version."current"
-    let lat = $version."latest"
-    if ($line | str contains $cur) {
-      line_replaced = ($line | str replace $cur $lat )
-    }
- }
+  $index = $index + 1
 }
 
-
-print $updated_content
-
-# $updated_content | save --force $file
-
-
-# print $updated_content
-
 }
-
