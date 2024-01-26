@@ -178,15 +178,10 @@ zstyle ':autocomplete:*' ignored-input '##'
 # bindkey "^R" history-incremental-pattern-search-backward
 # bindkey '^R' history-incremental-search-backward
 
-# swww init 2> /dev/null
-# swww img "$HOME/Downloads/pictures/68747470733a2f2f692e696d6775722e636f6d2f4c65756836776d2e676966.gif"
 if ! pgrep -x "swww-daemon" > /dev/null; then
     swww init 2> /dev/null
     swww img "$HOME/Downloads/pictures/68747470733a2f2f692e696d6775722e636f6d2f4c65756836776d2e676966.gif"
 fi
-
-
-
 
 eval "$(starship init zsh)"
 
@@ -199,10 +194,3 @@ for key in "$SSH_KEY_DIR"/*; do
         ssh-add "$key" > /dev/null 2>&1 
     fi
 done
-
-# function preexec() {
-#   if mountpoint -q ~/.remote; then
-#       fusermount -u ~/.remote
-#   fi
-# }
-

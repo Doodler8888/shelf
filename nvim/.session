@@ -13,13 +13,15 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 ~/.dotfiles/nvim
-badd +54 lua/user/manager.lua
-badd +126 lua/user/sessions.lua
+badd +1 lua/user/manager.lua
+badd +3 lua/user/sessions.lua
 badd +20 lua/user/init.lua
+badd +109 ~/.dotfiles/nvim/lua/user/functions.lua
+badd +0 ~/.dotfiles/nvim/lua/user/lspconfig.lua
+badd +4 lua/user/snippets.lua
 argglobal
 %argdel
-$argadd ~/.dotfiles/nvim
+$argadd ~/.dotfiles/nvim/
 edit lua/user/manager.lua
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
@@ -59,11 +61,11 @@ keepjumps 52
 normal! 010|
 wincmd w
 argglobal
-if bufexists(fnamemodify("lua/user/sessions.lua", ":p")) | buffer lua/user/sessions.lua | else | edit lua/user/sessions.lua | endif
+if bufexists(fnamemodify("~/.dotfiles/nvim/lua/user/lspconfig.lua", ":p")) | buffer ~/.dotfiles/nvim/lua/user/lspconfig.lua | else | edit ~/.dotfiles/nvim/lua/user/lspconfig.lua | endif
 if &buftype ==# 'terminal'
-  silent file lua/user/sessions.lua
+  silent file ~/.dotfiles/nvim/lua/user/lspconfig.lua
 endif
-balt lua/user/manager.lua
+balt lua/user/snippets.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -74,11 +76,11 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 5 - ((4 * winheight(0) + 21) / 42)
+let s:l = 80 - ((21 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 5
+keepjumps 80
 normal! 0
 wincmd w
 2wincmd w

@@ -1,12 +1,14 @@
-- hosts: localhost
+- name: Setup new arch installation
+  hosts: localhost
   gather_facts: false
   tasks:
     - name: Get the name of the main user
-      shell: "awk -F: '$3 == 1000 {print $1}' /etc/passwd"
+      ansible.builtin.shell: "awk -F: '$3 == 1000 {print $1}' /etc/passwd"
       register: main_user
+      changed_when: false
 
     - name: Create .ssh directory in the home directory of the main user
-      file:
+      ansible.builtin.file:
         path: "/home/{{ main_user.stdout }}/.ssh"
         state: directory
         mode: '0700'
@@ -14,7 +16,7 @@
         group: "{{ main_user.stdout }}"
 
     - name: Create the ssh config file
-      file:
+      ansible.builtin.file:
         path: "/home/{{ main_user.stdout }}/.ssh/config"
         state: touch
 
@@ -47,3 +49,9 @@
 
     - name: add email credential of the main user to git
       command: 'git config --global user.email "wurfkreuz@mail.ru"'
+
+
+# By default, 'command' and shell tasks in Ansible are assumed to change the
+# system state. "changed_when: false" - this tells Ansible that the task does
+# not change the system state, and it should always report "unchanged" when this
+# task is executed.

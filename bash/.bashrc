@@ -51,12 +51,12 @@ alias h='history'
 alias font='fc-cache -f -v'
 alias font-list='fc-list : family'
 alias cr='cp -r'
-alias alcrt='cd ~/.dotfiles/alacritty && nvim ~/.dotfiles/alacritty/alacritty.yml'
-alias qtl='cd ~/.dotfiles/qtile && nvim ~/.dotfiles/qtile/config.py'
+alias alc='cd ~/.dotfiles/alacritty && nvim alacritty.toml'
+alias qtl='cd ~/.dotfiles/qtile && nvim config.py'
 alias v='nvim'
 alias v.='nvim .'
-alias zlj='cd ~/.dotfiles/zellij && nvim ~/.dotfiles/zellij/config.kdl'
-alias tmx='cd ~/.dotfiles/tmux && nvim ~/.dotfiles/tmux/.tmux.conf'
+alias zlj='cd ~/.dotfiles/zellij && nvim config.kdl'
+alias tmx='cd ~/.dotfiles/tmux && nvim .tmux.conf'
 alias back='cd -'
 alias di='docker images'
 alias bsh='cd ~/.dotfiles/bash/ && nvim .bashrc'
@@ -100,7 +100,7 @@ alias search='nix-env -qa'
 alias switch='home-manager switch'
 alias e='sudo -e'
 alias home='nvim /home/wurfkreuz/.dotfiles/home-manager/home.nix'
-alias zsh='nvim /home/wurfkreuz/.dotfiles/zsh/.zshrc'
+alias zsh='cd /home/wurfkreuz/.dotfiles/zsh/ && nvim .zshrc'
 alias ls='exa'
 alias sl='exa'
 alias la='exa -lah'
@@ -128,8 +128,10 @@ alias inpt='cd $HOME/.dotfiles/bash && nvim .inputrc'
 
 eval "$(zoxide init bash)"
 
-swww init 2> /dev/null
-swww img "$HOME/Downloads/pictures/68747470733a2f2f692e696d6775722e636f6d2f4c65756836776d2e676966.gif"
+if ! pgrep -x "swww-daemon" > /dev/null; then
+    swww init 2> /dev/null
+    swww img "$HOME/Downloads/pictures/68747470733a2f2f692e696d6775722e636f6d2f4c65756836776d2e676966.gif"
+fi
 
 eval "$(starship init bash)"
 
@@ -152,29 +154,29 @@ fzf_nvim_with_sudo() {
         fi
     fi
 }
-bind -x '"\C-n": fzf_nvim_with_sudo'
+bind -x '"\C-e": fzf_nvim_with_sudo'
 
 fzf_insert_path() {
     local file
-    file=$(fzf --height 40% --border)
+    file=$(fd --type f --hidden . | fzf --height 40% --border)
     if [[ -n "$file" ]]; then
         # Append the selected file path to the current command line
         READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT}$file${READLINE_LINE:$READLINE_POINT}"
         READLINE_POINT=$(( READLINE_POINT + ${#file} ))
     fi
 }
-bind -x '"\C-f": fzf_insert_path'
+bind -x '"\C-l": fzf_insert_path'
 
 fzf_list_path() {
     local file
-    file=$(find . -exec realpath --relative-to=. {} \; | fzf --height 40% --border)
+    file=$(fd --hidden . / | fzf --height 40% --border)
     if [[ -n "$file" ]]; then
         # Append the selected file path to the current command line
         READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT}$file${READLINE_LINE:$READLINE_POINT}"
         READLINE_POINT=$(( READLINE_POINT + ${#file} ))
     fi
 }
-bind -x '"\C-l": fzf_list_path'
+bind -x '"\C-y": fzf_list_path'
 
 attach_zellij_session() {
     local session
@@ -183,5 +185,10 @@ attach_zellij_session() {
 }
 bind -x '"\C-s": attach_zellij_session'
 
+prepend_sudo() {
+    READLINE_LINE="sudo $READLINE_LINE"
+    READLINE_POINT=$((READLINE_POINT+5))
+}
+bind -x '"\C-o": prepend_sudo'
 
 [ -f "/home/wurfkreuz/.ghcup/env" ] && source "/home/wurfkreuz/.ghcup/env" # ghcup-env

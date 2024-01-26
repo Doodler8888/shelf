@@ -88,6 +88,31 @@ lspconfig.yamlls.setup{
     },
 }
 
+function InsertCommentChar()
+  local line = vim.api.nvim_get_current_line()
+  local cursor = vim.api.nvim_win_get_cursor(0)
+  local col = cursor[2]
+  local is_whitespace_only = line:sub(1, col):match("^%s*$") ~= nil
+
+  if is_whitespace_only then
+    -- If the line up to the cursor is only whitespace, insert `#` at the beginning
+    vim.api.nvim_set_current_line('#' .. line)
+    -- Move the cursor to the right, placing it after the inserted `#`
+    vim.api.nvim_win_set_cursor(0, {cursor[1], col + 1})
+  else
+    -- If the line contains non-whitespace characters, insert `#` with indentation
+    vim.api.nvim_input('i#')
+  end
+end
+
+-- Map Ctrl+O to the Lua function in insert mode for YAML files
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "yaml",
+  callback = function()
+    vim.api.nvim_buf_set_keymap(0, 'i', '<C-o>', '<Cmd>lua InsertCommentChar()<CR>', { noremap = true, silent = true })
+  end,
+})
+
 
 -- Nushell
 
