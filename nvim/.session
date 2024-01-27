@@ -13,16 +13,21 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 lua/user/manager.lua
+badd +84 lua/user/manager.lua
 badd +3 lua/user/sessions.lua
-badd +20 lua/user/init.lua
-badd +109 ~/.dotfiles/nvim/lua/user/functions.lua
-badd +0 ~/.dotfiles/nvim/lua/user/lspconfig.lua
-badd +4 lua/user/snippets.lua
+badd +17 lua/user/init.lua
+badd +109 lua/user/functions.lua
+badd +160 lua/user/lspconfig.lua
+badd +19 lua/user/snippets.lua
+badd +1 init.lua
+badd +87 ~/.dotfiles/bash/.bashrc
+badd +175 ~/.dotfiles/zsh/.zshrc
+badd +119 ~/.dotfiles/zsh/functions.sh
+badd +0 lua/user/remap.lua
 argglobal
 %argdel
 $argadd ~/.dotfiles/nvim/
-edit lua/user/manager.lua
+edit ~/.dotfiles/bash/.bashrc
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -39,10 +44,10 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
-exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
+exe 'vert 1resize ' . ((&columns * 90 + 46) / 92)
+exe 'vert 2resize ' . ((&columns * 1 + 46) / 92)
 argglobal
-balt lua/user/init.lua
+balt init.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -53,19 +58,20 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 52 - ((31 * winheight(0) + 21) / 42)
+let s:l = 176 - ((33 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 52
-normal! 010|
+keepjumps 176
+normal! 0
+lcd ~/.dotfiles/bash
 wincmd w
 argglobal
-if bufexists(fnamemodify("~/.dotfiles/nvim/lua/user/lspconfig.lua", ":p")) | buffer ~/.dotfiles/nvim/lua/user/lspconfig.lua | else | edit ~/.dotfiles/nvim/lua/user/lspconfig.lua | endif
+if bufexists(fnamemodify("~/.dotfiles/nvim/lua/user/remap.lua", ":p")) | buffer ~/.dotfiles/nvim/lua/user/remap.lua | else | edit ~/.dotfiles/nvim/lua/user/remap.lua | endif
 if &buftype ==# 'terminal'
-  silent file ~/.dotfiles/nvim/lua/user/lspconfig.lua
+  silent file ~/.dotfiles/nvim/lua/user/remap.lua
 endif
-balt lua/user/snippets.lua
+balt ~/.dotfiles/nvim/init.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -76,16 +82,17 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 80 - ((21 * winheight(0) + 21) / 42)
+let s:l = 17 - ((16 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 80
+keepjumps 17
 normal! 0
+lcd ~/.dotfiles/nvim
 wincmd w
 2wincmd w
-exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
-exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
+exe 'vert 1resize ' . ((&columns * 90 + 46) / 92)
+exe 'vert 2resize ' . ((&columns * 1 + 46) / 92)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

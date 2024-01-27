@@ -44,9 +44,10 @@ function FindSessionDir()
   return nil
 end
 
--- Function to save the session
-function SaveSession()
-  if not SessionLoaded then -- Check if a session has been loaded
+-- Function to save the session with an additional parameter to indicate autosave
+function SaveSession(autosave)
+  -- If autosave is true and no session was loaded, skip saving
+  if autosave and not SessionLoaded then
     print('No session was loaded, so no session will be saved on exit.')
     return
   end
@@ -58,6 +59,7 @@ function SaveSession()
     print('Session saved to: ' .. session_file)
   end
 end
+
 
 
 -- Modified load_session function to return a boolean
@@ -132,13 +134,15 @@ vim.api.nvim_create_user_command('OpenSession', LoadSession, {})
 -- Key binding for setting the session directory
 vim.api.nvim_set_keymap('n', '<leader>sd', ':lua SetSessionDir()<CR>', { noremap = true, silent = true })
 
--- Key binding for SaveSession
-vim.api.nvim_set_keymap('n', '<leader>ss', ':SaveSession<CR>', { noremap = true, silent = true })
-
 -- Key binding for OpenSession
 vim.api.nvim_set_keymap('n', '<leader>sl', ':OpenSession<CR>', { noremap = true, silent = true })
 
 vim.api.nvim_create_autocmd("VimLeavePre", {
-  callback = SaveSession
+  callback = function() SaveSession(true) end
 })
 
+-- Update the command to pass false for manual saves
+vim.api.nvim_create_user_command('SaveSession', function() SaveSession(false) end, {})
+
+-- Ensure key bindings for saving sessions also indicate manual saves
+vim.api.nvim_set_keymap('n', '<leader>ss', ':lua SaveSession(false)<CR>', { noremap = true, silent = true })
