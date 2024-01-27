@@ -22,7 +22,6 @@ while $index < $length {
   let $current_version = ($current_dep_versions | get $index)
   let $latest_version = ($latest_dep_versions | get $index)
 
-  # let updated_file = open --raw $file | str replace ($current_version) ($latest_version) | save -f $file
   open --raw $file | str replace ($current_version) ($latest_version) | save -f $file
 
   $index = $index + 1
