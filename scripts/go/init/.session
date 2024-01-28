@@ -1,0 +1,143 @@
+let SessionLoad = 1
+let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-1 siso=-1
+let v:this_session=expand("<sfile>:p")
+silent only
+silent tabonly
+cd ~/.dotfiles/scripts/go/init
+if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
+  let s:wipebuf = bufnr('%')
+endif
+let s:shortmess_save = &shortmess
+if &shortmess =~ 'A'
+  set shortmess=aoOA
+else
+  set shortmess=aoO
+endif
+badd +1 ~/.dotfiles/scripts/go/init/pkg/go.mod
+badd +3 main.go
+badd +1 ~/.dotfiles/scripts/go/init/go.mod
+badd +11 ~/.dotfiles/scripts/go/init/pkg/helper/reader.go
+badd +3 ~/.dotfiles/scripts/go/init/pkg/go/text.go
+badd +33 ~/.dotfiles/scripts/go/init/pkg/go/init.go
+argglobal
+%argdel
+$argadd ./
+edit ~/.dotfiles/scripts/go/init/pkg/helper/reader.go
+let s:save_splitbelow = &splitbelow
+let s:save_splitright = &splitright
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd _ | wincmd |
+split
+1wincmd k
+wincmd w
+wincmd w
+let &splitbelow = s:save_splitbelow
+let &splitright = s:save_splitright
+wincmd t
+let s:save_winminheight = &winminheight
+let s:save_winminwidth = &winminwidth
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
+exe '1resize ' . ((&lines * 21 + 22) / 44)
+exe 'vert 1resize ' . ((&columns * 90 + 93) / 187)
+exe '2resize ' . ((&lines * 20 + 22) / 44)
+exe 'vert 2resize ' . ((&columns * 90 + 93) / 187)
+exe 'vert 3resize ' . ((&columns * 96 + 93) / 187)
+argglobal
+balt main.go
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+11,13fold
+let &fdl = &fdl
+11
+normal! zo
+let s:l = 10 - ((9 * winheight(0) + 10) / 21)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 10
+normal! 0
+wincmd w
+argglobal
+if bufexists(fnamemodify("~/.dotfiles/scripts/go/init/pkg/go/text.go", ":p")) | buffer ~/.dotfiles/scripts/go/init/pkg/go/text.go | else | edit ~/.dotfiles/scripts/go/init/pkg/go/text.go | endif
+if &buftype ==# 'terminal'
+  silent file ~/.dotfiles/scripts/go/init/pkg/go/text.go
+endif
+balt main.go
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 1 - ((0 * winheight(0) + 10) / 20)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 1
+normal! 0
+wincmd w
+argglobal
+if bufexists(fnamemodify("~/.dotfiles/scripts/go/init/pkg/go/init.go", ":p")) | buffer ~/.dotfiles/scripts/go/init/pkg/go/init.go | else | edit ~/.dotfiles/scripts/go/init/pkg/go/init.go | endif
+if &buftype ==# 'terminal'
+  silent file ~/.dotfiles/scripts/go/init/pkg/go/init.go
+endif
+balt ~/.dotfiles/scripts/go/init/pkg/helper/reader.go
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+46,49fold
+let &fdl = &fdl
+let s:l = 79 - ((36 * winheight(0) + 21) / 42)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 79
+normal! 0
+wincmd w
+3wincmd w
+exe '1resize ' . ((&lines * 21 + 22) / 44)
+exe 'vert 1resize ' . ((&columns * 90 + 93) / 187)
+exe '2resize ' . ((&lines * 20 + 22) / 44)
+exe 'vert 2resize ' . ((&columns * 90 + 93) / 187)
+exe 'vert 3resize ' . ((&columns * 96 + 93) / 187)
+tabnext 1
+if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
+  silent exe 'bwipe ' . s:wipebuf
+endif
+unlet! s:wipebuf
+set winheight=1 winwidth=20
+let &shortmess = s:shortmess_save
+let &winminheight = s:save_winminheight
+let &winminwidth = s:save_winminwidth
+let s:sx = expand("<sfile>:p:r")."x.vim"
+if filereadable(s:sx)
+  exe "source " . fnameescape(s:sx)
+endif
+let &g:so = s:so_save | let &g:siso = s:siso_save
+nohlsearch
+doautoall SessionLoadPost
+unlet SessionLoad
+" vim: set ft=vim :
