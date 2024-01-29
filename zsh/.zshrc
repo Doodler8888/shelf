@@ -1,5 +1,4 @@
 source /home/wurfkreuz/.dotfiles/bash/scripts.sh
-source /home/wurfkreuz/.secret_dotfiles/zsh/keys.sh
 export GOPATH=$HOME/go
 export PATH="$HOME/.nimble/bin:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.dotfiles:$HOME/.cabal/bin:$HOME/.ghcup/bin:$HOME/.local/bin:/usr/lib:$PATH"
 export EDITOR='/usr//local/bin/nvim'
@@ -178,19 +177,19 @@ zstyle ':autocomplete:*' ignored-input '##'
 # bindkey "^R" history-incremental-pattern-search-backward
 # bindkey '^R' history-incremental-search-backward
 
-if ! pgrep -x "swww-daemon" > /dev/null; then
-    swww init 2> /dev/null
-    swww img "$HOME/Downloads/pictures/68747470733a2f2f692e696d6775722e636f6d2f4c65756836776d2e676966.gif"
-fi
+# if ! pgrep -x "swww-daemon" > /dev/null; then
+#     swww init 2> /dev/null
+#     swww img "$HOME/Downloads/pictures/68747470733a2f2f692e696d6775722e636f6d2f4c65756836776d2e676966.gif"
+# fi
 
 eval "$(starship init zsh)"
 
-if [ -z "$SSH_AUTH_SOCK" ] ; then
-    eval "$(ssh-agent -s)" 1> /dev/null # 'ssh-agent -s' start a new ssh agent and print out env variables for it. But because it only prints them out, they have to be evaluated.
-fi
-SSH_KEY_DIR="$HOME/.ssh/keys"
-for key in "$SSH_KEY_DIR"/*; do
-    if [[ -f $key && ! $key =~ \.pub$ ]]; then # The '=~' part is for making a regular expression check. The slash is an escape sequence because a dot has its own meaning for regular expressions.
-        ssh-add "$key" > /dev/null 2>&1 
-    fi
-done
+# if [ -z "$SSH_AUTH_SOCK" ] ; then
+#     eval "$(ssh-agent -s)" 1> /dev/null # 'ssh-agent -s' start a new ssh agent and print out env variables for it. But because it only prints them out, they have to be evaluated.
+# fi
+# SSH_KEY_DIR="$HOME/.ssh/keys"
+# for key in "$SSH_KEY_DIR"/*; do
+#     if [[ -f $key && ! $key =~ \.pub$ ]]; then # The '=~' part is for making a regular expression check. The slash is an escape sequence because a dot has its own meaning for regular expressions.
+#         ssh-add "$key" > /dev/null 2>&1 
+#     fi
+# done

@@ -818,6 +818,7 @@ alias install = sudo pacman -Syu
 alias backup = sudo timeshift --create --comments
 alias d = cd
 alias tu = tofu init -upgrade
+alias e = sudo -e
 
 def rmf [] { ls -la | where type == 'file' | each { rm $in.name } | null }
 def now [] { date now | to text | str replace " +0300 (now)" "" }

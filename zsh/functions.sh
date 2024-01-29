@@ -146,7 +146,6 @@ zle -N fzf-nvim
 bindkey '^E' fzf-nvim
 
 
-eval "$(zellij setup --generate-auto-start)"
 ss() {
     local session
     session=$(zellij list-sessions | fzf --height=10 --layout=reverse --border --ansi)
@@ -162,10 +161,10 @@ if [ -z "$SSH_AUTH_SOCK" ] ; then
     eval "$(ssh-agent -s)" 1> /dev/null
 fi
 
-SSH_KEY_DIR="$HOME/.ssh/keys"
+# SSH_KEY_DIR="$HOME/.ssh/keys"
 
-for key in "$SSH_KEY_DIR"/*; do
-    if [[ -f $key && ! $key =~ \.pub$ ]]; then # The '=~' part is for making a regular expression check. The slash is an escape sequence because a dot has its own meaning for regular expressions.
-        ssh-add "$key" > /dev/null 2>&1 
-    fi
-done
+# for key in "$SSH_KEY_DIR"/*; do
+#     if [[ -f $key && ! $key =~ \.pub$ ]]; then # The '=~' part is for making a regular expression check. The slash is an escape sequence because a dot has its own meaning for regular expressions.
+#         ssh-add "$key" > /dev/null 2>&1 
+#     fi
+# done

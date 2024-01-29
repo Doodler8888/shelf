@@ -107,6 +107,7 @@ $env.PROMPT_INDICATOR_VI_INSERT = ' '
 $env.PROMPT_INDICATOR_VI_NORMAL = ' '
 $env.PROMPT_COMMAND_RIGHT = ' '
 
+$env.GOPATH = "~/go"
 
 $env.PATH = ($env.PATH | split row (char esep) 
   | append "/usr/local/bin" 
@@ -114,4 +115,6 @@ $env.PATH = ($env.PATH | split row (char esep)
   | append "~/test" 
   | append "~/.cabal/bin"
   | append "~/.ghcup/bin"
+  | append "~/go"
+  | append "~/.nvm"
 )

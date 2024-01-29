@@ -6,27 +6,35 @@ import (
 	"os"
 	"os/exec"
 	"strings"
-	"github.com/Doodler8888/.dotfiles/scripts/go/init/pkg/helper"
+	"github.com/Doodler8888/.dotfiles/scripts/go/init/pkg/helpers"
+	"github.com/Doodler8888/.dotfiles/scripts/go/init/pkg/path_utils"
 )
 
 func Init() {
         reader := bufio.NewReader(os.Stdin)
 
-	fmt.Println("\nEnter path for the project:")
-	fmt.Println("1 - Enter a path")
-	fmt.Println("2 - Skip and move to the next stage")
+	fmt.Print("\nEnter path for the project:\n\n")
+	fmt.Print("1 - Enter a path\n")
+	fmt.Print("2 - Skip and move to the next stage\n\n")
+	fmt.Print("=> ")
 
 	choice, _ := helper.ReadTrimmedLine(reader)
 
 	var projectPath string // It's declared for reuse.
+	var err error
 
 	switch choice {
 	case "1":
-		fmt.Print("Enter the project path: ")
+		fmt.Print("\nEnter the project path: ")
 		projectPath, _ = helper.ReadTrimmedLine(reader)
-		fmt.Println("Project path set to:", projectPath)
+		projectPath, err = path_utils.ExpandHomePath(projectPath)
+		if err != nil {
+		    fmt.Printf("Error expanding path: %v\n", err)
+		    return 
+		}
+		fmt.Println("\nProject path set to:", projectPath)
 		// Attempt to create the directory if it doesn't exist
-		err := os.MkdirAll(projectPath, 755) // os.ModePerm is 0777, allowing read, write, and execute
+		err = os.MkdirAll(projectPath, 0755) // os.ModePerm is 0777, allowing read, write, and execute
 		if err != nil {
 		    fmt.Printf("Error creating directory: %v\n", err)
 		    return
@@ -35,12 +43,11 @@ func Init() {
 	case "2":
 		fmt.Println("Skipping project path input.")
 	default:
-		fmt.Println("Invalid choice, moving to next stage.")
+		fmt.Println("Invalid choice.")
+		return
 	}
 
 	fmt.Println(ModulePathMessage)
-
-	// reader := bufio.NewReader(os.Stdin)
 	fmt.Print("\n" + "Enter module path: ")
 	modulePath, _ := reader.ReadString('\n')
 	modulePath = strings.TrimSpace(modulePath) // Remove newline character
@@ -49,13 +56,13 @@ func Init() {
 	cmd.Dir = projectPath	
 	cmd.Stdout = os.Stdout // to display the output of the command
 	cmd.Stderr = os.Stderr // to display any error
-	err := cmd.Run()
+	err = cmd.Run()
 	if err != nil {
 		fmt.Printf("Error initializing module: %s\n", err)
 		return
 	}
 
-	fmt.Println("Module initialized successfully.")
+	fmt.Print("Module initialized successfully.\n\n")
 }
 
 // In the context of your usage, where you're including a lengthy explanation

@@ -17,8 +17,9 @@ badd +1 ~/.dotfiles/scripts/go/init/pkg/go.mod
 badd +3 main.go
 badd +1 ~/.dotfiles/scripts/go/init/go.mod
 badd +11 ~/.dotfiles/scripts/go/init/pkg/helper/reader.go
-badd +3 ~/.dotfiles/scripts/go/init/pkg/go/text.go
-badd +33 ~/.dotfiles/scripts/go/init/pkg/go/init.go
+badd +6 ~/.dotfiles/scripts/go/init/pkg/go/text.go
+badd +30 ~/.dotfiles/scripts/go/init/pkg/go/init.go
+badd +1 ~/.dotfiles/scripts/go/init/pkg/pathutils/path_utils.go
 argglobal
 %argdel
 $argadd ./
@@ -63,19 +64,19 @@ silent! normal! zE
 let &fdl = &fdl
 11
 normal! zo
-let s:l = 10 - ((9 * winheight(0) + 10) / 21)
+let s:l = 9 - ((8 * winheight(0) + 10) / 21)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 10
-normal! 0
+keepjumps 9
+normal! 08|
 wincmd w
 argglobal
-if bufexists(fnamemodify("~/.dotfiles/scripts/go/init/pkg/go/text.go", ":p")) | buffer ~/.dotfiles/scripts/go/init/pkg/go/text.go | else | edit ~/.dotfiles/scripts/go/init/pkg/go/text.go | endif
+if bufexists(fnamemodify("~/.dotfiles/scripts/go/init/pkg/pathutils/path_utils.go", ":p")) | buffer ~/.dotfiles/scripts/go/init/pkg/pathutils/path_utils.go | else | edit ~/.dotfiles/scripts/go/init/pkg/pathutils/path_utils.go | endif
 if &buftype ==# 'terminal'
-  silent file ~/.dotfiles/scripts/go/init/pkg/go/text.go
+  silent file ~/.dotfiles/scripts/go/init/pkg/pathutils/path_utils.go
 endif
-balt main.go
+balt ~/.dotfiles/scripts/go/init/pkg/helper/reader.go
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -85,12 +86,13 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
+13,15fold
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 10) / 20)
+let s:l = 16 - ((14 * winheight(0) + 10) / 20)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
+keepjumps 16
 normal! 0
 wincmd w
 argglobal
@@ -108,13 +110,19 @@ setlocal fml=1
 setlocal fdn=20
 setlocal fen
 silent! normal! zE
-46,49fold
+30,33fold
+30,33fold
+53,56fold
 let &fdl = &fdl
-let s:l = 79 - ((36 * winheight(0) + 21) / 42)
+30
+normal! zo
+30
+normal! zo
+let s:l = 30 - ((23 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 79
+keepjumps 30
 normal! 0
 wincmd w
 3wincmd w

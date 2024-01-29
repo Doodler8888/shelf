@@ -3,7 +3,7 @@ let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd ~/.dotfiles/zsh
+cd ~/.dotfiles/nvim
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
@@ -13,15 +13,26 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +0 .zshrc
-badd +162 functions.sh
-badd +1 oil:///home/wurfkreuz/.dotfiles/zsh/
+badd +34 lua/user/manager.lua
+badd +133 lua/user/sessions.lua
+badd +6 lua/user/init.lua
+badd +109 lua/user/functions.lua
+badd +151 lua/user/lspconfig.lua
+badd +19 lua/user/snippets.lua
+badd +1 init.lua
+badd +176 ~/.dotfiles/bash/.bashrc
+badd +175 ~/.dotfiles/zsh/.zshrc
+badd +119 ~/.dotfiles/zsh/functions.sh
+badd +15 lua/user/remap.lua
+badd +16 lua/user/ale.lua
+badd +1 ftplugin/go.lua
+badd +0 ~/.dotfiles/nu/config.nu
 argglobal
 %argdel
-$argadd oil:///home/wurfkreuz/.dotfiles/zsh/
-edit .zshrc
+$argadd ~/.dotfiles/nvim/
+edit ~/.dotfiles/nu/config.nu
 argglobal
-balt functions.sh
+balt lua/user/lspconfig.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -32,12 +43,13 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 104 - ((8 * winheight(0) + 9) / 18)
+let s:l = 741 - ((8 * winheight(0) + 21) / 43)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 104
-normal! 09|
+keepjumps 741
+normal! 0
+lcd ~/.dotfiles/nu
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

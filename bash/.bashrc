@@ -1,21 +1,17 @@
 source /home/wurfkreuz/.dotfiles/bash/scripts.sh
-export GOPATH=$HOME/go
 export PATH="$HOME/.nimble/bin:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.local/bin:/usr/bin:/home/wurfkreuz/.ghcup/bin:/home/wurfkreuz/.cabal/bin:/home/wufkreuz/.local/share/racket:$PATH"
 export EDITOR=/usr//local/bin/nvim
-export CDPATH=.:~:/usr/local:/etc:~/.dotfiles:~/.config:~/.projects
+# export CDPATH=.:~:/usr/local:/etc:~/.dotfiles:~/.config:~/.projects
 export STARSHIP_CONFIG="/home/wurfkreuz/.dotfiles/starship/starship.toml"
 export PATH="$PATH:/home/wurfkreuz/.ghcup/hls/2.4.0.0/bin"
 export PATH="$PATH:/home/wurfkreuz/.cabal/"
-# source "$HOME/.pip/lsp-bridge/venv/bin/activate"
-# export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*" --glob "!{/.snapshots,/home,/lib,/lib64,/mnt,/proc,/run,/sbin,/srv,/sys,/tmp}" /'
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git --exclude .snapshots --exclude var --exclude opt --exclude lib --exclude lib64 --exclude mnt --exclude proc --exclude run --exclude sbin --exclude srv --exclude sys --exclude tmp . /'
 export BOT_TOKEN="5907946679:AAExBdsBoE_et6XSF_A7DJIrpoNye7iGk8E"
-# source "/home/wurfkreuz/.dotfiles/nvim/format_to_threshold.sh"
 
 # # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-shopt -s autocd
+# shopt -s autocd
 shopt -s checkjobs
 shopt -s globstar
 
@@ -45,7 +41,7 @@ alias hpr="cd /home/wurfkreuz/.dotfiles/hyprland/ && nvim hyprland.conf"
 alias str="cd /home/wurfkreuz/.dotfiles/starship/ && nvim starship.toml"
 alias scripts='cd /home/wurfkreuz/.dotfiles/bash/ && nvim scripts.sh'
 alias rename='perl-rename'
-alias d='sudo'
+alias d='cd'
 alias key='cd ~/.dotfiles/keyd/ && nvim default.conf'
 alias h='history'
 alias font='fc-cache -f -v'
@@ -68,10 +64,7 @@ alias kdescribe='kubectl describe'
 alias kapply='kubectl apply'
 alias rm_untagged='docker rm $(docker ps -a -q -f "status=exited") && docker rmi $(docker images -f "dangling=true" -q)'
 alias console='sudo -u postgres psql'
-# alias run='nim c -r'
 alias compile='nim c -d:release'
-# alias rm='trash > /dev/null 2>&1'
-# alias rf='trash put > /dev/null 2>&1'
 alias rf='rm -rf'
 alias md='mkdir -p'
 alias s='source $HOME/.dotfiles/bash/.bashrc'
@@ -120,7 +113,7 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias .3='cd ../../..'
 alias .4='cd ../../../..'
-alias nvm='cd ~/.dotfiles/nvim/ && nvim .'
+# alias nvm='cd ~/.dotfiles/nvim/ && nvim .'
 alias install='sudo pacman -Syu'
 alias orphaned='sudo pacman -Qtdq'
 alias hello='echo "Hello"'
@@ -176,12 +169,12 @@ fzf_list_path() {
 }
 bind -x '"\C-y": fzf_list_path'
 
-attach_zellij_session() {
-    local session
-    session=$(zellij list-sessions | fzf --height=10 --layout=reverse --border --ansi) && \
-    [ -n "$session" ] && zellij attach "$(echo "$session" | awk '{print $1}')"
-}
-bind -x '"\C-s": attach_zellij_session'
+# attach_zellij_session() {
+#     local session
+#     session=$(zellij list-sessions | fzf --height=10 --layout=reverse --border --ansi) && \
+#     [ -n "$session" ] && zellij attach "$(echo "$session" | awk '{print $1}')"
+# }
+# bind -x '"\C-s": attach_zellij_session'
 
 prepend_sudo() {
     READLINE_LINE="sudo $READLINE_LINE"
