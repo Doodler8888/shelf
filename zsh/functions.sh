@@ -168,3 +168,17 @@ fi
 #         ssh-add "$key" > /dev/null 2>&1 
 #     fi
 # done
+
+
+bak() {
+    local filename=$1
+
+    if [[ $filename == *.bak ]]; then
+        local new_filename=${filename//.bak/}
+        mv "$filename" "$new_filename"
+    else
+        local new_filename="$filename.bak"
+        mv "$filename" "$new_filename"
+    fi
+}
+

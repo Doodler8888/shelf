@@ -3,20 +3,21 @@ package init_go
 import (
 	"bufio"
 	"fmt"
+	"github.com/Doodler8888/.dotfiles/scripts/go/init/pkg/helpers"
+	"github.com/Doodler8888/.dotfiles/scripts/go/init/pkg/path_utils"
 	"os"
 	"os/exec"
 	"strings"
-	"github.com/Doodler8888/.dotfiles/scripts/go/init/pkg/helpers"
-	"github.com/Doodler8888/.dotfiles/scripts/go/init/pkg/path_utils"
 )
 
 func Init() {
-        reader := bufio.NewReader(os.Stdin)
+	reader := bufio.NewReader(os.Stdin)
 
-	fmt.Print("\nEnter path for the project:\n\n")
-	fmt.Print("1 - Enter a path\n")
-	fmt.Print("2 - Skip and move to the next stage\n\n")
-	fmt.Print("=> ")
+	fmt.Print(
+		"\nEnter path for the project:\n\n",
+		"1 - Enter a path\n",
+		"2 - Skip and move to the next stage\n\n",
+		"=> ")
 
 	choice, _ := helper.ReadTrimmedLine(reader)
 
@@ -29,15 +30,15 @@ func Init() {
 		projectPath, _ = helper.ReadTrimmedLine(reader)
 		projectPath, err = path_utils.ExpandHomePath(projectPath)
 		if err != nil {
-		    fmt.Printf("Error expanding path: %v\n", err)
-		    return 
+			fmt.Printf("Error expanding path: %v\n", err)
+			return
 		}
 		fmt.Println("\nProject path set to:", projectPath)
 		// Attempt to create the directory if it doesn't exist
 		err = os.MkdirAll(projectPath, 0755) // os.ModePerm is 0777, allowing read, write, and execute
 		if err != nil {
-		    fmt.Printf("Error creating directory: %v\n", err)
-		    return
+			fmt.Printf("Error creating directory: %v\n", err)
+			return
 		}
 
 	case "2":
@@ -53,7 +54,7 @@ func Init() {
 	modulePath = strings.TrimSpace(modulePath) // Remove newline character
 
 	cmd := exec.Command("go", "mod", "init", modulePath)
-	cmd.Dir = projectPath	
+	cmd.Dir = projectPath
 	cmd.Stdout = os.Stdout // to display the output of the command
 	cmd.Stderr = os.Stderr // to display any error
 	err = cmd.Run()

@@ -24,15 +24,16 @@ badd +176 ~/.dotfiles/bash/.bashrc
 badd +175 ~/.dotfiles/zsh/.zshrc
 badd +119 ~/.dotfiles/zsh/functions.sh
 badd +15 lua/user/remap.lua
-badd +16 lua/user/ale.lua
+badd +27 lua/user/ale.lua
 badd +27 ftplugin/go.lua
 badd +11 lua/user/commands.lua
 badd +5 lua/user/conform.lua
 badd +1 lua/user/set.lua
+badd +0 lua/user/fzf.lua
 argglobal
 %argdel
 $argadd ~/.dotfiles/nvim/
-edit lua/user/ale.lua
+edit lua/user/fzf.lua
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -52,7 +53,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 90 + 93) / 187)
 exe 'vert 2resize ' . ((&columns * 96 + 93) / 187)
 argglobal
-balt lua/user/snippets.lua
+balt lua/user/ale.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -63,12 +64,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 29 - ((28 * winheight(0) + 21) / 42)
+let s:l = 39 - ((32 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 29
-normal! 015|
+keepjumps 39
+normal! 059|
 lcd ~/.dotfiles/nvim
 wincmd w
 argglobal

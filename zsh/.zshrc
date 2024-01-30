@@ -112,6 +112,7 @@ alias scr="cd ~/.dotfiles/scripts/"
 alias off="poweroff"
 alias run="cargo run"
 alias build="cargo build"
+alias scr="cd ~/.dotfiles/scripts"
 
 # bindkey '^R' fzf_history_search
 

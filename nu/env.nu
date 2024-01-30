@@ -107,7 +107,7 @@ $env.PROMPT_INDICATOR_VI_INSERT = ' '
 $env.PROMPT_INDICATOR_VI_NORMAL = ' '
 $env.PROMPT_COMMAND_RIGHT = ' '
 
-$env.GOPATH = "~/go"
+$env.GOPATH = ($env.HOME + "/go" )
 
 $env.PATH = ($env.PATH | split row (char esep) 
   | append "/usr/local/bin" 
