@@ -37,6 +37,7 @@
           - shellcheck
         state: latest
         update_cache: true
-      become: true
+      becoome: true
 
     - name: Soft link files
+      ansible.builtin.
