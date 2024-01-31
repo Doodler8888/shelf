@@ -13,9 +13,12 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +48 ~/.dotfiles/ansible/user_git_ssh-playbook.yaml
+badd +1 ~/.dotfiles/ansible/user_git_ssh-playbook.yaml
 badd +1 ~/.dotfiles/ansible/user_creation-playbook.yaml
-badd +5 ~/.dotfiles/ansible/localhost_setup-playbook.yaml
+badd +29 ~/.dotfiles/ansible/localhost_setup-playbook.yaml
+badd +1 git_ssh_dirs-playbook.yaml
+badd +12 ~/.dotfiles/ansible/nvim_source-playbook.yaml
+badd +2 ~/.dotfiles/ansible/nvim-playbook-playbook.yaml
 argglobal
 %argdel
 $argadd ./
@@ -39,6 +42,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
 exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 argglobal
+balt ~/.dotfiles/ansible/nvim_source-playbook.yaml
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -49,11 +53,11 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 1 - ((0 * winheight(0) + 21) / 42)
+let s:l = 53 - ((34 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 1
+keepjumps 53
 normal! 0
 wincmd w
 argglobal
@@ -72,12 +76,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 7 - ((6 * winheight(0) + 21) / 42)
+let s:l = 39 - ((38 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 7
-normal! 013|
+keepjumps 39
+normal! 026|
 wincmd w
 2wincmd w
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)

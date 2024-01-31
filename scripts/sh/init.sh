@@ -15,7 +15,6 @@ case $choice in
         mkdir -p "$project_path"
         ;;
     2)
-        echo "You've pressed 2"
         ;;
     *)
         echo "Invalid choice"
@@ -36,3 +35,38 @@ printf "\n=> "
 read -r module_path && printf "\n"
 
 cd "$project_path" && go mod init "$module_path" && printf "\n"
+
+printf "\nPost installation:\n\n"
+printf "1 - How the go's import system work\n"
+printf "\nPress any other key to exit\n"
+printf "\n=> "
+read -r choice
+
+case $choice in
+    1)
+       printf "
+       To import a package you need to specify path to a package directory,
+       not to a specific file. An imported code is used likes this:
+
+       import (
+	\"example.com/user/project/pkg/time\"
+       )
+
+       time.'item name'
+
+       But without looking at the package source, you might assume the package name
+       is time, but it could be defined as package timelib within the package.
+       Go's approach allows the package to be imported and used explicitly,
+       avoiding confusion and potential conflicts with Go's standard library
+       time package:
+
+       import (
+   	myTime \"example.com/user/project/pkg/time\"
+       )
+   
+       Then just use the alias to access the package's items.\n\n"
+       ;;
+   *)
+       exit 1
+       ;;
+esac

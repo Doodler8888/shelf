@@ -51,6 +51,7 @@
     - name: Add email credential of the main user to git
       ansible.builtin.command: 'git config --global user.email "wurfkreuz@mail.ru"'
 
+# Add a line that prints out public key that i should add to git.
 
 # By default, 'command' and shell tasks in Ansible are assumed to change the
 # system state. "changed_when: false" - this tells Ansible that the task does

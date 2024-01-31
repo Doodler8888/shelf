@@ -1,0 +1,45 @@
+#!/bin/bash
+
+# Function to resolve the absolute path of an argument
+function get_absolute_path() {
+    if [[ "$1" == /* ]]; then
+        echo "$1" # Argument is an absolute path
+    else
+        echo "$(pwd)/$1" # Prepend the current directory path
+    fi
+}
+
+# Check if the correct number of arguments is given
+# It doesn't matter if the check comes after the function
+if [[ "$#" -ne 2 ]]; then
+    echo "Usage: $0 <target-file-or-directory> <link-location>"
+    exit 1
+fi
+
+# Resolve the absolute path of the target
+TARGET=$(get_absolute_path "$1")
+
+# The second argument is the link location
+LINK_LOCATION="$2"
+
+# Create the symbolic link
+ln -s "$TARGET" "$LINK_LOCATION"
+
+# Confirmation message
+echo "Symbolic link created for $TARGET at $LINK_LOCATION"
+
+
+# "$#": This special parameter expands to the number of positional parameters in
+# decimal. In simpler terms, it tells you how many arguments were passed to the
+# script. For example, if a script is run as ./myscript arg1 arg2 arg3, then $#
+# would expand to 3.
+
+# -ne is an arithmetic operator used for comparing integer values. It stands for
+# "not equal" when comparing two integers. If you're comparing numbers to see if
+# they are not equal, you would use -ne.
+# != is used for comparing string values. It checks if the strings on either
+# side of the operator are not equal. If you're comparing strings to see if they
+# do not match, you would use !=.
+
+# Using uppercase for variables that are intended to have a script-wide scope
+# (or are treated as constants) makes them stand out.

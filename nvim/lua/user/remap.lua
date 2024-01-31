@@ -62,3 +62,9 @@ end
 -- vim.api.nvim_set_keymap('n', '<Leader>ee', ':SudaWrite ', {noremap = true})
 
 vim.api.nvim_set_keymap('n', '<Leader>tt', ':Trouble<CR>', {noremap = true})
+
+-- Remove traling spaces
+vim.api.nvim_set_keymap('n', '<leader>rw', [[:%s/\s\+$//e<CR>]], {noremap = true, silent = true})
+
+-- Remove persistent highliting after pattern matching actions
+vim.api.nvim_set_keymap('n', '<Esc><Esc>', ':noh<CR><Esc>', { noremap = true, silent = true })

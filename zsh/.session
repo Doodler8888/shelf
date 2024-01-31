@@ -13,13 +13,17 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +14 init.sh
-badd +184 ~/.dotfiles/zsh/.zshrc
-badd +183 ~/.dotfiles/zsh/functions.sh
+badd +1 init.sh
+badd +116 ~/.dotfiles/zsh/.zshrc
+badd +34 ~/.dotfiles/zsh/functions.sh
+badd +12 ~/.dotfiles/bash/.bashrc
+badd +830 ~/.dotfiles/nu/config.nu
+badd +45 ~/.dotfiles/nu/scripts/examples.nu
+badd +18 ~/.dotfiles/nu/scripts/dependency_update.nu
 argglobal
 %argdel
 $argadd ./
-edit ~/.dotfiles/zsh/functions.sh
+edit ~/.dotfiles/zsh/.zshrc
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -36,10 +40,10 @@ set winminheight=0
 set winheight=1
 set winminwidth=0
 set winwidth=1
-exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
-exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
+exe 'vert 1resize ' . ((&columns * 91 + 93) / 187)
+exe 'vert 2resize ' . ((&columns * 95 + 93) / 187)
 argglobal
-balt ~/.dotfiles/zsh/.zshrc
+balt ~/.dotfiles/nu/scripts/dependency_update.nu
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -50,12 +54,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 176 - ((33 * winheight(0) + 21) / 42)
+let s:l = 116 - ((20 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 176
-normal! 037|
+keepjumps 116
+normal! 046|
 lcd ~/.dotfiles/zsh
 wincmd w
 argglobal
@@ -74,17 +78,15 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 26 - ((25 * winheight(0) + 21) / 42)
+let s:l = 16 - ((15 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 26
-normal! 08|
-lcd ~/.dotfiles/zsh
+keepjumps 16
+normal! 010|
 wincmd w
-2wincmd w
-exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
-exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
+exe 'vert 1resize ' . ((&columns * 91 + 93) / 187)
+exe 'vert 2resize ' . ((&columns * 95 + 93) / 187)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf

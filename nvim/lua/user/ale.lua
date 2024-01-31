@@ -14,9 +14,10 @@ vim.g.ale_linters = {
   haskell = {},
   nim = {},
   go = {'cspell'},
-  yaml = {},
+  yaml = {'remove-trailing-spaces'},
   terraform = {},
   rust = {},
+  ansible = {'remove-trailing-spaces'},
 }
 
 vim.g.ale_linters_ignore = {

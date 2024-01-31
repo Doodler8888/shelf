@@ -30,15 +30,16 @@ badd +831 ~/.dotfiles/nu/config.nu
 badd +1 oil:///home/wurfkreuz/.dotfiles/nvim/
 badd +10 ~/.dotfiles/nu/scripts/dependency_update.nu
 badd +37 ~/.dotfiles/scripts/go/init/pkg/go/init.go
-badd +20 ~/.dotfiles/nu/scripts/init_go.nu
+badd +8 ~/.dotfiles/nu/scripts/init_go.nu
 badd +2 ~/.dotfiles/nu/scripts/test.sh
 badd +3 ~/.dotfiles/scripts/go/init/pkg/go/text.go
 badd +110 ~/.dotfiles/nu/env.nu
 badd +17 ~/.dotfiles/scripts/sh/init.sh
+badd +2 ~/.dotfiles/nu/scripts/ssh-agent.nu
 argglobal
 %argdel
 $argadd oil:///home/wurfkreuz/.dotfiles/nvim/
-edit ~/.dotfiles/nu/scripts/init_go.nu
+edit ~/.dotfiles/nu/scripts/dependency_update.nu
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -58,7 +59,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
 exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 argglobal
-balt ~/.dotfiles/scripts/go/init/pkg/go/init.go
+balt ~/.dotfiles/nu/scripts/ssh-agent.nu
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -69,11 +70,11 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 20 - ((19 * winheight(0) + 21) / 42)
+let s:l = 29 - ((28 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 20
+keepjumps 29
 normal! 0
 lcd ~/.dotfiles/nu
 wincmd w
@@ -93,11 +94,11 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 14 - ((13 * winheight(0) + 21) / 42)
+let s:l = 33 - ((32 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 14
+keepjumps 33
 normal! 0
 lcd ~/.dotfiles/nu
 wincmd w

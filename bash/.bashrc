@@ -9,7 +9,7 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git --exclude .snaps
 export BOT_TOKEN="5907946679:AAExBdsBoE_et6XSF_A7DJIrpoNye7iGk8E"
 
 # # If not running interactively, don't do anything
-[[ $- != *i* ]] && return
+# [[ $- != *i* ]] && return
 
 # shopt -s autocd
 shopt -s checkjobs

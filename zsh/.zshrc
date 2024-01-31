@@ -1,4 +1,5 @@
 source /home/wurfkreuz/.dotfiles/bash/scripts.sh
+source /usr/local/bin
 export GOPATH=$HOME/go
 export PATH="$HOME/.nimble/bin:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.dotfiles:$HOME/.cabal/bin:$HOME/.ghcup/bin:$HOME/.local/bin:/usr/lib:$PATH"
 export EDITOR='/usr//local/bin/nvim'
@@ -113,6 +114,9 @@ alias off="poweroff"
 alias run="cargo run"
 alias build="cargo build"
 alias scr="cd ~/.dotfiles/scripts"
+alias nsh="cd ~/.dotfiles/nu && nvim config.nu"
+alias ans="cd ~/.dotfiles/ansible"
+alias dot="cd ~/.dotfiles"
 
 # bindkey '^R' fzf_history_search
 

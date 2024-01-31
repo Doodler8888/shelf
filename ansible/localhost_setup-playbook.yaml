@@ -2,12 +2,41 @@
   hosts: localhost
   gather_facts: false
   tasks:
-        - name: Synchronize package database and install packages
-          community.general.pacman:
-            name:
-              - package1
-              - package2
-            state: present
-            update_cache: yes
-          become: yes
+    - name: Synchronize package database and install packages
+      community.general.pacman:
+        name:
+          - git
+          - ninja
+          - vim
+          - vivaldi
+          - alacritty
+          - exa
+          - zoxide
+          - fzf
+          - ninja
+          - cmake
+          - unzip
+          - zellij
+          - telegram-desktop
+          - fd
+          - ripgrep
+          - wl-clipboard
+          - ttf-noto-nerd
+          - yamllint
+          - ansible-lint
+          - nodejs
+          - npm
+          - yaml-language-server
+          - ansible-language-server
+          - rustup
+          - go
+          - lua-language-server
+          - opera
+          - nushell
+          - gopls
+          - shellcheck
+        state: latest
+        update_cache: true
+      become: true
 
+    - name: Soft link files
