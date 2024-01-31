@@ -164,7 +164,7 @@ fi
 # SSH_KEY_DIR="$HOME/.ssh/keys"
 
 # for key in "$SSH_KEY_DIR"/*; do
-#     if [[ -f $key && ! $key =~ \.pub$ ]]; then # The '=~' part is for making a regular expression check. The slash is an escape sequence because a dot has its own meaning for regular expressions.
+#     if [[ -f $key && ! $key =~ \.pub$ ]]; then # The '\.pub$' is a regular expression. I'm checking if a filename ends with '.pub'. The reason why it works on a partial pattern, because i use '&' which mean 'at the end of a line'.
 #         ssh-add "$key" > /dev/null 2>&1 
 #     fi
 # done
@@ -174,7 +174,7 @@ bak() {
     local filename=$1
 
     if [[ $filename == *.bak ]]; then
-        local new_filename=${filename//.bak/}
+        local new_filename=${filename%.bak}
         mv "$filename" "$new_filename"
     else
         local new_filename="$filename.bak"

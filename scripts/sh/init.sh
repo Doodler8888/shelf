@@ -11,7 +11,7 @@ case $choice in
         printf "\nEnter a path:\n\n"
         printf "=> "
         read -r project_path
-        project_path="${project_path/#\~/$HOME}" # Expanding the tilde to the home directory manually in Bash
+	project_path="${project_path/#~/$HOME}" # Expanding the tilde to the home directory manually in Bash
         mkdir -p "$project_path"
         ;;
     2)

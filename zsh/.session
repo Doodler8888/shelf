@@ -3,7 +3,7 @@ let s:so_save = &g:so | let s:siso_save = &g:siso | setg so=0 siso=0 | setl so=-
 let v:this_session=expand("<sfile>:p")
 silent only
 silent tabonly
-cd ~/.dotfiles/zsh
+cd ~/.dotfiles/scripts/sh
 if expand('%') == '' && !&modified && line('$') <= 1 && getline(1) == ''
   let s:wipebuf = bufnr('%')
 endif
@@ -13,15 +13,33 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +0 .zshrc
-badd +162 functions.sh
-badd +1 oil:///home/wurfkreuz/.dotfiles/zsh/
+badd +14 init.sh
+badd +184 ~/.dotfiles/zsh/.zshrc
+badd +183 ~/.dotfiles/zsh/functions.sh
 argglobal
 %argdel
-$argadd oil:///home/wurfkreuz/.dotfiles/zsh/
-edit .zshrc
+$argadd ./
+edit ~/.dotfiles/zsh/functions.sh
+let s:save_splitbelow = &splitbelow
+let s:save_splitright = &splitright
+set splitbelow splitright
+wincmd _ | wincmd |
+vsplit
+1wincmd h
+wincmd w
+let &splitbelow = s:save_splitbelow
+let &splitright = s:save_splitright
+wincmd t
+let s:save_winminheight = &winminheight
+let s:save_winminwidth = &winminwidth
+set winminheight=0
+set winheight=1
+set winminwidth=0
+set winwidth=1
+exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
+exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 argglobal
-balt functions.sh
+balt ~/.dotfiles/zsh/.zshrc
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -32,12 +50,41 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 104 - ((8 * winheight(0) + 9) / 18)
+let s:l = 176 - ((33 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 104
-normal! 09|
+keepjumps 176
+normal! 037|
+lcd ~/.dotfiles/zsh
+wincmd w
+argglobal
+if bufexists(fnamemodify("~/.dotfiles/scripts/sh/init.sh", ":p")) | buffer ~/.dotfiles/scripts/sh/init.sh | else | edit ~/.dotfiles/scripts/sh/init.sh | endif
+if &buftype ==# 'terminal'
+  silent file ~/.dotfiles/scripts/sh/init.sh
+endif
+balt ~/.dotfiles/zsh/functions.sh
+setlocal fdm=manual
+setlocal fde=0
+setlocal fmr={{{,}}}
+setlocal fdi=#
+setlocal fdl=0
+setlocal fml=1
+setlocal fdn=20
+setlocal fen
+silent! normal! zE
+let &fdl = &fdl
+let s:l = 26 - ((25 * winheight(0) + 21) / 42)
+if s:l < 1 | let s:l = 1 | endif
+keepjumps exe s:l
+normal! zt
+keepjumps 26
+normal! 08|
+lcd ~/.dotfiles/zsh
+wincmd w
+2wincmd w
+exe 'vert 1resize ' . ((&columns * 93 + 93) / 187)
+exe 'vert 2resize ' . ((&columns * 93 + 93) / 187)
 tabnext 1
 if exists('s:wipebuf') && len(win_findbuf(s:wipebuf)) == 0 && getbufvar(s:wipebuf, '&buftype') isnot# 'terminal'
   silent exe 'bwipe ' . s:wipebuf
@@ -45,6 +92,8 @@ endif
 unlet! s:wipebuf
 set winheight=1 winwidth=20
 let &shortmess = s:shortmess_save
+let &winminheight = s:save_winminheight
+let &winminwidth = s:save_winminwidth
 let s:sx = expand("<sfile>:p:r")."x.vim"
 if filereadable(s:sx)
   exe "source " . fnameescape(s:sx)
