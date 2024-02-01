@@ -35,9 +35,20 @@
           - nushell
           - gopls
           - shellcheck
+          - docker
+          - docker-buildx
         state: latest
         update_cache: true
       becoome: true
 
-    - name: Soft link files
-      ansible.builtin.
+    - name: Soft link directories
+      vars:
+        directories_to_link:
+          - zellij
+          - nvim
+          - alacritty
+          - hyprland
+      ansible.builtin.file:
+        src: "{{ ansible_env.HOME }}/.dotfiles/{{ item }}"
+        path: "{{ ansible_env.HOME }}/.config"
+        state: link

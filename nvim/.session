@@ -13,12 +13,11 @@ if &shortmess =~ 'A'
 else
   set shortmess=aoO
 endif
-badd +1 ~/.dotfiles/nvim
-badd +100 lua/user/manager.lua
+badd +103 lua/user/manager.lua
 badd +133 lua/user/sessions.lua
 badd +6 lua/user/init.lua
 badd +86 lua/user/functions.lua
-badd +109 lua/user/lspconfig.lua
+badd +110 lua/user/lspconfig.lua
 badd +10 lua/user/snippets.lua
 badd +1 init.lua
 badd +176 ~/.dotfiles/bash/.bashrc
@@ -32,11 +31,11 @@ badd +5 lua/user/conform.lua
 badd +48 lua/user/set.lua
 badd +37 lua/user/fzf.lua
 badd +18 lua/user/omnicompletion.lua
-badd +0 lua/user/cmp.lua
+badd +8 lua/user/cmp.lua
 argglobal
 %argdel
-$argadd ~/.dotfiles/nvim
-edit lua/user/cmp.lua
+$argadd ~/.dotfiles/nvim/
+edit lua/user/snippets.lua
 let s:save_splitbelow = &splitbelow
 let s:save_splitright = &splitright
 set splitbelow splitright
@@ -56,7 +55,7 @@ set winwidth=1
 exe 'vert 1resize ' . ((&columns * 90 + 93) / 187)
 exe 'vert 2resize ' . ((&columns * 96 + 93) / 187)
 argglobal
-balt lua/user/remap.lua
+balt lua/user/manager.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -67,20 +66,20 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 8 - ((7 * winheight(0) + 21) / 42)
+let s:l = 11 - ((10 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 8
-normal! 04|
+keepjumps 11
+normal! 0
 lcd ~/.dotfiles/nvim
 wincmd w
 argglobal
-if bufexists(fnamemodify("~/.dotfiles/nvim/lua/user/lspconfig.lua", ":p")) | buffer ~/.dotfiles/nvim/lua/user/lspconfig.lua | else | edit ~/.dotfiles/nvim/lua/user/lspconfig.lua | endif
+if bufexists(fnamemodify("~/.dotfiles/nvim/lua/user/remap.lua", ":p")) | buffer ~/.dotfiles/nvim/lua/user/remap.lua | else | edit ~/.dotfiles/nvim/lua/user/remap.lua | endif
 if &buftype ==# 'terminal'
-  silent file ~/.dotfiles/nvim/lua/user/lspconfig.lua
+  silent file ~/.dotfiles/nvim/lua/user/remap.lua
 endif
-balt ~/.dotfiles/nvim/lua/user/manager.lua
+balt ~/.dotfiles/nvim/lua/user/lspconfig.lua
 setlocal fdm=manual
 setlocal fde=0
 setlocal fmr={{{,}}}
@@ -91,12 +90,12 @@ setlocal fdn=20
 setlocal fen
 silent! normal! zE
 let &fdl = &fdl
-let s:l = 112 - ((20 * winheight(0) + 21) / 42)
+let s:l = 67 - ((38 * winheight(0) + 21) / 42)
 if s:l < 1 | let s:l = 1 | endif
 keepjumps exe s:l
 normal! zt
-keepjumps 112
-normal! 046|
+keepjumps 67
+normal! 0
 lcd ~/.dotfiles/nvim
 wincmd w
 2wincmd w
