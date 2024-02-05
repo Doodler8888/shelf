@@ -15,7 +15,7 @@
         owner: "{{ main_user.stdout }}"
         group: "{{ main_user.stdout }}"
 
-    - name: Create subdirectory 'key' in the .ssh directory
+    - name: Create subdirectory 'keys' in the .ssh directory
       ansible.builtin.file:
         path: "/home/{{ main_user.stdout }}/.ssh/keys"
         state: directory
@@ -30,9 +30,9 @@
         mode: '644'
 
     - name: Generate ssh key
-      ansible.builtin.command: "ssh-keygen -t rsa -b 2048 -f /home/{{ main_user.stdout }}/.ssh/git -q -N ''"
+      ansible.builtin.command: "ssh-keygen -t rsa -b 2048 -f /home/{{ main_user.stdout }}/.ssh/keys/git -q -N ''"
       args:
-        creates: "/home/{{ main_user.stdout }}/.ssh/keys/git"
+        creates: "/home/{{ main_user.stdout }}/.ssh/keys/git"  # 'creates' serves as a condition that tells Ansible to skip the command execution if the specified file or directory already exists.
       become: true
       become_user: "{{ main_user.stdout }}"
 
@@ -45,10 +45,10 @@
               ServerAliveCountMax 5
 
           Host github.com
-              IdentityFile ~/.ssh/git
+              IdentityFile ~/.ssh/keys/git
 
           Host gitlab.com
-              IdentityFile ~/.ssh/git
+              IdentityFile ~/.ssh/keys/git
         owner: "{{ main_user.stdout }}"
         group: "{{ main_user.stdout }}"
         mode: '0644'
@@ -60,7 +60,7 @@
       ansible.builtin.command: 'git config --global user.email "wurfkreuz@mail.ru"'
 
     - name: Cat a file
-      ansible.builtin.shell: cat /home/{{ main_user.stdout }}
+      ansible.builtin.shell: cat /home/{{ main_user.stdout }}/.ssh/key/git.pub
       register: file_content
 
     - name: Print file content

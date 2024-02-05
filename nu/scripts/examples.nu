@@ -43,3 +43,6 @@
 #   let path = (johnny path $code)
 #   cd $path
 # }
+
+# ls -la | where type == 'file' and name != '.session' | each { mv $in.na
+# me playbooks/ }

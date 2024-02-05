@@ -1,0 +1,20 @@
+- name: Link .rc files
+  vars:
+    rc_files:
+      - zsh/.zshrc
+      - bash/.bashrc
+      - bash/.inputrc
+  ansible.builtin.file:
+    src: "{{ ansible_env.HOME }}/.dotfiles/{{ item }}"
+    dest: "{{ ansible_env.HOME }}"
+    state: link
+  loop: "{{ rc_files }}"
+
+- name: Replace keyboard file
+  ansible.builtin.copy:
+    src: /home/wurfkreuz/.dotfiles/keyboard/us
+    dest: /usr/share/X11/xkb/symbols/us
+    owner: root
+    group: root
+    mode: '0644'
+  become: true

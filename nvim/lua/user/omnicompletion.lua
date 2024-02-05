@@ -27,8 +27,8 @@ _G.completion_key_map = completion_key_map
 
 -- Insert mode mappings for controlling completion menu
 -- vim.api.nvim_set_keymap('i', '<C-Space>', "v:lua.completion_key_map('<C-n>')", {expr = true, noremap = true})
-vim.api.nvim_set_keymap('i', '<C-n>', "v:lua.completion_key_map('<C-n>')", {expr = true, noremap = true})
-vim.api.nvim_set_keymap('i', '<C-p>', "v:lua.completion_key_map('<C-p>')", {expr = true, noremap = true})
+-- vim.api.nvim_set_keymap('i', '<C-n>', "v:lua.completion_key_map('<C-n>')", {expr = true, noremap = true})
+-- vim.api.nvim_set_keymap('i', '<C-p>', "v:lua.completion_key_map('<C-p>')", {expr = true, noremap = true})
 
 -- Insert mode mapping to accept the current suggestion with Ctrl-a
 vim.api.nvim_set_keymap('i', '<C-a>', '<C-y>', {noremap = true})

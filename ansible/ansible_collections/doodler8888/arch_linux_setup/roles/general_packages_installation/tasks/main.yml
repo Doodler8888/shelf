@@ -37,11 +37,11 @@
     update_cache: true
   become: true
 
-- name: Clone .dotfiles repository
-  ansible.builtin.git:
-    repo: 'https://github.com/Doodler8888/.dotfiles.git'
-    dest: "{{ ansible_env.HOME }}/.dotfiles"
-    version: "master"
+# - name: Clone .dotfiles repository
+#   ansible.builtin.git:
+#     repo: 'https://github.com/Doodler8888/.dotfiles.git'
+#     dest: "{{ ansible_env.HOME }}/.dotfiles"
+#     version: "master"
 
 - name: Soft link directories
   vars:
@@ -55,18 +55,6 @@
     dest: "{{ ansible_env.HOME }}/.config/{{ item }}"
     state: link
   loop: "{{ directories_to_link }}"
-
-- name: Link rc files
-  vars:
-    rc_files:
-      - zsh/.zshrc
-      - bash/.bashrc
-      - bash/.inputrc
-  ansible.builtin.file:
-    src: "{{ ansible_env.HOME }}/.dotfiles/{{ item }}"
-    dest: "{{ ansible_env.HOME }}"
-    state: link
-  loop: "{{ rc_files }}"
 
 
 # -y: Refresh the package database, ensuring you have the latest package lists. This is the equivalent of update_cache: true in the Ansible module.
