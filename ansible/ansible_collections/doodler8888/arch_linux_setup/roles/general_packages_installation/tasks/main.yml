@@ -55,3 +55,21 @@
     dest: "{{ ansible_env.HOME }}/.config/{{ item }}"
     state: link
   loop: "{{ directories_to_link }}"
+
+- name: Link rc files
+  vars:
+    rc_files:
+      - zsh/.zshrc
+      - bash/.bashrc
+      - bash/.inputrc
+  ansible.builtin.file:
+    src: "{{ ansible_env.HOME }}/.dotfiles/{{ item }}"
+    dest: "{{ ansible_env.HOME }}"
+    state: link
+  loop: "{{ rc_files }}"
+
+
+# -y: Refresh the package database, ensuring you have the latest package lists. This is the equivalent of update_cache: true in the Ansible module.
+# -u: Upgrade all packages to their latest versions. When combined with -S, it
+# applies to the specified package(s), making sure they are upgraded to the
+# latest version, which corresponds to state: latest in the Ansible module.
