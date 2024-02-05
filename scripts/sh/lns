@@ -9,18 +9,22 @@ function get_absolute_path() {
     fi
 }
 
-# Check if the correct number of arguments is given
-# It doesn't matter if the check comes after the function
-if [[ "$#" -ne 2 ]]; then
-    echo "Usage: $0 <target-file-or-directory> <link-location>"
+# Check if at least one argument is given
+if [[ "$#" -lt 1 ]]; then
+    echo "Usage: $0 <target-file-or-directory> [link-location]"
     exit 1
 fi
 
 # Resolve the absolute path of the target
 TARGET=$(get_absolute_path "$1")
 
-# The second argument is the link location
-LINK_LOCATION="$2"
+# The second argument is the link location, default to /usr/local/bin if not provided
+LINK_LOCATION="${2:-/usr/local/bin}"
+
+# Check if LINK_LOCATION is a directory and append the target's base name if it is
+if [[ -d "$LINK_LOCATION" ]]; then
+    LINK_LOCATION="$LINK_LOCATION/$(basename "$TARGET")"
+fi
 
 # Create the symbolic link
 ln -s "$TARGET" "$LINK_LOCATION"

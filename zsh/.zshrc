@@ -9,6 +9,8 @@ export ZDOTDIR="/home/wurfkreuz/.dotfiles/zsh/"
 export STARSHIP_CONFIG="/home/wurfkreuz/.dotfiles/starship/starship.toml"
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git --exclude .snapshots --exclude var --exclude opt --exclude lib --exclude lib64 --exclude mnt --exclude proc --exclude run --exclude sbin --exclude srv --exclude sys --exclude tmp . /'
 export PATH="$PATH:/home/wurfkreuz/.ghcup/hls/2.4.0.0/bin"
+export ANSIBLE_CONFIG="~/.dotfiles/ansible/ansible.cfg"
+export ANSIBLE_COLLECTIONS_PATH="~/.dotfiles/ansible/ansible_collections"
 
 # zstyle ':completion:*' menu select
 # zstyle ':completion:*' special-dirs true
@@ -117,7 +119,9 @@ alias scr="cd ~/.dotfiles/scripts"
 alias nsh="cd ~/.dotfiles/nu && nvim config.nu"
 alias ans="cd ~/.dotfiles/ansible"
 alias dot="cd ~/.dotfiles"
-
+alias dimages="docker images"
+alias dtag="docker tag"
+alias dpsa="docker ps -a | head -n 5"
 # bindkey '^R' fzf_history_search
 
 # Uncomment the following line to enable command auto-correction.

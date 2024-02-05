@@ -1,0 +1,57 @@
+- name: Synchronize package database and install packages
+  community.general.pacman:
+    name:
+      - git
+      - ninja
+      - vim
+      - vivaldi
+      - alacritty
+      - exa
+      - zoxide
+      - fzf
+      - ninja
+      - cmake
+      - unzip
+      - zellij
+      - telegram-desktop
+      - fd
+      - ripgrep
+      - wl-clipboard
+      - ttf-noto-nerd
+      - yamllint
+      - ansible-lint
+      - nodejs
+      - npm
+      - yaml-language-server
+      - ansible-language-server
+      - rustup
+      - go
+      - lua-language-server
+      - opera
+      - nushell
+      - gopls
+      - shellcheck
+      - docker
+      - docker-buildx
+    state: latest
+    update_cache: true
+  become: true
+
+- name: Clone .dotfiles repository
+  ansible.builtin.git:
+    repo: 'https://github.com/Doodler8888/.dotfiles.git'
+    dest: "{{ ansible_env.HOME }}/.dotfiles"
+    version: "master"
+
+- name: Soft link directories
+  vars:
+    directories_to_link:
+      - zellij
+      - nvim
+      - alacritty
+      - hyprland
+  ansible.builtin.file:
+    src: "{{ ansible_env.HOME }}/.dotfiles/{{ item }}"
+    dest: "{{ ansible_env.HOME }}/.config/{{ item }}"
+    state: link
+  loop: "{{ directories_to_link }}"

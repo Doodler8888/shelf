@@ -1,0 +1,4 @@
+- name: Test My Role
+  hosts: localhost  # or any group from your inventory
+  roles:
+    - doodler8888.arch_linux_setup.general_packages_installation

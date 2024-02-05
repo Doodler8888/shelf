@@ -5,10 +5,11 @@ FROM archlinux:latest
 RUN pacman -Syu --noconfirm && \
     pacman -S sudo git ansible openssh --noconfirm
 
-RUN if [ -z "$(command -v ssh-keygen )" ]; then echo "ssh-keygen not found" && exit 1; fi
+RUN which ssh-keygen || (echo "ssh-keygen not found" && exit 1)
 
 # Generate SSH host keys
-RUN ssh-keygen -A && echo "SSH host keys generated." > /home/wurfkreuz/.dotfiles/ssh_keygen_output.txt
+RUN ssh-keygen -A
+
 
 # Create a new user for Ansible (replace 'wurfkreuz' with your preferred username)
 # And configure sudoers to allow passwordless sudo
