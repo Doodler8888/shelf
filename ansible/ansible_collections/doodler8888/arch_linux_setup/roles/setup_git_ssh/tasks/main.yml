@@ -62,4 +62,4 @@
 
 - name: Print file content
   ansible.builtin.debug:
-  msg: "{{ file_content.stdout }}"
+    msg: "{{ file_content.stdout }}"
