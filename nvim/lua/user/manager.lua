@@ -31,6 +31,7 @@ local plugins = {
 	"stevearc/oil.nvim",
 	"stevearc/conform.nvim",
 	'saecki/crates.nvim',
+	'akinsho/toggleterm.nvim',
 	{
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },

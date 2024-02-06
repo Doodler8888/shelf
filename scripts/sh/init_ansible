@@ -20,4 +20,7 @@ ansible-galaxy collection init namespace.collection_name
 If you are in a collection directory, this is an example of how 
 to add roles 
 
-ansible-galaxy init --init-path=roles setup_git_ssh"
+ansible-galaxy init --init-path=roles setup_git_ssh
+
+Playbooks in role directories are written in a 'tasks' directory
+in a main.yml file."

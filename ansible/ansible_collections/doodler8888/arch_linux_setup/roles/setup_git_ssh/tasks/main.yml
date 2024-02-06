@@ -28,7 +28,7 @@
 - name: Generate ssh key
   ansible.builtin.command: "ssh-keygen -t rsa -b 2048 -f /home/{{ main_user.stdout }}/.ssh/keys/git -q -N ''"
   args:
-    creates: "/home/{{ main_user.stdout }}/.ssh/keys/git"  # 'creates' serves as a condition that tells Ansible to skip the command execution if the specified file or directory already exists.
+    creates: "/home/{{ main_user.stdout }}/.ssh/keys/git"
   become: true
   become_user: "{{ main_user.stdout }}"
 
@@ -63,3 +63,6 @@
 - name: Print file content
   ansible.builtin.debug:
     msg: "{{ file_content.stdout }}"
+
+
+# 'creates' serves as a condition that tells Ansible to skip the command execution if the specified file or directory already exists.

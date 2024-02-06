@@ -1,3 +1,34 @@
+- name: Soft link directories
+  vars:
+    directories_to_link:
+      - zellij
+      - nvim
+      - alacritty
+      - hyprland
+  ansible.builtin.file:
+    src: "{{ ansible_env.HOME }}/.dotfiles/{{ item }}"
+    dest: "{{ ansible_env.HOME }}/.config/{{ item }}"
+    state: link
+  loop: "{{ directories_to_link }}"
+
+# - name: Check if the destination directory exists
+#   ansible.builtin.stat:
+#     path: "{{ ansible_env.HOME }}/.config/{{ item }}"
+#   register: dest_stat
+#   loop:
+#     - zellij
+#     - nvim
+#     - alacritty
+#     - hyprland
+#
+# - name: Soft link directories
+#   ansible.builtin.file:
+#     src: "{{ ansible_env.HOME }}/.dotfiles/{{ item.item }}"
+#     dest: "{{ ansible_env.HOME }}/.config/{{ item.item }}"
+#     state: link
+#   loop: "{{ dest_stat.results }}"
+#   when: not item.stat.exists or item.stat.isdir is not defined or not item.stat.isdir
+
 - name: Synchronize package database and install packages
   community.general.pacman:
     name:
@@ -42,19 +73,6 @@
 #     repo: 'https://github.com/Doodler8888/.dotfiles.git'
 #     dest: "{{ ansible_env.HOME }}/.dotfiles"
 #     version: "master"
-
-- name: Soft link directories
-  vars:
-    directories_to_link:
-      - zellij
-      - nvim
-      - alacritty
-      - hyprland
-  ansible.builtin.file:
-    src: "{{ ansible_env.HOME }}/.dotfiles/{{ item }}"
-    dest: "{{ ansible_env.HOME }}/.config/{{ item }}"
-    state: link
-  loop: "{{ directories_to_link }}"
 
 
 # -y: Refresh the package database, ensuring you have the latest package lists. This is the equivalent of update_cache: true in the Ansible module.

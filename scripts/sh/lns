@@ -21,7 +21,8 @@ TARGET=$(get_absolute_path "$1")
 # The second argument is the link location, default to /usr/local/bin if not provided
 LINK_LOCATION="${2:-/usr/local/bin}"
 
-# Check if LINK_LOCATION is a directory and append the target's base name if it is
+# This check is for a situation when i forget about passing a full link path
+# without a name for a link file and provide only a directory path.
 if [[ -d "$LINK_LOCATION" ]]; then
     LINK_LOCATION="$LINK_LOCATION/$(basename "$TARGET")"
 fi
