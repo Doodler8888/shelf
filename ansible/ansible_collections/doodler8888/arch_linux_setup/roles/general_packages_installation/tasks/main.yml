@@ -1,33 +1,20 @@
-- name: Soft link directories
-  vars:
-    directories_to_link:
-      - zellij
-      - nvim
-      - alacritty
-      - hyprland
-  ansible.builtin.file:
-    src: "{{ ansible_env.HOME }}/.dotfiles/{{ item }}"
-    dest: "{{ ansible_env.HOME }}/.config/{{ item }}"
-    state: link
-  loop: "{{ directories_to_link }}"
+- name: Check if target exists and is not a symlink
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.config/{{ item }}"
+  register: target_status
+  loop: "{{ general_packages_installation_directories_to_link }}"
 
-# - name: Check if the destination directory exists
-#   ansible.builtin.stat:
-#     path: "{{ ansible_env.HOME }}/.config/{{ item }}"
-#   register: dest_stat
-#   loop:
-#     - zellij
-#     - nvim
-#     - alacritty
-#     - hyprland
-#
-# - name: Soft link directories
-#   ansible.builtin.file:
-#     src: "{{ ansible_env.HOME }}/.dotfiles/{{ item.item }}"
-#     dest: "{{ ansible_env.HOME }}/.config/{{ item.item }}"
-#     state: link
-#   loop: "{{ dest_stat.results }}"
-#   when: not item.stat.exists or item.stat.isdir is not defined or not item.stat.isdir
+- name: Link directories if necessary
+  ansible.builtin.file:
+    src: "{{ ansible_env.HOME }}/.dotfiles/{{ item.item }}"
+    dest: "{{ ansible_env.HOME }}/.config/{{ item.item }}"
+    state: link
+  loop: "{{ target_status.results }}"
+  when: >
+    not item.stat.exists or
+    (item.stat.exists and not item.stat.islnk)
+  loop_control:
+    label: "{{ item.item }}"
 
 - name: Synchronize package database and install packages
   community.general.pacman:

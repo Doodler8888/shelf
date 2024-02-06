@@ -63,6 +63,9 @@ end
 
 -- Function to save the session with an additional parameter to indicate autosave
 function SaveSession(autosave)
+  -- if autosave then
+  --   CloseAllToggleTermBuffers()
+  -- end
   -- If autosave is true and no session was loaded, skip saving
   if autosave and not SessionLoaded then
     print('No session was loaded, so no session will be saved on exit.')
@@ -155,7 +158,22 @@ vim.api.nvim_set_keymap('n', '<leader>sd', ':lua SetSessionDir()<CR>', { noremap
 vim.api.nvim_set_keymap('n', '<leader>sl', ':OpenSession<CR>', { noremap = true, silent = true })
 
 vim.api.nvim_create_autocmd("VimLeavePre", {
-  callback = function() SaveSession(true) end
+  callback = function()
+    -- Then save the session
+    SaveSession(true)
+  end
+})
+
+vim.api.nvim_set_keymap('n', '<leader>xc', '<cmd>lua CloseAllToggleTermBuffers()<CR>:wqa<CR>', {noremap = true, silent = true})
+
+vim.api.nvim_create_autocmd("VimLeavePre", {
+  callback = function()
+    -- Directly call the function to close all toggleterm buffers
+    CloseAllToggleTermBuffers()
+    -- Then, programmatically save all buffers and quit Neovim
+    vim.cmd('wa') -- Save all buffers
+    vim.cmd('qa') -- Quit Neovim
+  end
 })
 
 -- Update the command to pass false for manual saves

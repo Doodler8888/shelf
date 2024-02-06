@@ -1,2 +1,5 @@
----
-# vars file for general_packages_installation
+general_packages_installation_directories_to_link:
+  - zellij
+  - nvim
+  - alacritty
+  - hyprland

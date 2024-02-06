@@ -37,24 +37,24 @@ vim.api.nvim_set_keymap('n', '<leader>tn', '<cmd>lua OpenFloatingTermInCurrentDi
 vim.api.nvim_set_keymap('n', '<leader>tt', '<cmd>ToggleTerm<CR>', {noremap = true, silent = true})
 
 
-function CloseAllToggleTermBuffers()
-    -- Iterate over all buffers
-    local buffers = vim.api.nvim_list_bufs()
-    for _, buf in ipairs(buffers) do
-        -- Check if the buffer is valid and loaded to avoid errors
-        if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_is_loaded(buf) then
-            local buftype = vim.api.nvim_buf_get_option(buf, "buftype")
-            -- Check if the buffer is a terminal
-            if buftype == "terminal" then
-                -- Attempt to close the terminal buffer
-                -- This command closes the buffer ignoring unsaved changes. Be cautious.
-                vim.api.nvim_buf_delete(buf, {force = true})
-            end
-        end
-    end
-end
-
-vim.api.nvim_set_keymap('n', '<leader>tc', '<cmd>lua CloseAllToggleTermBuffers()<CR>', { noremap = true, silent = true })
+-- function CloseAllToggleTermBuffers()
+--     -- Iterate over all buffers
+--     local buffers = vim.api.nvim_list_bufs()
+--     for _, buf in ipairs(buffers) do
+--         -- Check if the buffer is valid and loaded to avoid errors
+--         if vim.api.nvim_buf_is_valid(buf) and vim.api.nvim_buf_is_loaded(buf) then
+--             local buftype = vim.api.nvim_buf_get_option(buf, "buftype")
+--             -- Check if the buffer is a terminal
+--             if buftype == "terminal" then
+--                 -- Attempt to close the terminal buffer
+--                 -- This command closes the buffer ignoring unsaved changes. Be cautious.
+--                 vim.api.nvim_buf_delete(buf, {force = true})
+--             end
+--         end
+--     end
+-- end
+--
+-- vim.api.nvim_set_keymap('n', '<leader>tc', '<cmd>lua CloseAllToggleTermBuffers()<CR>', { noremap = true, silent = true })
 
 
 function _G.switch_to_next_toggleterm()
