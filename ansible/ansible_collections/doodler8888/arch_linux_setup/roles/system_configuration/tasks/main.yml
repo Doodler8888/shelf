@@ -7,7 +7,7 @@
 - name: Link .rc files to home directory
   ansible.builtin.file:
     src: "{{ ansible_env.HOME }}/.dotfiles/{{ system_configuration_rc_files[loop.index0] }}"
-    dest: "{{ ansible_env.HOME }}/{{ item.item }}"
+    dest: "{{ ansible_env.HOME }}/{{ item.item }}" # The second 'item' is the original value of the rc_files2 variable.
     state: link
   loop: "{{ rc_files_status.results }}"
   when: not item.stat.exists or

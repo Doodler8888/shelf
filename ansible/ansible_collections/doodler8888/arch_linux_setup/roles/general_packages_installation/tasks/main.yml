@@ -13,8 +13,8 @@
   when: >
     not item.stat.exists or
     (item.stat.exists and not item.stat.islnk)
-  loop_control:
-    label: "{{ item.item }}"
+  # loop_control:
+  #   label: "{{ item.item }}"
 
 - name: Synchronize package database and install packages
   community.general.pacman:

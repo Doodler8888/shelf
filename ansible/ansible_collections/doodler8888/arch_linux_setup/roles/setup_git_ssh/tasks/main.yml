@@ -22,7 +22,7 @@
 - name: Create the ssh config file
   ansible.builtin.file:
     path: "/home/{{ main_user.stdout }}/.ssh/config"
-    state: touch
+    state: file
     mode: '644'
 
 - name: Generate ssh key
@@ -32,7 +32,7 @@
   become: true
   become_user: "{{ main_user.stdout }}"
 
-- name: Create the ssh config file
+- name: Fill the ssh config file
   ansible.builtin.blockinfile:
     path: "/home/{{ main_user.stdout }}/.ssh/config"
     block: |
@@ -56,7 +56,7 @@
   ansible.builtin.command: 'git config --global user.email "wurfkreuz@mail.ru"'
 
 - name: Cat a file
-  ansible.builtin.command: cat /home/{{ main_user.stdout }}/.ssh/key/git.pub
+  ansible.builtin.command: cat /home/{{ main_user.stdout }}/.ssh/keys/git.pub
   register: file_content
   changed_when: false
 
