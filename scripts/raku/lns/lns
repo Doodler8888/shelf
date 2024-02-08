@@ -1,0 +1,24 @@
+#!/usr/bin/env raku
+
+use v6.d;
+
+sub get-abs-path($path) {
+    return $path if $path ~~ m/^\//;
+    return ($*CWD / $path).Str;
+}
+
+sub MAIN($target, $link-location?) {
+    die "Usage: $*PROGRAM-NAME <target-file-or-directory> [link-location]\n" unless $target;
+
+    my $abs-target = get-abs-path($target);
+    my $final-link-location = $link-location // "/usr/local/bin";
+
+    if $final-link-location.IO ~~ :d {
+        $final-link-location = $final-link-location ~ '/' ~ $abs-target.IO.basename;
+    }
+
+    mkdir $final-link-location.IO.dirname;
+    symlink $abs-target, $final-link-location;
+
+    say "Symbolic link created for $abs-target at $final-link-location";
+}

@@ -182,3 +182,7 @@ bak() {
     fi
 }
 
+d() {
+    cd "$1" || return
+    exa -la
+}

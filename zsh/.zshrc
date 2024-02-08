@@ -32,7 +32,7 @@ alias str="cd /home/wurfkreuz/.dotfiles/starship/ && nvim starship.toml"
 alias scripts='cd /home/wurfkreuz/.dotfiles/bash/ && nvim scripts.sh'
 alias rename='perl-rename'
 alias u='sudo'
-alias d='cd'
+# alias d='cd && ls -la'
 alias key='cd ~/.dotfiles/keyd/ && nvim default.conf'
 alias h='history'
 alias update_fonts='fc-cache -f -v'
@@ -123,6 +123,8 @@ alias dimages="docker images"
 alias dtag="docker tag"
 alias dpsa="docker ps -a | head -n 5"
 alias cfg="cd ~/.dotfiles/ansible/ && nvim ansible.cfg"
+alias comma="comma.sh"
+
 # bindkey '^R' fzf_history_search
 
 # Uncomment the following line to enable command auto-correction.

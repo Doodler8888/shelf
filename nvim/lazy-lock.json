@@ -25,8 +25,8 @@
   "toggleterm.nvim": { "branch": "main", "commit": "b49df5cdce67a8964d1b027dae94bde212092b51" },
   "tree-sitter-nu": { "branch": "main", "commit": "2d0dd587dbfc3363d2af4e4141833e718647a67e" },
   "trouble.nvim": { "branch": "main", "commit": "f1168feada93c0154ede4d1fe9183bf69bac54ea" },
+  "vim-raku": { "branch": "master", "commit": "84a65c415f966c3cd5536fdbc6d70ee8f0d73508" },
   "vim-terraform": { "branch": "master", "commit": "d37ae7e7828aa167877e338dea5d4e1653ed3eb1" },
   "wrapping-paper.nvim": { "branch": "main", "commit": "a73850df9431ccce6899ee7e01963569faccb261" },
-  "zellij.nvim": { "branch": "master", "commit": "483c855ab7a3aba60e522971991481807ea3a47b" },
   "zoxide.vim": { "branch": "master", "commit": "b1e70b6fc1682a83929aee63680d2b43456fe9a5" }
 }
