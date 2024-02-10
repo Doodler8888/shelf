@@ -22,7 +22,7 @@ function _G.open_terminal_in_current_buffer_dir()
                 vim.api.nvim_set_current_win(term_win)
             else
                 -- If the terminal buffer isn't visible in any window, create a new split and display it
-                vim.cmd('split')
+                vim.cmd('below split | resize 12')
                 vim.api.nvim_set_current_buf(term_info.bufnr)
             end
             -- Attempt to resize only if we have a stored size and the window can be resized
@@ -30,7 +30,7 @@ function _G.open_terminal_in_current_buffer_dir()
                 pcall(vim.api.nvim_win_set_height, 0, term_info.size)
             end
         else
-            vim.cmd('split | terminal zsh -c "cd ' .. vim.fn.shellescape(buf_dir) .. ' && exec zsh"')
+            vim.cmd('below split | resize 12 | terminal zsh -c "cd ' .. vim.fn.shellescape(buf_dir) .. ' && exec zsh"')
             local win_height = vim.api.nvim_win_get_height(0)
             local new_term_bufnr = vim.api.nvim_get_current_buf()
             _G.terminal_buffers[buf_dir] = {bufnr = new_term_bufnr, size = win_height}

@@ -22,11 +22,11 @@ vim.keymap.set("n", "<leader>sd", resession.delete)
 --   end,
 -- })
 
-vim.api.nvim_create_autocmd("VimLeavePre", {
-  callback = function()
-    require('resession').save()
-  end,
-})
+-- vim.api.nvim_create_autocmd("VimLeavePre", {
+--   callback = function()
+--     require('resession').save()
+--   end,
+-- })
 
 -- vim.api.nvim_create_autocmd("VimLeavePre", {
 --   callback = function()

@@ -43,8 +43,8 @@ require('rose-pine').setup({
 	-- https://github.com/rose-pine/neovim/wiki/Recipes
 	highlight_groups = {
 		ColorColumn = { bg = 'subtle', blend = 35, bold = false },
-		CursorLine = { bg = 'foam', blend = 10, bold = false },
-		CursorLineLn = { bg = 'foam', blend = 10, bold = false },
+		-- CursorLine = { bg = 'foam', blend = 10, bold = false },
+		-- CursorLineLn = { bg = 'foam', blend = 10, bold = false },
 		StatusLine = { fg = 'love', bg = 'love', blend = 10, bold = false },
 		StatusLineNC = { link = "StatusLine", bold = false },
 		FloatBorder = { fg = 'highlight_med', bg = 'none', bold = false },
@@ -56,7 +56,7 @@ require('rose-pine').setup({
 		Search = { link = "Visual" },
 		Substitute = { link = "Visual" },
 		CurSearch = { link = "Visual" },
-		TermCursor = { link = "Visual" },
+		-- TermCursor = { link = "Visual" },
 		Directory = { fg = 'foam', bold = false },
 
 }
