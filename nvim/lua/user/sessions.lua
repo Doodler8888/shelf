@@ -28,9 +28,8 @@ function _G.load_session(session_name)
 end
 
 
-
 function _G.save_session(session_name)
-    -- Check if the directory exists, if not, create it
+    -- Ensure the sessions directory exists, if not, create it
     if not vim.fn.isdirectory(sessions_dir) then
         vim.fn.mkdir(sessions_dir, "p")
     end
@@ -51,7 +50,7 @@ function _G.save_session(session_name)
 
     local session_path = sessions_dir .. '/' .. name_to_use
     vim.cmd('mksession! ' .. vim.fn.fnameescape(session_path))
-    print("Session saved: " .. session_path)
+    print("\nSession saved: " .. session_path)
     _G.current_session_name = name_to_use -- Update the global variable to the new session name
 end
 

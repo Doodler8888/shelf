@@ -55,7 +55,6 @@ function CloseAllToggleTermBuffers()
             -- Check if the buffer is a terminal
             if buftype == "terminal" then
                 -- Attempt to close the terminal buffer
-                -- This command closes the buffer ignoring unsaved changes. Be cautious.
                 vim.api.nvim_buf_delete(buf, {force = true})
             end
         end
@@ -63,3 +62,13 @@ function CloseAllToggleTermBuffers()
 end
 
 vim.api.nvim_set_keymap('n', '<leader>tc', '<cmd>lua CloseAllToggleTermBuffers()<CR>', { noremap = true, silent = true })
+
+
+-- Create a new command 'W'
+vim.api.nvim_create_user_command('W', function()
+    CloseAllToggleTermBuffers()
+    -- Use vim.cmd to execute a Vim command from Lua
+    vim.cmd('wqa')
+end, {})
+
+vim.api.nvim_set_keymap('n', '<C-n><C-n>', [[:W<CR>]], {noremap = true, silent = true})

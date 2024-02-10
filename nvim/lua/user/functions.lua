@@ -41,15 +41,6 @@ end
 vim.api.nvim_set_keymap('i', '<C-d>', '<cmd>lua TrimWhitespace()<CR>', { noremap = true, silent = true })
 
 
--- local function change_to_buffer_dir()
---   -- Get the current buffer's full path
---   local bufname = vim.api.nvim_buf_get_name(0)
---   -- Extract the directory from the buffer's full path
---   local buftdir = vim.fn.fnamemodify(bufname, ':p:h')
---   -- Change the Neovim's current working directory to the buffer's directory
---   vim.cmd('cd ' .. buftdir)
--- end
-
 local function change_to_buffer_dir()
   -- Check if the current buffer is a netrw buffer
   local is_netrw = vim.fn.exists("g:netrw_dir") == 1

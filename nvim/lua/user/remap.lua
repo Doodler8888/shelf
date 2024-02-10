@@ -71,4 +71,5 @@ vim.api.nvim_set_keymap('n', '<Esc><Esc>', ':noh<CR><Esc>', { noremap = true, si
 
 -- Close a terminal buffer
 vim.api.nvim_set_keymap('t', '<C-c><C-c>', [[<C-\><C-n>:bd!<CR>]], {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<C-c><C-c>', [[:bd!<CR>]], {noremap = true, silent = true})
 vim.api.nvim_set_keymap('t', '<C-w>c', '<C-\\><C-n>:q<CR>', {noremap = true, silent = true})
