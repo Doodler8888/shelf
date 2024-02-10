@@ -11,6 +11,13 @@ end
 
 function _G.open_terminal_in_current_buffer_dir()
     local buf_path = vim.api.nvim_buf_get_name(0)
+    local filetype = vim.bo.filetype
+
+    -- Check if the buffer is of type 'oil' and adjust the path
+    if filetype == 'oil' then
+        buf_path = buf_path:gsub("^oil://", "")
+    end
+
     local buf_dir = vim.fn.fnamemodify(buf_path, ':p:h')
 
     if buf_dir ~= "" then
@@ -30,6 +37,7 @@ function _G.open_terminal_in_current_buffer_dir()
                 pcall(vim.api.nvim_win_set_height, 0, term_info.size)
             end
         else
+            -- Adjust the terminal command to change the directory properly
             vim.cmd('below split | resize 12 | terminal zsh -c "cd ' .. vim.fn.shellescape(buf_dir) .. ' && exec zsh"')
             local win_height = vim.api.nvim_win_get_height(0)
             local new_term_bufnr = vim.api.nvim_get_current_buf()
