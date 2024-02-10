@@ -1,5 +1,10 @@
 function Copy_full_path()
     local full_path = vim.fn.expand('%:p')
+    -- Check if the current buffer's filetype is 'oil'
+    if vim.bo.filetype == 'oil' then
+        -- Trim the 'oil://' prefix from the full path
+        full_path = full_path:gsub("^oil://", "")
+    end
     vim.fn.setreg('+', full_path)
     print('Copied path: ' .. full_path)
 end
@@ -56,7 +61,16 @@ local function change_to_buffer_dir()
   else
     -- Get the current buffer's full path
     local bufname = vim.api.nvim_buf_get_name(0)
-    -- Extract the directory from the buffer's full path
+    -- Check if the buffer is of type 'oil'
+    local filetype = vim.bo.filetype
+
+    if filetype == 'oil' then
+      -- Assuming the 'oil' filetype paths always start with 'oil://'
+      -- Trim the 'oil://' part and adjust the path as needed
+      bufname = bufname:gsub("^oil://", "")
+    end
+
+    -- Extract the directory from the buffer's (possibly adjusted) full path
     buftdir = vim.fn.fnamemodify(bufname, ':p:h')
   end
 

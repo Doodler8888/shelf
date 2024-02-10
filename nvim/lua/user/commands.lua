@@ -20,3 +20,6 @@ vim.cmd('command! Books lcd $HOME/.secret_dotfiles/ansible/playbooks')
 vim.cmd('command! Keys lcd $HOME/.secret_dotfiles/zsh | edit keys.sh')
 vim.cmd('command! Str lcd $HOME/.dotfiles/starship/ | edit starship.toml')
 vim.cmd('command! Scr lcd $HOME/.dotfiles/scripts | Oil ~/.dotfiles/scripts')
+
+-- :set filetype?
+
