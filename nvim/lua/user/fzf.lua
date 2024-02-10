@@ -131,6 +131,6 @@ vim.cmd([[command! -nargs=* RootDirs lua _G.fzf_root_dirs()]])
 vim.cmd([[command! -nargs=* CurrentDirs lua _G.fzf_current_dirs()]])
 
 -- Map our providers to keybinds
-vim.keymap.set("n", "<Leader>fdh", _G.fzf_home_dirs)
-vim.keymap.set("n", "<Leader>fdr", _G.fzf_root_dirs)
-vim.keymap.set("n", "<Leader>fdc", _G.fzf_current_dirs)
+vim.keymap.set("n", "<Leader>dh", _G.fzf_home_dirs)
+vim.keymap.set("n", "<Leader>dr", _G.fzf_root_dirs)
+vim.keymap.set("n", "<Leader>dc", _G.fzf_current_dirs)
