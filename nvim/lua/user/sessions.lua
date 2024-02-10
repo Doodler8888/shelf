@@ -43,6 +43,7 @@ function _G.save_session(session_name)
                 print("Session name is required")
                 return
             end
+	    print("\n")
         else
             name_to_use = session_name
         end
@@ -50,7 +51,7 @@ function _G.save_session(session_name)
 
     local session_path = sessions_dir .. '/' .. name_to_use
     vim.cmd('mksession! ' .. vim.fn.fnameescape(session_path))
-    print("\nSession saved: " .. session_path)
+    print("Session saved: " .. session_path)
     _G.current_session_name = name_to_use -- Update the global variable to the new session name
 end
 

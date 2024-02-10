@@ -1,7 +1,8 @@
 #!/usr/bin/env raku
 
 use v6.d;
-use TOML;
+# use TOML;
+use Config::TOML;
 
 
 # sub MAIN($filename) {
@@ -36,34 +37,66 @@ use TOML;
 #   return $output.lines[0].split(' ')[2].trans('"' => '').subst(':', '');
 # }
 
+# sub MAIN($filename) {
+#     my $file-content = $filename.IO.slurp;
+#     my %deps = from-toml($file-content)<dependencies>;
+#     # say %deps;
+#
+#     my %new-versions;
+#     my @ver;
+#     for %deps.kv -> $lib, $version {
+#         # @ver = $version ~~ Hash ?? $version<version> !! $version;
+# 	@ver.push($version ~~ Hash ?? $version<version> !! $version);
+#
+#         my $output = qqx/cargo search $lib/;
+#         my $package_version = $output.lines[0].split(' ')[2].trans('"'=>'').subst(':', ''); # Clean up version
+#
+# 	%new-versions{$lib} = $package_version;
+#     }
+#     # say @ver;
+#     # say %new-versions
+#
+#     # Substitute one thing with other if package name derived by regex is the same as a package name in a hash.
+#     for %new-versions.kv -> $lib, $package_version {
+# 	# my $packages = $file_content
+# 	$file-content .= subst(@ver, $package_version);
+#     }
+#     $filename.IO.spurt($file-content);
+# }
+
 sub MAIN($filename) {
     my $file-content = $filename.IO.slurp;
-    my $deps = from-toml($file-content)<dependencies>;
+    my %deps = from-toml($file-content)<dependencies>;
 
     my %new-versions;
-    for $deps.kv -> $lib, $version {
-        my $ver = $version ~~ Hash ?? $version<version> !! $version;
-        # say "$lib -> $ver";
+    my @ver;
+    for %deps.kv -> $lib, $version {
+        my $ver_to_add = $version ~~ Hash ?? $version<version> !! $version;
+        @ver.push($ver_to_add);
 
         my $output = qqx/cargo search $lib/;
         my $package_version = $output.lines[0].split(' ')[2].trans('"'=>'').subst(':', ''); # Clean up version
-	# say "Library name: $lib = old version: $ver => new version: $package_version";
 
-	%new-versions{$lib} = $package_version;
-	# $deps .= subst($ver, $package_version); 
-	# say "New dep:\n $deps"
+        %new-versions{$lib} = $package_version;
     }
-    #   # for %new-versions.kv -> $lib, $new-ver {
-#   #   $file-content .= subst($lib, $new-ver); # '.=' allows to use the original $file-content variable to rewrite its value.
-#   # }$file-content = $
-
-    for %new-versions.kv -> $lib, $package_version {
-	$file-content .= subs
-    }
+    say @ver;
     say %new-versions;
+
+
+    # Assuming each item in @ver corresponds to a $lib in %new-versions
+    for @ver -> $ver_item {
+        # Find the library that matches this version
+        for %new-versions.kv -> $lib, $package_version {
+            # If you need to match the $ver_item with $lib or derive a pattern from it, adjust this part
+            # This example assumes direct substitution of the library name with its new version
+            # Adjust the pattern as needed to match your specific use case
+            $file-content .= subst($ver_item, $package_version); # :g for global replacement
+        }
+    }
 
     $filename.IO.spurt($file-content);
 }
+
 
 
 # The idea is to create a list or even list of versions, then sort them and use substituion outside of the loop.
