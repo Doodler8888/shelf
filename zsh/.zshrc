@@ -11,6 +11,7 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git --exclude .snaps
 export PATH="$PATH:/home/wurfkreuz/.ghcup/hls/2.4.0.0/bin"
 export ANSIBLE_CONFIG="~/.dotfiles/ansible/ansible.cfg"
 export ANSIBLE_COLLECTIONS_PATH="~/.dotfiles/ansible/ansible_collections"
+export RAKU_MODULE_DEBUG="~/.raku/sources"
 
 # zstyle ':completion:*' menu select
 # zstyle ':completion:*' special-dirs true
