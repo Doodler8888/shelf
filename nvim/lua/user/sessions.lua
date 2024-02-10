@@ -19,9 +19,7 @@ function _G.load_session(session_name)
   end
   local session_path = sessions_dir .. '/' .. session_name
   if vim.fn.filereadable(session_path) == 1 then
-    vim.cmd('silent! source ' .. vim.fn.fnameescape(session_path), {mods = {silent = true}})
-    -- Replace the nvim_echo with a less intrusive logging mechanism
-    -- vim.api.nvim_out_write("Session loaded: " .. session_path .. "\n")
+    vim.cmd('source ' .. vim.fn.fnameescape(session_path), {mods = {silent = true}})
     -- Set a global variable to indicate a session has been loaded
     _G.session_loaded = true
   else
