@@ -4,6 +4,21 @@ require("resession").setup({
     interval = 30,
     notify = false,
   },
+-- Save and restore these options
+  options = {
+    "binary",
+    "bufhidden",
+    "buflisted",
+    "cmdheight",
+    "diff",
+    "filetype",
+    "modifiable",
+    "previewwindow",
+    "readonly",
+    "scrollbind",
+    "winfixheight",
+    "winfixwidth",
+  },
 })
 
 

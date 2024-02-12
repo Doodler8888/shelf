@@ -48,6 +48,10 @@ lspconfig.hls.setup{
     -- }
 }
 
+-- Python
+
+lspconfig.pyright.setup{
+}
 
 -- Ansible/Yaml
 

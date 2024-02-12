@@ -33,6 +33,7 @@ local plugins = {
 	'saecki/crates.nvim',
 	'akinsho/toggleterm.nvim',
 	'Raku/vim-raku',
+	-- 'stevearc/resession.nvim',
 	{
 		"folke/trouble.nvim",
 		dependencies = { "nvim-tree/nvim-web-devicons" },

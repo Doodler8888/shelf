@@ -1,16 +1,23 @@
+[dependencies]
+log = "0.4.20"
+pretty_env_logger = "0.5.0"
+[dependencies.teloxide]
+features = [ "macros" ]
+version = "0.12.2"
+[dependencies.tokio]
+features = [ "rt-multi-thread", "macros" ]
+version = "1.36.0"
 [package]
+edition = "2021"
 name = "update_dependencies"
 version = "0.1.0"
-edition = "2021"
-
+[profile.release]
+codegen-units = 1
+debug = false
+incremental = false
+lto = true
+opt-level = 3
+panic = "abort"
 [[bin]]
 name = "update_dependencies"
 path = "src/main.rs"
-
-[dependencies]
-teloxide = { version = "0.12", features = ["macros"] }
-log = "0.4"
-pretty_env_logger = "0.4"
-tokio = { version =  "1.8", features = ["rt-multi-thread", "macros"] }
-
-# something else

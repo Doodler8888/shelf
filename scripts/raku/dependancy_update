@@ -1,133 +1,73 @@
 #!/usr/bin/env raku
 
 use v6.d;
-# use TOML;
 use Config::TOML;
 
-
-# sub MAIN($filename) {
-#
-#   my $file-content = $filename.IO.slurp;
-#
-#   my $deps = from-toml($file-content)<dependencies>;
-#
-#   # Build lookup table  
-#   my %new-versions;
-#   for $deps.kv -> $lib, $version {
-#     my $ver = $version ~~ Hash ?? $version<version> !! $version;
-#
-#     my $new-ver = lookup-latest-version($lib);
-#
-#     %new-versions{$lib} = $new-ver;
-#   }
-#
-#
-#   say %new-versions
-#   # for %new-versions.kv -> $lib, $new-ver {
-#   #   $file-content .= subst($lib, $new-ver);
-#   # }
-#   #
-#   # # Write file
-#   # $filename.IO.spurt($file-content);
-#
-# }
-#
-# sub lookup-latest-version($lib) {
-#   my $output = qqx/cargo search $lib/;
-#   return $output.lines[0].split(' ')[2].trans('"' => '').subst(':', '');
-# }
-
-# sub MAIN($filename) {
-#     my $file-content = $filename.IO.slurp;
-#     my %deps = from-toml($file-content)<dependencies>;
-#     # say %deps;
-#
-#     my %new-versions;
-#     my @ver;
-#     for %deps.kv -> $lib, $version {
-#         # @ver = $version ~~ Hash ?? $version<version> !! $version;
-# 	@ver.push($version ~~ Hash ?? $version<version> !! $version);
-#
-#         my $output = qqx/cargo search $lib/;
-#         my $package_version = $output.lines[0].split(' ')[2].trans('"'=>'').subst(':', ''); # Clean up version
-#
-# 	%new-versions{$lib} = $package_version;
-#     }
-#     # say @ver;
-#     # say %new-versions
-#
-#     # Substitute one thing with other if package name derived by regex is the same as a package name in a hash.
-#     for %new-versions.kv -> $lib, $package_version {
-# 	# my $packages = $file_content
-# 	$file-content .= subst(@ver, $package_version);
-#     }
-#     $filename.IO.spurt($file-content);
-# }
-
 sub MAIN($filename) {
-    my $file-content = $filename.IO.slurp;
-    my %deps = from-toml($file-content)<dependencies>;
 
-    my %new-versions;
-    my @ver;
-    for %deps.kv -> $lib, $version {
-        my $ver_to_add = $version ~~ Hash ?? $version<version> !! $version;
-        @ver.push($ver_to_add);
+  # my $file-content = slurp $filename;
+  # my %toml = from-toml($file-content);
 
-        my $output = qqx/cargo search $lib/;
-        my $package_version = $output.lines[0].split(' ')[2].trans('"'=>'').subst(':', ''); # Clean up version
+  my $toml = slurp $filename.from-toml($file-content);
 
-        %new-versions{$lib} = $package_version;
-    }
-    say @ver;
-    say %new-versions;
+  if %toml<dependencies>:exists {
+    for %toml<dependencies>.kv -> $lib, $version {
 
+      my $output = qqx/cargo search $lib/;
+      my $new-version = $output.lines[0].split(' ')[2].trans('"' => '').subst(':', '');
 
-    # Assuming each item in @ver corresponds to a $lib in %new-versions
-    for @ver -> $ver_item {
-        # Find the library that matches this version
-        for %new-versions.kv -> $lib, $package_version {
-            # If you need to match the $ver_item with $lib or derive a pattern from it, adjust this part
-            # This example assumes direct substitution of the library name with its new version
-            # Adjust the pattern as needed to match your specific use case
-            $file-content .= subst($ver_item, $package_version); # :g for global replacement
+      if $new-version.defined and ($version.isa(Hash) ?? $version<version> !! $version) ne $new-version {
+        say "Updating $lib: $version -> $new-version";
+        if $version.isa(Hash) {
+          %toml<dependencies>{$lib}<version> = $new-version;
+        } else {
+          %toml<dependencies>{$lib} = $new-version; 
         }
+      } else {
+        say "Latest version for $lib not found or already up to date.";
+      }
     }
-
-    $filename.IO.spurt($file-content);
+    my $new-toml-content = to-toml(%toml);
+    spurt $filename, $new-toml-content;
+  } else {
+    say "'dependencies' section not found in $filename"; 
+  }
 }
 
 
-
-# The idea is to create a list or even list of versions, then sort them and use substituion outside of the loop.
-
-# $filename.IO.slurp reads the entire content of the file whose name is passed
-# as an argument to the script.
-
-# The .kv method is used with hashes (and other associative containers) to
-# retrieve the keys and values as a list of pairs, where each pair is returned
-# as two separate items: first the key, then the value.
-
-# Because my hash is nested, we could say that the hash has a hash inside.
-# And that's what i check here 'if $version ~~ Hash {' if key pair value is a
-# nested hash, then i go search inside that hash looking for a 'version' key.
-
-# The reason for the 'ver' to be initially equal to 'version' is because if
-# there is no nested hash, then 'ver' is equal to version. Otherwire, it gets a
-# new, correct value.
-
-# ?? and !!: These operators are part of Raku's ternary conditional operator,
-# which is used for inline conditional expressions. The syntax is condition ??
-# true-expression !! false-expression. If the condition is true, the expression
-# immediately following ?? is evaluated and returned; if the condition is false,
-# the expression following !! is evaluated and returned.
-
-# qqx is used to execute a command in the system's shell and capture its output.
-# The slashes are just delimiters.
-# - q: Single quotes, no interpolation or escape processing, except for \\ and \'.
-# - qq: Double quotes, supports interpolation and escape sequences like \n, \t,
-# etc.
-# - qx: Similar to backticks in other languages, executes a shell command but does
-# not allow interpolation.
-# - qqx: Combines the features of qq and qx, allowing both interpolation and the
-# execution of the resulting string as a shell command.
+# use v6.d;
+# use Config::TOML;
+#
+# sub get-latest-version(Str $library) {
+#     my $output = qqx/cargo search $library/;
+#     my $new-ver = $output.lines[0].split(' ')[2].trans('"'=>'').subst(':', '');
+#     return $new-ver;
+# }
+#
+# sub MAIN($filename) {
+#
+#     my $file-content = slurp $filename;
+#     my %toml = from-toml($file-content);
+#
+#     if %toml<dependencies>:exists {
+#         for %toml<dependencies>.kv -> $lib, $version {
+#             my $new-version = get-latest-version($lib);
+#             if $new-version.defined and ($version.isa(Hash) ?? $version<version> !! $version) ne $new-version {
+#                 say "Updating $lib: $version -> $new-version";
+#                 if $version.isa(Hash) {
+#                     %toml<dependencies>{$lib}<version> = $new-version; # Correct syntax for nested hash update
+#                 } else {
+#                     %toml<dependencies>{$lib} = $new-version; # Correct syntax for direct value update
+#                 }
+#             } else {
+#                 say "Latest version for $lib not found or already up to date.";
+#             }
+#         }
+#
+#         my $new-toml-content = to-toml(%toml);
+#         spurt $filename, $new-toml-content;
+#     } else {
+#         say "'dependencies' section not found in $filename";
+#     }
+# }
+#

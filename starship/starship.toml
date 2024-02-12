@@ -54,3 +54,6 @@ disabled = true
 
 [terraform]
 disabled = true
+
+[perl]
+disabled = true

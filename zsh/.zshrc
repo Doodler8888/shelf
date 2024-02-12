@@ -1,7 +1,7 @@
 source /home/wurfkreuz/.dotfiles/bash/scripts.sh
 source /usr/local/bin
 export GOPATH=$HOME/go
-export PATH="$HOME/.nimble/bin:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.dotfiles:$HOME/.cabal/bin:$HOME/.ghcup/bin:$HOME/.local/bin:/usr/lib:$PATH"
+export PATH="$HOME/.nimble/bin:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.dotfiles:$HOME/.cabal/bin:$HOME/.ghcup/bin:$HOME/.local/bin:/usr/lib:$HOME/perl5/bin:$PATH"
 export EDITOR='/usr//local/bin/nvim'
 export CDPATH='.:~:/usr/local:/etc:~/.dotfiles:~/.config:~/.projects'
 export HISTFILE="$HOME/.zsh_history"
@@ -12,6 +12,7 @@ export PATH="$PATH:/home/wurfkreuz/.ghcup/hls/2.4.0.0/bin"
 export ANSIBLE_CONFIG="~/.dotfiles/ansible/ansible.cfg"
 export ANSIBLE_COLLECTIONS_PATH="~/.dotfiles/ansible/ansible_collections"
 export RAKU_MODULE_DEBUG="~/.raku/sources"
+export PERL5LIB="$HOME/perl5/lib/perl5:$PERL5LIB"
 
 # zstyle ':completion:*' menu select
 # zstyle ':completion:*' special-dirs true
