@@ -1,11 +1,15 @@
 use strict;
 use warnings;
 use TOML::Tiny qw(from_toml to_toml);
+use feature 'say';
 
 sub get_latest_version {
     my ($library) = @_;
     my $output = qx(cargo search $library);
-    my ($new_ver) = $output =~ /"([^"]+)"/; # Capture version in quotes
+    # my ($new_ver) = $output =~ /"([^"]+)"/; # Capture version in quotes
+    my ($new_ver) = $output =~ /"(.+)"/; # Capture version in quotes
+    say $output;
+    say $new_ver
     return $new_ver;
 }
 
@@ -21,7 +25,7 @@ sub update_library_versions {
         while (my ($lib, $version) = each %{$toml->{dependencies}}) {
             my $new_version = get_latest_version($lib);
             if (defined $new_version and ($version ne $new_version)) {
-                print "Updating $lib: $version -> $new_version\n";
+                # print "Updating $lib: $version -> $new_version\n";
                 $toml->{dependencies}{$lib} = $new_version;
             } else {
                 print "Latest version for $lib not found or already up to date.\n";

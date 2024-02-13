@@ -1,73 +1,69 @@
 #!/usr/bin/env raku
 
-use v6.d;
+use v6.e.PREVIEW;
 use Config::TOML;
 
 sub MAIN($filename) {
+  my %toml = from-toml({ slurp $filename }());
 
-  # my $file-content = slurp $filename;
-  # my %toml = from-toml($file-content);
+  %toml<dependencies>:exists && (do {
+      for %toml<dependencies>.kv -> $lib, $version {
+	  my $output = qqx/cargo search $lib/;
+	  my $new-version = ($output.lines ~~ rx/'"'(.+)'"'/)[0].Str;
 
-  my $toml = slurp $filename.from-toml($file-content);
-
-  if %toml<dependencies>:exists {
-    for %toml<dependencies>.kv -> $lib, $version {
-
-      my $output = qqx/cargo search $lib/;
-      my $new-version = $output.lines[0].split(' ')[2].trans('"' => '').subst(':', '');
-
-      if $new-version.defined and ($version.isa(Hash) ?? $version<version> !! $version) ne $new-version {
-        say "Updating $lib: $version -> $new-version";
-        if $version.isa(Hash) {
-          %toml<dependencies>{$lib}<version> = $new-version;
-        } else {
-          %toml<dependencies>{$lib} = $new-version; 
-        }
-      } else {
-        say "Latest version for $lib not found or already up to date.";
+	  (($version.isa(Hash) ?? $version<version> !! $version) ne $new-version)
+	  && (do {
+	      $version.isa(Hash) 
+	      ?? (%toml<dependencies>{$lib}<version> = $new-version)
+	      !! (%toml<dependencies>{$lib} = $new-version);
+	  })
+	  || say "Latest version for $lib not found or already up to date.";
       }
-    }
-    my $new-toml-content = to-toml(%toml);
-    spurt $filename, $new-toml-content;
-  } else {
-    say "'dependencies' section not found in $filename"; 
-  }
+      my $new-toml-content = to-toml(%toml);
+      spurt $filename, $new-toml-content;
+  })
+  || say "'dependencies' section not found in $filename";
 }
 
+
+
+# rx/'"'(.+)'"'/)[0].Str; - to access the c
+# my $new-version = $output.lines[0].split(' ')[2].trans('"' => '').subst(':', '');
+
+# my $condition = (($version.isa(Hash) ?? $version<version> !! $version) ne $new-version);
+# say "Condition for $lib is $condition";
+
+# By wrapping the && expression in parentheses, you ensure that it is evaluated as
+# a single unit, which then determines whether the subsequent || operator should
+# be considered based on the outcome of the entire && expression.
 
 # use v6.d;
 # use Config::TOML;
 #
-# sub get-latest-version(Str $library) {
-#     my $output = qqx/cargo search $library/;
-#     my $new-ver = $output.lines[0].split(' ')[2].trans('"'=>'').subst(':', '');
-#     return $new-ver;
-# }
-#
 # sub MAIN($filename) {
 #
-#     my $file-content = slurp $filename;
-#     my %toml = from-toml($file-content);
+#   my %toml = from-toml({ slurp $filename }());
 #
-#     if %toml<dependencies>:exists {
-#         for %toml<dependencies>.kv -> $lib, $version {
-#             my $new-version = get-latest-version($lib);
-#             if $new-version.defined and ($version.isa(Hash) ?? $version<version> !! $version) ne $new-version {
-#                 say "Updating $lib: $version -> $new-version";
-#                 if $version.isa(Hash) {
-#                     %toml<dependencies>{$lib}<version> = $new-version; # Correct syntax for nested hash update
-#                 } else {
-#                     %toml<dependencies>{$lib} = $new-version; # Correct syntax for direct value update
-#                 }
-#             } else {
-#                 say "Latest version for $lib not found or already up to date.";
-#             }
+#   if %toml<dependencies>:exists {
+#     for %toml<dependencies>.kv -> $lib, $version {
+#
+#       my $output = qqx/cargo search $lib/;
+#       my $new-version = ($output.lines ~~ rx/'"'(.+)'"'/)[0].Str;
+#
+#       if $new-version.defined and ($version.isa(Hash) ?? $version<version> !! $version) ne $new-version {
+#         say "Updating $lib: $version -> $new-version";
+#         if $version.isa(Hash) {
+#           %toml<dependencies>{$lib}<version> = $new-version;
+#         } else {
+#           %toml<dependencies>{$lib} = $new-version; 
 #         }
-#
-#         my $new-toml-content = to-toml(%toml);
-#         spurt $filename, $new-toml-content;
-#     } else {
-#         say "'dependencies' section not found in $filename";
+#       } else {
+#         say "Latest version for $lib not found or already up to date.";
+#       }
 #     }
+#     my $new-toml-content = to-toml(%toml);
+#     spurt $filename, $new-toml-content;
+#   } else {
+#     say "'dependencies' section not found in $filename"; 
+#   }
 # }
-#

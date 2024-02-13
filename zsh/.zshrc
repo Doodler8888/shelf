@@ -1,7 +1,7 @@
 source /home/wurfkreuz/.dotfiles/bash/scripts.sh
 source /usr/local/bin
 export GOPATH=$HOME/go
-export PATH="$HOME/.nimble/bin:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.dotfiles:$HOME/.cabal/bin:$HOME/.ghcup/bin:$HOME/.local/bin:/usr/lib:$HOME/perl5/bin:$PATH"
+export PATH="$HOME/.nimble/bin:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.dotfiles:$HOME/.cabal/bin:$HOME/.ghcup/bin:$HOME/.local/bin:/usr/lib:$HOME/perl5/bin:$HOME/.qlot/bin/:$HOME/common-lisp/lem:$PATH"
 export EDITOR='/usr//local/bin/nvim'
 export CDPATH='.:~:/usr/local:/etc:~/.dotfiles:~/.config:~/.projects'
 export HISTFILE="$HOME/.zsh_history"
