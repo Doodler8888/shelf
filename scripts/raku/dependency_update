@@ -19,8 +19,7 @@ sub MAIN($filename) {
 	  })
 	  || say "Latest version for $lib not found or already up to date.";
       }
-      my $new-toml-content = to-toml(%toml);
-      spurt $filename, $new-toml-content;
+      spurt $filename, to-toml(%toml);
   })
   || say "'dependencies' section not found in $filename";
 }
