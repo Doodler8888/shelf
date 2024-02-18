@@ -1,3 +1,17 @@
+vim.o.packpath = "/tmp/nvim/site"
+
+local plugins = {
+  rose_pine = "https://github.com/rose-pine/neovim",
+  -- ADD OTHER PLUGINS _NECESSARY_ TO REPRODUCE THE ISSUE
+}
+
+for name, url in pairs(plugins) do
+  local install_path = "/tmp/nvim/site/pack/test/start/" .. name
+  if vim.fn.isdirectory(install_path) == 0 then
+    vim.fn.system({ "git", "clone", "--depth=1", url, install_path })
+  end
+end
+
 require('rose-pine').setup({
 	-- --- @usage 'auto'|'main'|'moon'|'dawn'
 	variant = 'main',
