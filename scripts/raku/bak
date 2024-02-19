@@ -1,0 +1,35 @@
+#!/usr/bin/env raku
+
+use v6.e.PREVIEW;
+
+multi MAIN($filename, Bool :$m = False) {
+# multi MAIN($filename) {
+    if $filename ~~ / \.bak$ / { 
+        my $new_filename = $filename.subst(/\.bak$/, '');
+        move($filename, $new_filename);
+    }
+    else {
+        my $new_filename = "$filename.bak";
+        move($filename, $new_filename);
+    }
+}
+
+multi MAIN($filename, Bool :$c($copy) = False) { # The ($copy) part creates an alias to the $c flag.
+    if $filename ~~ / \.bak$/ {
+        my $new_filename = $filename.subst(/\.bak$/, '');
+	copy($filename, $new_filename);
+    }
+    else {
+        my $new_filename = "$filename.bak";
+	copy($filename, $new_filename);
+    }
+}
+
+
+# Raku provides some hooks to override CLI behavior, like if you define the
+# ARGS-TO-CAPTURE function you can preprocess arguments before dispatching to
+# MAIN.
+
+# You can define the special hash %*SUB-MAIN-OPTS to configure how the arguments
+# are parsed. F.ex if you add the :bundling key, then it will accept -abc in
+# addition to -a -b -c.

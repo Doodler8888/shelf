@@ -1,8 +1,6 @@
 #!/usr/bin/env raku
 
 use v6.e.PREVIEW;
-use Test;
-use Test::Mock;
 
 sub get_abs_path($path) {
   return $path if $path ~~ rx/^ \/ /; 
@@ -10,10 +8,11 @@ sub get_abs_path($path) {
 }
 
 #| Create symlink with or without destination argument
-multi sub MAIN($target, $link-location?) {
+sub MAIN($target, $link-location?) {
 
   my $abs-target = get_abs_path($target);
-  my $final-link-location = $link-location.IO.d ?? "{$link-location}/{$abs-target.IO.basename}" !! $link-location // "/usr/local/bin";
+  my $final-link-location = $link-location // "/usr/local/bin";
+  $final-link-location = "{$final-link-location}/{$abs-target.IO.basename}" if $final-link-location.IO.d;
 
   mkdir $final-link-location.IO.dirname;
   symlink $abs-target, $final-link-location;
@@ -21,45 +20,46 @@ multi sub MAIN($target, $link-location?) {
   say "Symbolic link created for $abs-target at $final-link-location";
 }
 
-class LinkCreator {
-    # Encapsulate the symlink creation logic within a method
-    method create-symlink(Str $target, Str $link-location?) {
-        my $abs-target = self.get-abs-path($target);
-        my $final-link-location = $link-location.IO.d ?? "{$link-location}/{$abs-target.IO.basename}" !! $link-location // "/usr/local/bin";
-
-        mkdir $final-link-location.IO.dirname;
-        symlink $abs-target, $final-link-location;
-
-        say "Symbolic link created for $abs-target at $final-link-location";
-    }
-
-    method get-abs-path($path) {
-        return $path if $path ~~ rx/^ \/ /;
-        return "{$*CWD}/{$path}";
-    }
-}
-
-multi sub MAIN('test') {
-    plan 1;
-
-    # Create a mock of the LinkCreator class
-    my $mock = mocked(LinkCreator);
-
-    # Perform the action using the mocked object
-    $mock.create-symlink("test.toml", "~/");
-
-    # Assert the expected method calls
-    # Adjust the expected path according to the actual logic of create-symlink
-    check-mock($mock,
-        *.called('create-symlink', with => \( "test.toml", "~/" )), # Use the same argument as passed to the method
-    );
-}
-
-# my $final-link-location = $link-location // "/usr/local/bin";
+# class LinkCreator {
+#     # Encapsulate the symlink creation logic within a method
+#     method create-symlink(Str $target, Str $link-location?) {
+#         my $abs-target = self.get-abs-path($target);
+# 	my $final-link-location = $link-location // "/usr/local/bin";
+# 	# $final-link-location = "{$final-link-location}/{$abs-target.IO.basename}" if $final-link-location.IO.d;
 #
-# if $final-link-location.IO ~~ :d {
-#     $final-link-location = "{$final-link-location}/{$abs-target.IO.basename}";
+#         mkdir $final-link-location.IO.dirname;
+#         symlink $abs-target, $final-link-location;
+#
+#         say "Symbolic link created for $abs-target at $final-link-location";
+#     }
+#
+#     method get-abs-path($path) {
+#         return $path if $path ~~ rx/^ \/ /;
+#         return "{$*CWD}/{$path}";
+#     }
 # }
+#
+# multi sub MAIN('test') {
+#     use Test;
+#     use Test::Mock;
+#
+#     my $mock = mocked(LinkCreator);
+#
+#     plan 1;
+#
+#     $mock.create-symlink("test.toml", "~/");
+#     check-mock($mock,
+#         *.called('create-symlink', with => \( "test.toml", "~/" )), # Use the same argument as passed to the method
+#     );
+#
+#     plan 2;
+#
+#     $mock.create-symlink("test.toml");
+#     check-mock($mock,
+#         *.called('create-symlink', with => \( "test.toml" )), # Use the same argument as passed to the method
+#     );
+# }
+
 
 # Asterisk (*) and Special Variables
 #
