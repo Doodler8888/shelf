@@ -2,27 +2,16 @@
 
 use v6.e.PREVIEW;
 
-multi MAIN($filename, Bool :$m = False) {
-# multi MAIN($filename) {
-    if $filename ~~ / \.bak$ / { 
-        my $new_filename = $filename.subst(/\.bak$/, '');
-        move($filename, $new_filename);
-    }
-    else {
-        my $new_filename = "$filename.bak";
-        move($filename, $new_filename);
-    }
+multi sub MAIN($filename) {
+  ($filename ~~ / \.bak$ /) 
+    ?? move($filename, $filename.subst(/\.bak$/, '')) 
+    !! move($filename, "$filename.bak");
 }
 
-multi MAIN($filename, Bool :$c($copy) = False) { # The ($copy) part creates an alias to the $c flag.
-    if $filename ~~ / \.bak$/ {
-        my $new_filename = $filename.subst(/\.bak$/, '');
-	copy($filename, $new_filename);
-    }
-    else {
-        my $new_filename = "$filename.bak";
-	copy($filename, $new_filename);
-    }
+multi sub MAIN($filename, Bool :c(:$copy)!) {
+  ($filename ~~ / \.bak$ /) 
+    ?? copy($filename, $filename.subst(/\.bak$/, '')) 
+    !! copy($filename, "$filename.bak");
 }
 
 
