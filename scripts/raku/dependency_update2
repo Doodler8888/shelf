@@ -1,6 +1,7 @@
 #!/usr/bin/env raku
 
 use v6.e.PREVIEW;
+use Config::TOML;
 
 sub MAIN($filename) {
   my $file-content = slurp $filename;

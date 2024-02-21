@@ -126,7 +126,7 @@ alias dimages="docker images"
 alias dtag="docker tag"
 alias dpsa="docker ps -a | head -n 5"
 alias cfg="cd ~/.dotfiles/ansible/ && nvim ansible.cfg"
-alias comma="comma.sh"
+alias comma="bash ~/Downloads/comma/comma-complete-2023.08.0/bin/comma.sh"
 
 # bindkey '^R' fzf_history_search
 
