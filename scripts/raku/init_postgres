@@ -60,8 +60,7 @@ given prompt("> ") {
 say 
 
 "
-    The postgres user is an analogues to a root user of OS, but for postgresql.
-
+    The postgres user is analogues to a root user of Unix, but for postgresql.
 ";
 
 
@@ -77,7 +76,16 @@ if $result ~~ /'could not connect to server'|'password authentication failed'/ {
     Oops. It seems like your postgres user doesn't have a password, let's fix that!
     Enter a password you want to set:
 ";
-    prompt("> ");
+    my $password = prompt("> ").trim;
+
+    # Ensure the password is not empty
+    if $password.defined && $password.chars > 0 {
+        my $setPasswordCommand = qq[sudo -u postgres psql -c "ALTER USER postgres PASSWORD '$password'"];
+	shell($setPasswordCommand);
+	say "Password for 'postgres' user has been successfully updated.";
+    } else {
+        say "No password entered. Exiting.";
+    }
 }
 
 

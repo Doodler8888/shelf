@@ -165,7 +165,7 @@ fi
 # SSH_KEY_DIR="$HOME/.ssh/keys"
 
 # for key in "$SSH_KEY_DIR"/*; do
-#     if [[ -f $key && ! $key =~ \.pub$ ]]; then # The '\.pub$' is a regular expression. I'm checking if a filename ends with '.pub'. The reason why it works on a partial pattern, because i use '&' which mean 'at the end of a line'.
+#     if [[ -f $key && ! $key =~ \.pub$ ]]; then
 #         ssh-add "$key" > /dev/null 2>&1 
 #     fi
 # done

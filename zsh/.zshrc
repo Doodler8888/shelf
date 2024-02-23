@@ -2,7 +2,7 @@ source /home/wurfkreuz/.dotfiles/bash/scripts.sh
 source /usr/local/bin
 source ~/.secret_dotfiles/zsh/.zshrc
 export GOPATH=$HOME/go
-export PATH="$HOME/.nimble/bin:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.dotfiles:$HOME/.cabal/bin:$HOME/.ghcup/bin:$HOME/.local/bin:/usr/lib:$HOME/perl5/bin:$HOME/.qlot/bin/:$HOME/common-lisp/lem:$PATH"
+export PATH="$HOME/.nimble/bin:$HOME/.cargo/bin:$HOME/go/bin:$HOME/.dotfiles:$HOME/.cabal/bin:$HOME/.ghcup/bin:$HOME/.local/bin:/usr/lib:$HOME/perl5/bin:$HOME/.qlot/bin/:$HOME/common-lisp/lem:$HOME/.config/emacs/bin:$PATH"
 export EDITOR='/usr//local/bin/nvim'
 export CDPATH='.:~:/usr/local:/etc:~/.dotfiles:~/.config:~/.projects'
 export HISTFILE="$HOME/.zsh_history"
@@ -71,6 +71,7 @@ alias sstart='sudo systemctl start'
 alias sstop='sudo systemctl stop'
 alias srestart='sudo systemctl restart'
 alias sstatus='sudo systemctl status'
+alias sus='sudo systemctl status'
 alias senable='sudo systemctl enable'
 alias sdisable='sudo systemctl disable'
 alias sdi='sudo dnf install'
