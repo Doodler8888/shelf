@@ -1,0 +1,10 @@
+[Unit]
+Description=Runs my Raku script periodically
+
+[Timer]
+; OnCalendar=*-*-* 00:00:00
+OnCalendar=*:*
+Persistent=true
+
+[Install]
+WantedBy=timers.target

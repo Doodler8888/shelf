@@ -9,6 +9,7 @@ sub MAIN() {
   my $bot = Telegram::Bot.new(%*ENV<NOTIFY_TOKEN>);
   my Int $chat_id = 388104355;
   my @messages;
+  # my $message;
 
   my @repos = shell("find ~/ -type d -name '.git' -not -path '*/.source/*' -not -path '*/.antigen/*' -not -path '*/.cargo/*' -not -path '*/elpaca/*' -not -path '*/.cache/*' -not -path '*/.local/*' -not -path '*/.share/*' -printf '%p\n' 2>/dev/null", :out)
   .out.slurp(:close).lines.map(*.chomp); # Apply chomp to each line
@@ -18,9 +19,12 @@ sub MAIN() {
 
     # If there's any output from `git status --porcelain`, there are uncommitted changes
     if $status.chars {
-      my $last-commit-date = shell("git -C {$repo-dir.IO.parent} log -1 --format=%cd", :out).out.slurp(:close).chomp;
-      my $message = "Repository with uncommitted changes: {$repo-dir.IO.parent}\nLast commit date: $last-commit-date";
+      my $last-commit-date = shell("git -C {$repo-dir.IO.parent} log -1 --format=%cd", :out)
+      .out.slurp(:close).chomp;
+      my $message = "Repository with uncommitted changes: {$repo-dir.IO.parent}
+                     \nLast commit date: $last-commit-date";
       @messages.push($message);
+      # $bot.sendMessage($chat_id, $message);
     }
   }
   my $combined_message = @messages.join("\n\n");
@@ -51,7 +55,7 @@ sub MAIN() {
 # It typically avoids unnecessary decorations and presents the information in a
 # straightforward, machine-readable format.
 
-
+# map(*.chomp) is a shorthand for 'map -> $_ { $_.chomp }'
 
 
 # sub MAIN($message)
