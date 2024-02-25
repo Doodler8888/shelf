@@ -15,3 +15,5 @@ for @repos -> $repo-dir {
     \nLast commit date: $last-commit-date";
   }
 }
+
+say "Execution finished";

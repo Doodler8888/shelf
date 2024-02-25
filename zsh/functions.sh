@@ -67,9 +67,9 @@ unseal() {
     vault login "$token"
 }
 
-push() {
-        git add . && git commit -m "n" && git push
-    }
+# push() {
+#         git add . && git commit -m "n" && git push
+#     }
 
 fzf-history-widget() {
 	local selected num
