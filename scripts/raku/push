@@ -8,6 +8,8 @@ my $gitOutput = qqx/git add . && git commit -m "n" && git push/;
 # Print the output of the git command sequence
 say $gitOutput;
 
+say "Execution finished";
+
 my @repos = shell("find ~/ -type d -name '.git' -not -path '*/.source/*' -not -path '*/.antigen/*' -not -path '*/.cargo/*' -not -path '*/elpaca/*' -not -path '*/.cache/*' -not -path '*/.local/*' -not -path '*/.share/*' -printf '%p\n' 2>/dev/null", :out)
 .out.slurp(:close).lines.map(*.chomp); # Apply chomp to each line
 
@@ -23,4 +25,3 @@ for @repos -> $repo-dir {
   }
 }
 
-say "Execution finished";
