@@ -3,10 +3,10 @@
 use v6.e.PREVIEW;
 
 
-sub get_abs_path($my_path is copy) {
-    $my_path ~~ s/^ '~' | '~/'/%*ENV<HOME>/;
-    return $my_path if $my_path ~~ /^ \/ /;   
-    return "{$*CWD}/{$my_path}";
+sub get_abs_path($path is copy) {
+    $path ~~ s/^ '~' | '~/'/%*ENV<HOME>/;
+    return $path if $path ~~ /^ \/ /;   
+    return "{$*CWD}/{$path}";
 }
 
 #| Create symlinks for any number of targets with /usr/local/bin as a default destination
@@ -23,33 +23,6 @@ sub MAIN(*@files, Str :d(:$destination)="/usr/local/bin") {
     }
 }
 
-# #| Create symlink on a single target
-# multi sub MAIN($target, $link-location="/usr/local/bin") {
-#
-#   my $abs-target = get_abs_path($target);
-#   my $final-link-location = $link-location; # The final variable is created because i can't modify parameters, they are immutable.
-#   $final-link-location ~= "/{$abs-target.IO.basename}" if $final-link-location.IO.d;
-#
-#   mkdir $final-link-location.IO.dirname;
-#   symlink $abs-target, $final-link-location;
-#
-#   say "Symbolic link created for $abs-target at $final-link-location";
-# }
-#
-# #| Create symlinks on multiple targets
-# multi sub MAIN(*@targets, Str :d(:$destination)!) {
-#
-#   for @targets -> $target {
-#     my $abs-target = get_abs_path($target);
-#     my $final-link-location = $destination;
-#     $final-link-location ~= "/{$abs-target.IO.basename}" if $final-link-location.IO.d;
-#
-#     mkdir $final-link-location.IO.dirname; 
-#     symlink $abs-target, $final-link-location;
-#
-#     say "Symbolic link created for $abs-target at $final-link-location";
-#   }
-# }
 
 # *@targets - without the *: If you remove the *, making the signature something
 # like sub MAIN(@targets, Str :$link-location), Raku no longer treats @targets
