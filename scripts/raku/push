@@ -12,7 +12,7 @@ for @repos -> $repo-dir {
   if $status.chars {
     my $last-commit-date = shell("git -C {$repo-dir.IO.parent} log -1 --format=%cd", :out)
     .out.slurp(:close).chomp;
-    my $message = "Repository with uncommitted changes: {$repo-dir.IO.parent}\n"
+    my $message = "\nRepository with uncommitted changes: {$repo-dir.IO.parent}\n"
     ~ "Last commit date: $last-commit-date";
     # say $message;
     @messages.push($message);
