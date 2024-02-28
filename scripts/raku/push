@@ -22,5 +22,3 @@ for @repos -> $repo-dir {
 qqx/git add . && git commit -m "n" && git push/;
 
 say @messages.join("\n\n");
-
-say "Execution finished";

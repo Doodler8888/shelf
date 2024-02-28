@@ -33,18 +33,30 @@ local plugins = {
 	"stevearc/conform.nvim",
 	-- 'saecki/crates.nvim',
 	'Raku/vim-raku',
+	-- {
+	--   "kndndrj/nvim-dbee",
+	--   dependencies = {
+	--     "MunifTanjim/nui.nvim",
+	--   },
+	-- },
 	{
-	  "kndndrj/nvim-dbee",
+	  'kristijanhusak/vim-dadbod-ui',
 	  dependencies = {
-	    "MunifTanjim/nui.nvim",
+	    { 'tpope/vim-dadbod', lazy = true },
+	    { 'kristijanhusak/vim-dadbod-completion', ft = { 'sql', 'mysql', 'plsql', 'psql' }, lazy = true },
 	  },
-	  build = function()
-	    -- Install tries to automatically detect the install method.
-	    -- if it fails, try calling it with one of these parameters:
-	    --    "curl", "wget", "bitsadmin", "go"
-	    require("dbee").install("curl")
+	  cmd = {
+	    'DBUI',
+	    'DBUIToggle',
+	    'DBUIAddConnection',
+	    'DBUIFindBuffer',
+	  },
+	  init = function()
+	    -- Your DBUI configuration
+	    vim.g.db_ui_use_nerd_fonts = 1
 	  end,
 	},
+	'vim-dadbod-ssh',
 	-- 'stevearc/resession.nvim',
 	{
 		"folke/trouble.nvim",

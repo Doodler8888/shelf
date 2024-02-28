@@ -6,11 +6,13 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv")
 -- Keep center view
 vim.keymap.set("n", "<C-d>", "<C-d>zz")
 vim.keymap.set("n", "<C-u>", "<C-u>zz")
+vim.keymap.set("n", "<C-f>", "<C-f>zz")
+vim.keymap.set("n", "<C-b>", "<C-b>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
 -- Void a pasted upon word
--- vim.keymap.set("x", "<C-y>", [["_dP]])
+vim.keymap.set("x", "<C-y>", [["_dP]])
 
 -- Start replacing the word that you was on
 vim.keymap.set("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])

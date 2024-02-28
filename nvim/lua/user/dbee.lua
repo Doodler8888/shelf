@@ -1,10 +1,11 @@
+-- require("dbee").install()
 require("dbee").setup({
     sources = { -- Add a source here
         require('dbee.sources').MemorySource:new({
             {
-                name = "My Postgres Database",
+                name = "Shelf Database",
                 type = "postgres",
-                url = "postgres://user:password@host:port/database_name",
+		url = "postgres://wurfkreuz:" .. os.getenv("WURFKREUZ_POSTGRES") .. "@localhost:5432/shelf",
             }
         })
     }

@@ -4,6 +4,7 @@ cmp.setup {
   sources = {
     { name = 'path', max_item_count = 4 },
     { name = 'nvim_lsp' },
+    { name = 'vim-dadbod-completion' },
     -- { name = 'cmdline', max_item_count = 4, keyword_pattern = [[^[^w]\w*$]] },
   },
   mapping = {

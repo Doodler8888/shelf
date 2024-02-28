@@ -40,7 +40,7 @@ vim.api.nvim_set_keymap("n", "<leader>fb", ":FzfLua buffers<CR>", { noremap = tr
 
 vim.keymap.set({ "i" }, "<C-y>", function()
 	require("fzf-lua").complete_path({
-		cmd = "fd --hidden . / --follow --exclude .git --exclude .snapshots --exclude var --exclude opt --exclude lib --exclude lib64 --exclude mnt --exclude proc --exclude run --exclude sbin --exclude srv --exclude sys --exclude tmp",
+		cmd = "fd --hidden . / --follow --exclude .git --exclude .snapshots --exclude opt --exclude lib --exclude lib64 --exclude mnt --exclude proc --exclude run --exclude sbin --exclude srv --exclude sys --exclude tmp",
 	})
 end, { silent = true, desc = "Fuzzy complete path" })
 
