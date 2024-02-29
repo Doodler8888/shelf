@@ -1,0 +1,141 @@
+package main
+
+import (
+	"context" // Import the context package
+	"log"
+	"net/http"
+	"os"
+	// "encoding/json" // Corrected import name
+	// "time"
+
+	"github.com/go-telegram-bot-api/telegram-bot-api/v5"
+	"path/filepath"
+
+	d "github.com/doodler8888/shelf/internal/database"
+)
+
+func main() {
+	// Fetch bot token from environment variable
+	botToken := os.Getenv("SHELF_TOKEN")
+	if botToken == "" {
+		log.Fatal("Error: BOT_TOKEN environment variable not set")
+	}
+	bot, err := tgbotapi.NewBotAPI(botToken)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	bot.Debug = true
+	wh, err := tgbotapi.NewWebhook("https://2b2a-178-121-35-10.ngrok-free.app/" + bot.Token)
+	if err != nil {
+		log.Fatal("Error setting up webhook:", err)
+	}
+	log.Printf("Authorized on account %s", bot.Self.UserName)
+
+	_, err = bot.Request(wh)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	info, err := bot.GetWebhookInfo()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	if info.LastErrorDate != 0 {
+		log.Printf("Telegram callback failed: %s", info.LastErrorMessage)
+	}
+
+	updates := bot.ListenForWebhook("/" + bot.Token)
+	// go http.ListenAndServeTLS("0.0.0.0:8443", "cert.pem", "key.pem", nil)
+	go http.ListenAndServe(":8080", nil)
+
+	for update := range updates {
+		log.Println("Received an Update!")
+		if update.Message != nil && update.Message.Document == nil {
+			msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Please upload a book file.")
+			bot.Send(msg)
+		} else if update.Message.Document != nil {
+			fileName := update.Message.Document.FileName
+
+			// Get the file extension
+			ext := filepath.Ext(fileName)
+
+			if ext == ".pdf" || ext == ".epub" {
+				ctx := context.Background() // Basic context for now
+
+				// Assuming you need the filename when creating the Book
+				book := &d.Book{
+					Title: fileName, // Or extract title from the filename
+					// ... other Book fields ...
+				}
+
+				err := d.InsertBook(ctx, book)
+				if err != nil {
+					// ... Handle potential database insertion errors ...
+				} else {
+					msg := tgbotapi.NewMessage(update.Message.Chat.ID, "Invalid file format. Please upload a book file (PDF, EPUB, etc.).")
+					bot.Send(msg)
+				}
+			}
+		}
+
+		// for update := range updates {
+		// 	log.Printf("%+v\n", update)
+		// }
+	}
+}
+
+// func handleUpdates(bot *tgbotapi.BotAPI) func(http.ResponseWriter, *http.Request) {
+//     return func(w http.ResponseWriter, r *http.Request) {
+//         update := tgbotapi.Update{}
+//         err := json.NewDecoder(r.Body).Decode(&update)
+//         if err != nil {
+//             log.Printf("Error decoding webhook update: %v", err)
+//             return
+//         }
+//
+//         ctx, cancel := context.WithTimeout(r.Context(), 5 * time.Second) // 5-second timeout
+//         defer cancel() // Ensure the context is cancelled when the function returns
+//
+//         // Your existing update handling logic
+// 	fileName := update.Message.Document.FileName
+//         if update.Message != nil && update.Message.Document == nil {
+//             // ...
+//         } else if update.Message.Document != nil {
+//             // ...
+//             book := &d.Book{
+//                 Title:  fileName,
+//                 Author: "Unknown",
+//                 // ... populate other fields ...
+//             }
+//
+//             err := d.InsertBook(ctx, book)
+//             if err != nil {
+//                 // ... handle insertion error ...
+//             }
+//             // ...
+//         }
+//         // ... (rest of your existing logic) ...
+//     }
+// }
+
+// Most common reasons for the bot not responding:
+//
+// 1. The go server listens on incorrect port "go http.ListenAndServe(":8080",
+// nil)". "ngrok http http://localhost:8080" - the command forwards the traffic
+// coming to ngrok to a port where your go server is listening.
+// 2. You forgot to add slash on a ngrok address "wh, err :=
+// tgbotapi.NewWebhook("https://86f3-178-121-35-10.ngrok-free.app/" +
+// bot.Token)".
+
+// The port in a URL for HTTPS connections is typically not required because HTTPS
+// (Hypertext Transfer Protocol Secure) is designed to work over port 443 by
+// default. When you specify https:// in a URL, it implies that the connection
+// should be secure, and the default port for secure connections is 443.
+// However, when you are using a service like ngrok, which provides a tunnel to
+// your local server, you do not need to specify a port in the URL for the webhook.
+// This is because ngrok forwards incoming requests from the public internet to
+// your local server on the port you specify in the ngrok command." - it looks like
+// i don't need to use"
+// It's about this part: wh, _ := tgbotapi.NewWebhook("https://7a08-178-121-20-31.ngrok-free.app/"+bot.Token)
