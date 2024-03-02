@@ -1,6 +1,6 @@
 require'nvim-treesitter.configs'.setup {
   -- A list of parser names, or "all" (the five listed parsers should always be installed)
-  ensure_installed = { "terraform", "lua", "vim", "vimdoc", "query", "go" },
+  ensure_installed = { "terraform", "hcl", "lua", "vim", "vimdoc", "query", "go" },
 
   -- Install parsers synchronously (only applied to `ensure_installed`)
   sync_install = false,
@@ -11,7 +11,7 @@ require'nvim-treesitter.configs'.setup {
 
   highlight = {
     enable = true,
-    disable = { "terraform" },
+    -- disable = { "terraform" },
     additional_vim_regex_highlighting = false,
   },
     textobjects = {
@@ -37,8 +37,8 @@ require'nvim-treesitter.configs'.setup {
 	["im"] = "@comment.inner",
 	["aa"] = "@attribute.outer",
 	["ia"] = "@attribute.inner",
-	["ab"] = "@block.outer",
-	["ib"] = "@block.inner",
+	-- ["ab"] = "@block.outer",
+	-- ["ib"] = "@block.inner",
       },
       -- swap = {
 	     --  

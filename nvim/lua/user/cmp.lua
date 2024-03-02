@@ -12,7 +12,21 @@ cmp.setup {
    ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
    ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
   },
+  window = {
+    completion = cmp.config.window.bordered(),
+    -- documentation = cmp.config.window.bordered(),
+  },
 }
+
+function _G.toggle_cmp()
+ if cmp.visible() then
+    cmp.close()
+ else
+    cmp.complete()
+ end
+end
+
+vim.api.nvim_set_keymap('i', '<C-x><C-c>', '<cmd>lua toggle_cmp()<CR>', {expr = true, noremap = true})
 
 
 -- -- cmdline setup

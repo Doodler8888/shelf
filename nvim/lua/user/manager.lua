@@ -114,7 +114,7 @@ local plugins = {
 		-- after = "nvim-treesitter",
 		-- requires = "nvim-treesitter/nvim-treesitter",
 	},
-	"hashivim/vim-terraform",
+	-- "hashivim/vim-terraform",
 	"dense-analysis/ale",
 	'pocco81/auto-save.nvim',
 	-- {
@@ -126,8 +126,7 @@ local plugins = {
 	"nanotee/zoxide.vim",
 	"hrsh7th/nvim-cmp",
 	"hrsh7th/cmp-path",
-	-- 'neovim/nvim-lspconfig',
-	-- 'hrsh7th/cmp-nvim-lsp',
+	'hrsh7th/cmp-nvim-lsp',
 }
 
 require("lazy").setup(plugins, opts)

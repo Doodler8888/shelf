@@ -1,25 +1,31 @@
 #!/usr/bin/env raku
 
 
-qqx/git add . && git commit -m "n" && git push/;
+sub MAIN(Bool :l(:$list) = False) {
+  qqx/git add . && git commit -m "n" && git push/ if $list == False;
 
-my @messages;
+  my @messages;
 
-my @repos = shell("find ~/ -type d -name '.git' -not -path '*/.source/*' -not -path '*/.antigen/*' -not -path '*/.cargo/*' -not -path '*/elpaca/*' -not -path '*/.cache/*' -not -path '*/.local/*' -not -path '*/.share/*' -printf '%p\n' 2>/dev/null", :out)
-.out.slurp(:close).lines.map(*.chomp); # Apply chomp to each line
+  my @repos = shell("find ~/ -type d -name '.git' -not -path '*/.source/*' -not -path '*/.antigen/*' -not -path '*/.cargo/*' -not -path '*/elpaca/*' -not -path '*/.cache/*' -not -path '*/.local/*' -not -path '*/.share/*' -printf '%p\n' 2>/dev/null", :out)
+  .out.slurp(:close).lines.map(*.chomp); # Apply chomp to each line
 
-for @repos -> $repo-dir {
-  my $status = shell("git -C {$repo-dir.IO.parent} status --porcelain", :out).out.slurp(:close);
+  for @repos -> $repo-dir {
+    my $status = shell("git -C {$repo-dir.IO.parent} status --porcelain", :out).out.slurp(:close);
 
-  if $status.chars {
-    my $last-commit-date = shell("git -C {$repo-dir.IO.parent} log -1 --format=%cd", :out)
-    .out.slurp(:close).chomp;
-    my $message = "\nRepository with uncommitted changes: {$repo-dir.IO.parent}\n"
-    ~ "Last commit date: $last-commit-date";
-    # say $message;
-    @messages.push($message);
+    if $status.chars {
+      my $last-commit-date = shell("git -C {$repo-dir.IO.parent} log -1 --format=%cd", :out)
+      .out.slurp(:close).chomp;
+      my $message = "\nRepository with uncommitted changes: {$repo-dir.IO.parent}\n"
+      ~ "Last commit date: $last-commit-date";
+      @messages.push($message);
+    }
   }
+
+  say @messages.join("\n");
+  say "";
 }
 
-say @messages.join("\n");
-say "\n";
+
+# multi MAIN() {
+#
+# }

@@ -5,11 +5,12 @@ require("auto-save").setup({
 
         -- Add the filetype of oil.nvim buffers here
         local oil_filetype = "oil"
+        local sql_filetype = "sql"
 
         -- If the buffer's filetype is oil_filetype, do not save
-        if fn.getbufvar(buf, "&filetype") == oil_filetype then
-            return false
-        end
+	if fn.getbufvar(buf, "&filetype") == oil_filetype or fn.getbufvar(buf, "&filetype") == sql_filetype then
+	  return false
+	end
 
         -- Your existing condition logic can remain here if there's more
         if fn.getbufvar(buf, "&modifiable") == 1 then
