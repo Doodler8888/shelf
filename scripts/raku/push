@@ -31,7 +31,7 @@ multi MAIN(Bool :a(:$all)!) {
   .out.slurp(:close).lines.map(*.chomp); # Apply chomp to each line
 
   for @repos -> $repo-dir {
-    say "Processing: $repo-dir ..."; # Inspect the path
+    say "Processing: $repo-dir .."; # Inspect the path
     # qqx/cd "{$repo-dir}/.." && git add . && git commit -m "n" && git push/;
     qqx/cd "{$repo-dir.IO.dirname}" && git add . && git commit -m "n" && git push/;
     say "--------------------------------------------------------------------";
