@@ -6,7 +6,8 @@ sub push-all($dir = ".") { # $dir has a default value of "." (current directory)
     qqx/cd "$dir" && git add . && git commit -m "n"/; # Use $dir
 
     for @remote_repos -> $repo {
-        qqx/git push $repo/;  
+      say "This is the dir variable: $dir";
+      qqx/git push $repo/;  
     }
 }
 
