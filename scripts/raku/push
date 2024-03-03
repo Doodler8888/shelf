@@ -1,14 +1,14 @@
 #!/usr/bin/env raku
 
-sub push-all($dir = ".") { # $dir has a default value of "." (current directory)
+sub push-all($dir = ".") {
     my @remote_repos = shell("cd $dir && git remote -v | grep 'push'", :out)
         .out.slurp(:close).lines.map({ .split(/\s+/)[0] });
-    qqx/cd "$dir" && git add . && git commit -m "n"/; # Use $dir
+    qqx/cd "$dir" && git add . && git commit -m "n"/;
 
     for @remote_repos -> $repo {
       say "This is the dir variable: $dir";
       say "This is a remote repo name: $repo";
-      qqx/git push $repo/;  
+      qqx/cd $dir && git push $repo/;  
     }
 }
 
