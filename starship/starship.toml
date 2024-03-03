@@ -37,8 +37,8 @@ disabled = true
 disabled = true
 
 [python]
-disabled = true
-# format = "[$version( \\($virtualenv\\) )]($style)"
+# disabled = true
+format = "[$version( \\($virtualenv\\) )]($style)"
 
 [nodejs]
 disabled = true

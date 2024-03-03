@@ -1,17 +1,41 @@
 #!/usr/bin/env raku
 
+sub push-all($dir = ".") { # $dir has a default value of "." (current directory)
+    my @remote_repos = shell("git remote -v | grep 'push'", :out)
+        .out.slurp(:close).lines.map({ .split(/\s+/)[0] });
+    qqx/cd "$dir" && git add . && git commit -m "n"/; # Use $dir
+
+    for @remote_repos -> $repo {
+        qqx/git push $repo/;  
+    }
+}
+
+# sub push-all() {
+#   my @remote_repos = shell("git remote -v | grep 'push'", :out)
+#   .out.slurp(:close).lines.map({ .split(/\s+/)[0] });
+#   qqx/git add . && git commit -m "n"/;
+#
+#   for @remote_repos -> $repo {
+#     qqx/git push $repo/;
+#     # my $command = "git add . && git commit -m 'n' && git push $repo";
+#     # say $command;
+#   }
+# }
+
+# sub MAIN() {
+#   push-all;
+# }
 
 multi MAIN(Bool :l(:$list) = False) {
-  qqx/git add . && git commit -m "n" && git push/ if $list == False;
+  # qqx/git add . && git commit -m "n" && git push/ if $list == False;
+  push-all() if $list == False;
 
   my @messages;
-
   my @repos = shell("find ~/ -type d -name '.git' -not -path '*/.source/*' -not -path '*/.antigen/*' -not -path '*/.cargo/*' -not -path '*/elpaca/*' -not -path '*/.cache/*' -not -path '*/.local/*' -not -path '*/.share/*' -printf '%p\n' 2>/dev/null", :out)
   .out.slurp(:close).lines.map(*.chomp); # Apply chomp to each line
 
   for @repos -> $repo-dir {
     my $status = shell("git -C {$repo-dir.IO.parent} status --porcelain", :out).out.slurp(:close);
-
     if $status.chars {
       my $last-commit-date = shell("git -C {$repo-dir.IO.parent} log -1 --format=%cd", :out)
       .out.slurp(:close).chomp;
@@ -28,13 +52,13 @@ multi MAIN(Bool :l(:$list) = False) {
 
 multi MAIN(Bool :a(:$all)!) {
   my @repos = shell("find ~/ -type d -name '.git' -not -path '*/.source/*' -not -path '*/.antigen/*' -not -path '*/.cargo/*' -not -path '*/elpaca/*' -not -path '*/.cache/*' -not -path '*/.local/*' -not -path '*/.share/*' -printf '%p\n' 2>/dev/null", :out)
-  .out.slurp(:close).lines.map(*.chomp); # Apply chomp to each line
+  .out.slurp(:close).lines.map(*.chomp);
 
   for @repos -> $repo-dir {
-    say "Processing: $repo-dir..."; # Inspect the path
-    # qqx/cd "{$repo-dir}/.." && git add . && git commit -m "n" && git push/;
-    qqx/cd "{$repo-dir.IO.dirname}" && git add . && git commit -m "n" && git push/;
-    say "--------------------------------------------------------------------";
+    say "Processing: $repo-dir ...";
+    # qqx/cd "{$repo-dir.IO.dirname}" && git add . && git commit -m "n" && git push/;
+    push-all($repo-dir.IO.dirname);
+    say "---------------------------------------------------------------------";
     }
 }
 
