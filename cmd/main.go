@@ -54,4 +54,3 @@ func main() {
 	b.Start()
 }
 
-// test
