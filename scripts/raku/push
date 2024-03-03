@@ -7,6 +7,7 @@ sub push-all($dir = ".") { # $dir has a default value of "." (current directory)
 
     for @remote_repos -> $repo {
       say "This is the dir variable: $dir";
+      say "This is a remote repo name: $repo";
       qqx/git push $repo/;  
     }
 }
