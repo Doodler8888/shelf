@@ -6,37 +6,19 @@ sub push-all($dir = ".") {
     qqx/cd "$dir" && git add . && git commit -m "n"/;
 
     for @remote_repos -> $repo {
-      say "This is the dir variable: $dir";
-      say "This is a remote repo name: $repo";
       qqx/cd $dir && git push $repo/;  
+      say "---------------------------------------------------------------------";
     }
 }
 
-# sub push-all() {
-#   my @remote_repos = shell("git remote -v | grep 'push'", :out)
-#   .out.slurp(:close).lines.map({ .split(/\s+/)[0] });
-#   qqx/git add . && git commit -m "n"/;
-#
-#   for @remote_repos -> $repo {
-#     qqx/git push $repo/;
-#     # my $command = "git add . && git commit -m 'n' && git push $repo";
-#     # say $command;
-#   }
-# }
-
-# sub MAIN() {
-#   push-all;
-# }
 
 multi MAIN(Bool :l(:$list) = False) {
-  # qqx/git add . && git commit -m "n" && git push/ if $list == False;
-
   my @messages;
   my @repos = shell("find ~/ -type d -name '.git' -not -path '*/.source/*' -not -path '*/.antigen/*' -not -path '*/.cargo/*' -not -path '*/elpaca/*' -not -path '*/.cache/*' -not -path '*/.local/*' -not -path '*/.share/*' -printf '%p\n' 2>/dev/null", :out)
   .out.slurp(:close).lines.map(*.chomp); # Apply chomp to each line
+  push-all() if $list == False;
 
   for @repos -> $repo-dir {
-    push-all($repo-dir) if $list == False;
     my $status = shell("git -C {$repo-dir.IO.parent} status --porcelain", :out).out.slurp(:close);
     if $status.chars {
       my $last-commit-date = shell("git -C {$repo-dir.IO.parent} log -1 --format=%cd", :out)
@@ -58,12 +40,18 @@ multi MAIN(Bool :a(:$all)!) {
 
   for @repos -> $repo-dir {
     say "Processing: $repo-dir ...";
-    # qqx/cd "{$repo-dir.IO.dirname}" && git add . && git commit -m "n" && git push/;
     push-all($repo-dir.IO.dirname);
     say "---------------------------------------------------------------------";
     }
 }
 
+multi MAIN(Bool :h(:$help)!) {
+        say "Usage: script-name [options]\n";
+        say "Options:";
+        say " --list  (-l) List all local repositories with uncommitted changes";
+        say " --all   (-a) Push changes to all repositories";
+        say " --usage (-u) Usage description";
+}
 
 # {$repo-dir.IO.dirname} - originally i go into a .git directory, with
 # 'IO.dirname' i go to a directory of a .git directory instead.
