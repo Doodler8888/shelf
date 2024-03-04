@@ -6,8 +6,8 @@ sub push-all($dir = ".") {
     qqx/cd "$dir" && git add . && git commit -m "n"/;
 
     for @remote_repos -> $repo {
-      qqx/cd $dir && git push $repo/;  
-      say "---------------------------------------------------------------------";
+      qqx/cd $dir && git push $repo\n/;  
+      # say "---------------------------------------------------------------------";
     }
 }
 
