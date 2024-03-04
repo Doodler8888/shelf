@@ -9,7 +9,7 @@ stages:
 test:
   stage: test
   script:
-    - go ../../test ./... # Executes Go tests in the current directory and all its subdirectories.
+    - go test ../../... # Executes Go tests in the current directory and all its subdirectories.
 
 # # Build Stage
 # build:
