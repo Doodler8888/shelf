@@ -11,7 +11,7 @@ import (
 func main() {
 	var (
 		port      = "8080"
-		publicURL = "https://2722-178-121-35-10.ngrok-free.app" // you must add it to your config vars
+		publicURL = "https://65bd-178-121-38-255.ngrok-free.app" // you must add it to your config vars
 		token     = os.Getenv("SHELF_TOKEN")                    // you must add it to your config vars
 	)
 
