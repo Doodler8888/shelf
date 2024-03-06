@@ -1,8 +1,9 @@
+---
 image: golang:1.22-alpine3.19  # Since your runner uses the same base image
 
 stages:
   - test
-  # - build
+  - build
   # - package
 
 # Test Stage
@@ -11,12 +12,13 @@ test:
   script:
     - go test ./... # Executes Go tests in the current directory and all its subdirectories.
 
-# # Build Stage
-# build:
-#   stage: build
-#   script:
-#     - go build -o my-go-app # Builds your Go code and produces an executable binary file named my-go-app.
-#
+# Build Stage
+build:
+  stage: build
+  script:
+    - go build -o shelf # Builds your Go code and produces an executable binary file named my-go-app.
+...
+
 # # Package Stage (Docker)
 # package:
 #   stage: package
