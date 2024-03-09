@@ -9,7 +9,7 @@ import (
 
 var testDB *bun.DB // Your database connection for testing
 
-func TestMain(m *testing.M) {
+func TestMain2(m *testing.M) {
 	// ... setup for your test database connection ...
 	code := m.Run()
 	// ... teardown code to close connection ...

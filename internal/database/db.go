@@ -25,7 +25,7 @@ func InitDB() {
     //         " user=" + os.Getenv("SHELF_DB_USER") + " password=" + os.Getenv("DB_PASS") + 
     //         " dbname=" + os.Getenv("SHELF_DB_NAME") + " sslmode=disable"
 
-    dsn := "host=" + os.Getenv("SHELF_DB_HOST") + " port=" + os.Getenv("DB_PORT") + 
+    dsn := "postgres://host=" + os.Getenv("SHELF_DB_HOST") + " port=" + os.Getenv("DB_PORT") + 
             " user=" + os.Getenv("SHELF_DB_USER") + " password=" + os.Getenv("DB_PASS") + 
             " dbname=" + os.Getenv("TEST_SHELF_DB_NAME") + " sslmode=disable"
 
