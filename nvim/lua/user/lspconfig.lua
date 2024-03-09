@@ -48,10 +48,12 @@ lspconfig.hls.setup{
     -- }
 }
 
+
 -- Python
 
-lspconfig.pyright.setup{
+lspconfig.pyright.setup {
 }
+
 
 -- Ansible/Yaml
 
@@ -118,15 +120,18 @@ vim.api.nvim_create_autocmd("FileType", {
 })
 
 
--- Nushell
+-- Disable auto-wrapping on specified file types
 
 vim.api.nvim_create_autocmd("FileType", { -- Had an unexpected behavior with the custom nu type, where the autoformatiing was getting triggered on the 80th character.
-  pattern = "nu",
+  pattern = { "nu", "python" },
   callback = function()
     -- Remove 't' from formatoptions to prevent auto text wrapping while typing
     vim.opt_local.formatoptions:remove("t")
   end,
 })
+
+
+-- Nushell
 
 vim.cmd [[
   autocmd BufNewFile,BufRead *.nu setfiletype nu

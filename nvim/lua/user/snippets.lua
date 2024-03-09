@@ -10,8 +10,8 @@ function _G.insert_ansible_builtin()
   vim.api.nvim_win_set_cursor(0, {cursor[1], new_cursor_pos})
 end
 
-vim.api.nvim_set_keymap('n', '<Leader>oa', ':lua insert_ansible_builtin()<CR>', {noremap = true})
-vim.api.nvim_set_keymap('i', '<C-a>', '<Cmd>lua insert_ansible_builtin()<CR>', {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n', '<Leader>oa', ':lua insert_ansible_builtin()<CR>', {noremap = true})
+-- vim.api.nvim_set_keymap('i', '<C-a>', '<Cmd>lua insert_ansible_builtin()<CR>', {noremap = true, silent = true})
 
 
 function _G.insert_general_community()
@@ -22,7 +22,7 @@ function _G.insert_general_community()
   vim.api.nvim_win_set_cursor(0, cursor)
 end
 
-vim.api.nvim_set_keymap('n', '<Leader>oc', ':lua insert_general_community()<CR>', {noremap = true})
+-- vim.api.nvim_set_keymap('n', '<Leader>oc', ':lua insert_general_community()<CR>', {noremap = true})
 
 
 vim.keymap.set(

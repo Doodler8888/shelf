@@ -14,7 +14,4 @@ require('flash').setup {
     }
 }
 
--- vim.api.nvim_set_keymap('n', 'S', '<cmd>lua require("flash").jump({mode = "search"})<CR>', {noremap = true, silent = true})
-
-vim.api.nvim_set_keymap('n', '\\', '/', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '|', '?', { noremap = true, silent = true })
+-- vim.api.nvim_set_keymap('n', '\\', '<cmd>lua require("flash").jump({mode = "search"})<CR>', {noremap = true, silent = true})

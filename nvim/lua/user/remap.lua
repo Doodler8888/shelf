@@ -11,11 +11,8 @@ vim.keymap.set("n", "<C-b>", "<C-b>zz")
 vim.keymap.set("n", "n", "nzzzv")
 vim.keymap.set("n", "N", "Nzzzv")
 
--- Void a pasted upon word
-vim.keymap.set("x", "<C-y>", [["_dP]])
-
 -- Start replacing the word that you was on
-vim.keymap.set("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
+vim.keymap.set("n", "<leader>rr", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 -- Make a file executable
 vim.keymap.set("n", "<leader>xx", "<cmd>!chmod +x %<CR>", { silent = true })
@@ -45,8 +42,12 @@ vim.api.nvim_set_keymap('v', '<', '<gv', { noremap = true, silent = true })
 -- Motion shortcuts
 vim.api.nvim_set_keymap('i', '<C-f>', '<Esc>la', {noremap = true})
 vim.api.nvim_set_keymap('i', '<C-b>', '<Esc>ha', {noremap = true})
+-- vim.api.nvim_set_keymap('i', '<M-l>', '<Esc>la', {noremap = true})
+-- vim.api.nvim_set_keymap('i', '<M-h>', '<Esc>ha', {noremap = true})
 vim.api.nvim_set_keymap('i', '<M-w>', '<Esc> wi', {noremap = true})
+vim.api.nvim_set_keymap('i', '<M-W>', '<Esc> Wi', {noremap = true})
 vim.api.nvim_set_keymap('i', '<M-b>', '<Esc> bi', {noremap = true})
+vim.api.nvim_set_keymap('i', '<M-B>', '<Esc> Bi', {noremap = true})
 vim.api.nvim_set_keymap('i', '<M-i>', '<Esc>I', {noremap = true})
 vim.api.nvim_set_keymap('i', '<M-a>', '<Esc>A', {noremap = true})
 
@@ -54,10 +55,10 @@ vim.api.nvim_set_keymap('i', '<M-a>', '<Esc>A', {noremap = true})
 vim.api.nvim_set_keymap('n', '<Leader>tn', ':tabnew<CR>', {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<Leader>tx', ':tabclose<CR>', {noremap = true, silent = true})
 
--- Move between tabs with 
-for i = 1, 9 do
-  vim.api.nvim_set_keymap('n', '<leader>'..i, i..'gt', {noremap = true, silent = true})
-end
+-- -- Move between tabs with 
+-- for i = 1, 9 do
+--   vim.api.nvim_set_keymap('n', '<leader>'..i, i..'gt', {noremap = true, silent = true})
+-- end
 
 -- vim.api.nvim_set_keymap('n', '<Leader>ee', ':SudaWrite ', {noremap = true})
 
@@ -73,3 +74,11 @@ vim.api.nvim_set_keymap('n', '<Esc><Esc>', ':noh<CR><Esc>', { noremap = true, si
 vim.api.nvim_set_keymap('t', '<C-c><C-c>', [[<C-\><C-n>:bd!<CR>]], {noremap = true, silent = true})
 vim.api.nvim_set_keymap('n', '<C-c><C-c>', [[:bd!<CR>]], {noremap = true, silent = true})
 vim.api.nvim_set_keymap('t', '<C-w>c', '<C-\\><C-n>:q<CR>', {noremap = true, silent = true})
+
+vim.api.nvim_set_keymap('n', '<Leader>uu', ':UndotreeToggle<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '<Leader>bb', ':DBUIToggle<CR>', {noremap = true, silent = true})
+
+-- Navigate to the top-right split
+vim.api.nvim_set_keymap('n', '<C-w>y', '<Cmd>wincmd t<Bar>wincmd l<CR>', { noremap = true, silent = true })
+-- Navigate to the bottom-left split
+-- vim.api.nvim_set_keymap('n', '<C-w>bl', '<Cmd>wincmd b<Bar>wincmd h<CR>', { noremap = true, silent = true })

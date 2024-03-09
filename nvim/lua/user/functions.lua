@@ -129,3 +129,25 @@ end
 -- You can bind the function to a command in Neovim
 vim.api.nvim_create_user_command('ShowMessages', ShowMessagesInNewBuffer, {})
 vim.api.nvim_set_keymap('n', '<Leader>mm', ':ShowMessages<CR>', {noremap = true, silent = true})
+
+
+-- Function to temporarily disable auto-indentation, insert a new line below, and then re-enable auto-indentation
+function _G.insert_new_line_below()
+ local auto_indent = vim.api.nvim_buf_get_option(0, 'autoindent')
+ vim.api.nvim_buf_set_option(0, 'autoindent', false)
+ vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('o<Esc>i', true, true, true), 'n', true)
+ vim.api.nvim_buf_set_option(0, 'autoindent', auto_indent)
+end
+
+-- Function to temporarily disable auto-indentation, insert a new line above, and then re-enable auto-indentation
+function _G.insert_new_line_above()
+ local auto_indent = vim.api.nvim_buf_get_option(0, 'autoindent')
+ vim.api.nvim_buf_set_option(0, 'autoindent', false)
+ vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('O<Esc>i', true, true, true), 'n', true)
+ vim.api.nvim_buf_set_option(0, 'autoindent', auto_indent)
+end
+
+-- Map <leader>o to insert a new line below without auto-indentation
+vim.api.nvim_set_keymap('n', 'go', ':lua insert_new_line_below()<CR>', {noremap = true, silent = true})
+-- Map <leader>O to insert a new line above without auto-indentation
+vim.api.nvim_set_keymap('n', 'gO', ':lua insert_new_line_above()<CR>', {noremap = true, silent = true})

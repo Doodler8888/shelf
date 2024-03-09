@@ -3,6 +3,25 @@ require("telescope").setup({
 		find_command = { "fd", "--type=f", "--hidden", "--exclude=.git", "--exclude=node_modules" },
 	},
 	extensions = {
+		["ui-select"] = {
+			require("telescope.themes").get_dropdown {
+				-- even more opts
+			}
+
+			-- pseudo code / specification for writing custom displays, like the one
+			-- for "codeactions"
+			-- specific_opts = {
+				--   [kind] = {
+					--     make_indexed = function(items) -> indexed_items, width,
+						--     make_displayer = function(widths) -> displayer
+							--     make_display = function(displayer) -> function(e)
+								--     make_ordinal = function(e) -> string
+									--   },
+									--   -- for example to disable the custom builtin "codeactions" display
+									--      do the following
+									--   codeactions = false,
+									-- }
+								},
 		fzf = {
 			fuzzy = true, -- false will only do exact matching
 			override_generic_sorter = true, -- override the generic sorter
@@ -18,12 +37,13 @@ require("telescope").setup({
 })
 
 require("telescope").load_extension("fzf")
+require("telescope").load_extension("ui-select")
 -- require("telescope").load_extension("persisted")
 -- require('telescope').load_extension('zoxide')
 
 vim.api.nvim_set_keymap(
 	"n",
-	"<leader>tf",
+	"<leader>ff",
 	[[<cmd>lua require('telescope.builtin').find_files({ hidden = true, sort = true })<CR>]],
 	{ noremap = true, silent = true }
 )
@@ -35,7 +55,7 @@ vim.api.nvim_set_keymap(
 -- )
 vim.api.nvim_set_keymap(
 	"n",
-	"<leader>ts",
+	"<leader>fs",
 	[[<cmd>lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep > ") })<CR>]],
 	{ noremap = true, silent = true }
 )
@@ -101,7 +121,7 @@ end
 -- Bind the new function to a keymapping
 vim.api.nvim_set_keymap(
 	"n",
-	"<leader>th",
+	"<leader>fh",
 	"<Cmd>lua Find_files_and_change_dir()<CR>",
 	{ noremap = true, silent = true }
 )

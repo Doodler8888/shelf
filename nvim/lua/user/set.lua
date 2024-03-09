@@ -52,10 +52,5 @@ vim.cmd([[
   command! StopAllLSP lua for _, client in ipairs(vim.lsp.get_active_clients()) do vim.lsp.stop_client(client) end
 ]])
 
--- -- Equalize window sizes after Neovim starts
--- vim.api.nvim_create_autocmd("VimEnter", {
---     pattern = "*",
---     command = "horizontal wincmd =",
--- })
-
--- vim.cmd([[autocmd BufWritePre * lua require('conform').format()]])
+-- vim.cmd([[ set statusline=%f\ %{winnr()} ]])
+vim.api.nvim_set_option('statusline', '%{winnr()} %f')

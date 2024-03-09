@@ -146,13 +146,13 @@ fzf-nvim() {
 zle -N fzf-nvim
 bindkey '^E' fzf-nvim
 
-
 ss() {
-    local session
-    session=$(zellij list-sessions | fzf --height=10 --layout=reverse --border --ansi)
-    if [[ -n "$session" ]]; then
-        zellij attach "$(echo "$session" | awk '{print $1}')"
-    fi
+  # set -x - debugging
+  local session
+  session=$(zellij list-sessions | fzf --height=10 --layout=reverse --border --ansi)
+  if [[ -n "$session" ]]; then
+    zellij attach "$(echo "$session" | awk '{print $1}')"
+  fi
 }
 zle -N ss
 bindkey '^S' ss

@@ -1,9 +1,11 @@
 -- At a minimum, you will need to set up some formatters by filetype
+
 require("conform").setup({
 	formatters_by_ft = {
 		-- lua = { "stylua" },
 		rust = { "rustfmt" },
 		go = { "gofmt" },
+		python = { "black" },
 	},
 })
 

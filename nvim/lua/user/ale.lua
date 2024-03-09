@@ -17,6 +17,7 @@ vim.g.ale_linters = {
   yaml = {'remove-trailing-spaces'},
   terraform = {},
   rust = {},
+  python = {'flake8'},
   ansible = {'remove-trailing-spaces'},
 }
 
@@ -26,13 +27,4 @@ vim.g.ale_linters_ignore = {
 
 vim.g.ale_lint_on_text_changed = 'always'
 
-
--- Available Linters: ['bingo', 'cspell', 'gobuild', 'gofmt', 'golangci-lint',
--- 'gopls', 'gosimple', 'gotype', 'govet', 'golangserver', 'revive',
--- 'staticcheck']
---    Linter Aliases:
--- 'gobuild' -> ['go build']
--- 'govet' -> ['go vet']
---   Enabled Linters: ['gofmt', 'golangci-lint', 'gopls', 'govet']
---   Ignored Linters: []
-
+vim.g.ale_python_flake8_options = '--max-line-length=100 --ignore=E203,W503'

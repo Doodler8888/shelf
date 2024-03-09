@@ -38,11 +38,11 @@ vim.api.nvim_set_keymap("n", "<leader>fr", ":FzfLua files cwd=/<CR>", { noremap 
 vim.api.nvim_set_keymap("n", "<leader>fs", ":FzfLua grep_project<CR>", { noremap = true })
 vim.api.nvim_set_keymap("n", "<leader>fb", ":FzfLua buffers<CR>", { noremap = true })
 
-vim.keymap.set({ "i" }, "<C-y>", function()
-	require("fzf-lua").complete_path({
-		cmd = "fd --hidden . / --follow --exclude .git --exclude .snapshots --exclude opt --exclude lib --exclude lib64 --exclude mnt --exclude proc --exclude run --exclude sbin --exclude srv --exclude sys --exclude tmp",
-	})
-end, { silent = true, desc = "Fuzzy complete path" })
+-- vim.keymap.set({ "i" }, "<C-y>", function()
+-- 	require("fzf-lua").complete_path({
+-- 		cmd = "fd --hidden . / --follow --exclude .git --exclude .snapshots --exclude opt --exclude lib --exclude lib64 --exclude mnt --exclude proc --exclude run --exclude sbin --exclude srv --exclude sys --exclude tmp",
+-- 	})
+-- end, { silent = true, desc = "Fuzzy complete path" })
 
 vim.keymap.set({ "i" }, "<C-l>", function()
 	-- Get the current line and cursor position
@@ -133,4 +133,4 @@ vim.cmd([[command! -nargs=* CurrentDirs lua _G.fzf_current_dirs()]])
 -- Map our providers to keybinds
 vim.keymap.set("n", "<Leader>dh", _G.fzf_home_dirs)
 vim.keymap.set("n", "<Leader>dr", _G.fzf_root_dirs)
-vim.keymap.set("n", "<Leader>dc", _G.fzf_current_dirs)
+vim.keymap.set("n", "<Leader>df", _G.fzf_current_dirs)

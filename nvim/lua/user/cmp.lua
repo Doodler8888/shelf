@@ -14,19 +14,19 @@ cmp.setup {
   },
   window = {
     completion = cmp.config.window.bordered(),
-    -- documentation = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
   },
 }
 
-function _G.toggle_cmp()
- if cmp.visible() then
-    cmp.close()
- else
-    cmp.complete()
- end
-end
-
-vim.api.nvim_set_keymap('i', '<C-x><C-c>', '<cmd>lua toggle_cmp()<CR>', {expr = true, noremap = true})
+-- function _G.toggle_cmp()
+--  if cmp.visible() then
+--     cmp.close()
+--  else
+--     cmp.complete()
+--  end
+-- end
+--
+-- vim.api.nvim_set_keymap('i', '<C-x><C-c>', '<cmd>lua toggle_cmp()<CR>', {expr = true, noremap = true})
 
 
 -- -- cmdline setup

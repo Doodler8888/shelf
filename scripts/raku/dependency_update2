@@ -16,6 +16,7 @@ sub MAIN($filename) {
 
   my @lines = $file-content.lines;
   for %versions.keys -> $lib {
+  my @lines = 
       my $old-version = %versions{$lib}<old-version>;
       my $new-version = %versions{$lib}<new-version>;
 

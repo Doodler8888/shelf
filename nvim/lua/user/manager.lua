@@ -24,21 +24,16 @@ local plugins = {
 		"nvim-telescope/telescope-fzf-native.nvim",
 		build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
 	},
+	"nvim-telescope/telescope-ui-select.nvim",
 	"rose-pine/neovim",
 	"anuvyklack/hydra.nvim",
 	"folke/flash.nvim",
-	-- "backdround/improved-ft.nvim",
 	"ibhagwan/fzf-lua",
 	"stevearc/oil.nvim",
 	"stevearc/conform.nvim",
+	-- "tpope/vim-sleuth",
 	-- 'saecki/crates.nvim',
 	'Raku/vim-raku',
-	-- {
-	--   "kndndrj/nvim-dbee",
-	--   dependencies = {
-	--     "MunifTanjim/nui.nvim",
-	--   },
-	-- },
 	{
 	  'kristijanhusak/vim-dadbod-ui',
 	  dependencies = {
@@ -98,6 +93,8 @@ local plugins = {
 	{
 		"neovim/nvim-lspconfig",
 	},
+	'nat-418/boole.nvim',
+	'mbbill/undotree',
 	{
 	  "nvim-treesitter/nvim-treesitter",
 	  config = function()
@@ -111,10 +108,7 @@ local plugins = {
 	},
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
-		-- after = "nvim-treesitter",
-		-- requires = "nvim-treesitter/nvim-treesitter",
 	},
-	-- "hashivim/vim-terraform",
 	"dense-analysis/ale",
 	'pocco81/auto-save.nvim',
 	-- {
@@ -124,7 +118,23 @@ local plugins = {
 	--   end
 	-- },
 	"nanotee/zoxide.vim",
-	"hrsh7th/nvim-cmp",
+	{
+	  "hrsh7th/nvim-cmp",
+	 --  dependencies = {
+	 --    {
+	 --      'L3MON4D3/LuaSnip',
+	 --      build = (function()
+		-- -- Build Step is needed for regex support in snippets
+		-- -- This step is not supported in many windows environments
+		-- -- Remove the below condition to re-enable on windows
+		-- if vim.fn.has 'win32' == 1 or vim.fn.executable 'make' == 0 then
+		--   return
+		-- end
+		-- return 'make install_jsregexp'
+	 --      end)(),
+	 --    },
+	 --  },
+	},
 	"hrsh7th/cmp-path",
 	'hrsh7th/cmp-nvim-lsp',
 }

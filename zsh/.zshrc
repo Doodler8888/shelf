@@ -25,7 +25,9 @@ HISTSIZE=2000
 SAVEHIST=2000
 # precmd() {}
 
-bindkey -v
+autoload edit-command-line; zle -N edit-command-line
+bindkey -M vicmd gv edit-command-line
+# bindkey -v
 bindkey "^?" backward-delete-char
 
 alias fnc="cd ~/.dotfiles/zsh/ && nvim functions.sh"
@@ -99,7 +101,7 @@ alias sl='exa'
 alias la='exa -lah'
 alias ld='exa -ld'
 alias ls.='exa -a | grep -E "^\."'
-alias tree='exa -T'
+alias tree='exa -Ta --ignore-glob='.git''
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -204,6 +206,7 @@ zstyle ':autocomplete:*' ignored-input '##'
 #     swww img "$HOME/Downloads/pictures/68747470733a2f2f692e696d6775722e636f6d2f4c65756836776d2e676966.gif"
 # fi
 
+eval "$(zoxide init --cmd cd zsh)"
 eval "$(starship init zsh)"
 
 # if [ -z "$SSH_AUTH_SOCK" ] ; then

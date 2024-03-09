@@ -6,8 +6,8 @@ sub push-all($dir = ".") {
     qqx/cd "$dir" && git add . && git commit -m "n"/;
 
     for @remote_repos -> $repo {
-      qqx/cd $dir && git push $repo\n/;  
-      # say "---------------------------------------------------------------------";
+      qqx/cd $dir && git push $repo/;  
+      say "";
     }
 }
 
@@ -46,7 +46,7 @@ multi MAIN(Bool :a(:$all)!) {
 }
 
 multi MAIN(Bool :h(:$help)!) {
-        say "Usage: script-name [options]\n";
+        say "$*USAGE\n";
         say "Options:";
         say " --list  (-l) List all local repositories with uncommitted changes";
         say " --all   (-a) Push changes to all repositories";
