@@ -5,6 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/uptrace/bun"
 	"github.com/uptrace/bun/dialect/pgdialect"
@@ -17,17 +18,18 @@ type Book struct {
 	ID            int64                       `bun:",pk,autoincrement"`
 	Title         string                      `bun:",notnull"`
 	Author        string
-	FilePath      string `bun:",nullzero"`
+	FilePath      string    `bun:",nullzero"`
+	Uploaded_at   time.Time `bun:",notnull"`
 }
 
 var db *bun.DB
 
-// InitDB s/e
 func InitDB() {
 	host := os.Getenv("SHELF_DB_HOST")
 	port := os.Getenv("SHELF_DB_PORT")
 	user := os.Getenv("SHELF_DB_USER")
 	password := os.Getenv("SHELF_DB_PASS")
+	// dbname := os.Getenv("SHELF_DB_NAME")
 	dbname := os.Getenv("TEST_SHELF_DB_NAME")
 
 	// Correctly format the DSN string
@@ -61,6 +63,10 @@ func InitDB() {
 // FilePath stringbun:",nullzero"`
 //
 // ",nullzero": Allows the ‘FilePath’ column to store NULL in the database. If no file path is provided, Bun will handle inserting a zero value for the string conveniently.
-// Why 'Author' is Plain
 //
 // The  Author string  line has no Bun tags because you likely want to accept empty author fields in the database. By default, Go strings can already be NULL or empty, so no special tag is needed for Bun to handle this.
+
+// Why Use nullzero on FilePath but not on Author?
+// An empty string ("")  could be a potentially valid filepath in certain
+// scenarios. So not using nullzero could lead to an unintended empty filepath
+// stored in the database.
