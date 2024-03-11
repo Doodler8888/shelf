@@ -13,8 +13,8 @@ vim.g.ale_linters = {
   lua = {},
   haskell = {},
   nim = {},
-  go = {'revive'},
-  yaml = {'pint'},
+  go = {},
+  yaml = {},
   terraform = {},
   rust = {},
   python = {'flake8'},
@@ -28,5 +28,3 @@ vim.g.ale_linters_ignore = {
 vim.g.ale_lint_on_text_changed = 'always'
 
 vim.g.ale_python_flake8_options = '--max-line-length=100 --ignore=E203,W503'
--- vim.g.ale_yaml_pint_options = 'lint $*'
--- vim.g.ale_yaml_pint_command = 'pint'

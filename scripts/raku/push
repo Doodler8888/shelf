@@ -7,7 +7,7 @@ sub push-all($dir = ".") {
 
     for @remote_repos -> $repo {
       qqx/cd $dir && git push $repo/;  
-      say "";
+      # say "";
     }
 }
 
@@ -41,7 +41,7 @@ multi MAIN(Bool :a(:$all)!) {
   for @repos -> $repo-dir {
     say "Processing: $repo-dir ...";
     push-all($repo-dir.IO.dirname);
-    # say "---------------------------------------------------------------------";
+    say "---------------------------------------------------------------------";
     }
 }
 
