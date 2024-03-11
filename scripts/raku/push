@@ -7,7 +7,7 @@ sub push-all($dir = ".") {
 
   for @remote_repos.kv -> $index, $repo {
       qqx/cd $dir && git push $repo/;
-      say "" if $index > 1;
+      say "" if $index < @remote_repos.elems - 1;
   }
 }
 
