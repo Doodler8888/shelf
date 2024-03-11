@@ -52,5 +52,3 @@ func AskQuestions(b *tb.Bot, chatID int64) (db.Book, error) {
 
 	return book, nil
 }
-
-// test
