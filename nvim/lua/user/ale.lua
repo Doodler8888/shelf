@@ -13,18 +13,20 @@ vim.g.ale_linters = {
   lua = {},
   haskell = {},
   nim = {},
-  go = {'cspell'},
-  yaml = {'remove-trailing-spaces'},
+  go = {'revive'},
+  yaml = {'pint'},
   terraform = {},
   rust = {},
   python = {'flake8'},
-  ansible = {'remove-trailing-spaces'},
+  -- ansible = {''},
 }
 
 vim.g.ale_linters_ignore = {
-  go = {'golangci-lint'},
+  -- go = {'golangci-lint'},
 }
 
 vim.g.ale_lint_on_text_changed = 'always'
 
 vim.g.ale_python_flake8_options = '--max-line-length=100 --ignore=E203,W503'
+-- vim.g.ale_yaml_pint_options = 'lint $*'
+-- vim.g.ale_yaml_pint_command = 'pint'

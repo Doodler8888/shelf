@@ -1,5 +1,0 @@
-[Unit]
-Description=My Raku Script Service
-
-[Service]
-ExecStart=/home/wurfkreuz/.dotfiles/scripts/raku/notify

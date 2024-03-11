@@ -1,37 +1,48 @@
-import json
+import boto3
 import os
-import requests
+from telegram import Bot
 
-# Set up the Telegram Bot API token and chat ID
-TELEGRAM_BOT_TOKEN = os.environ["TELEGRAM_BOT_TOKEN"]
-TELEGRAM_CHAT_ID = os.environ["TELEGRAM_CHAT_ID"]
+# Set up Telegram bot
+telegram_token = os.environ["NOTIFY_TOKEN"]
+chat_id = "388104355"
 
-# Telegram API endpoint for sending messages
-TELEGRAM_API_URL = f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage"
+# Create EC2 client
+ec2 = boto3.client("ec2")
 
 
-def lambda_handler(event, context):
-    # Extract the relevant information from the event
-    service_name = event["service"]
-    usage_data = event["usage"]
+def get_ec2_usage():
+    # Query EC2 usage data
+    instances = ec2.describe_instances()
 
-    # Compose the message to be sent to Telegram
-    message = (
-        f"Service Usage Alert!\n\nService: {service_name}\nUsage Data: {usage_data}"
-    )
+    # Format the usage data into a message
+    message = "AWS Usage Notification:\n\n"
+    message += "EC2 Instances:\n"
+    for reservation in instances["Reservations"]:
+        for instance in reservation["Instances"]:
+            message += f"- Instance ID: {instance['InstanceId']}\n"
+            message += f"  Instance Type: {instance['InstanceType']}\n"
+            message += f"  State: {instance['State']['Name']}\n"
+            message += f"  Launch Time: {instance['LaunchTime']}\n"
+            message += "\n"
 
+    return message
+
+
+def send_notification(bot, message):
     # Send the message to Telegram
-    payload = {"chat_id": TELEGRAM_CHAT_ID, "text": message}
-    response = requests.post(TELEGRAM_API_URL, json=payload)
+    bot.send_message(chat_id=chat_id, text=message)
 
-    # Check if the message was sent successfully
-    if response.status_code == 200:
-        return {
-            "statusCode": 200,
-            "body": json.dumps("Message sent to Telegram successfully"),
-        }
-    else:
-        return {
-            "statusCode": 500,
-            "body": json.dumps("Failed to send message to Telegram"),
-        }
+
+def main():
+    # Create Telegram bot instance
+    bot = Bot(token=telegram_token)
+
+    # Get EC2 usage data
+    usage_message = get_ec2_usage()
+
+    # Send the usage notification to Telegram
+    send_notification(bot, usage_message)
+
+
+if __name__ == "__main__":
+    main()

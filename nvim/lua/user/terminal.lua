@@ -79,4 +79,4 @@ vim.api.nvim_create_user_command('W', function()
     vim.cmd('wqa')
 end, {})
 
-vim.api.nvim_set_keymap('n', '<C-n><C-n>', [[:W<CR>]], {noremap = true, silent = true})
+-- vim.api.nvim_set_keymap('n', '<C-n><C-n>', [[:W<CR>]], {noremap = true, silent = true})

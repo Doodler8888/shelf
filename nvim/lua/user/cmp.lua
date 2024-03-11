@@ -1,16 +1,23 @@
 local cmp = require'cmp'
+local luasnip = require'luasnip'
 
 cmp.setup {
+  snippet = {
+    expand = function(args)
+      luasnip.lsp_expand(args.body)
+    end,
+  },
   sources = {
     { name = 'path', max_item_count = 4 },
     { name = 'nvim_lsp' },
+    { name = 'buffer' },
     { name = 'vim-dadbod-completion' },
-    -- { name = 'cmdline', max_item_count = 4, keyword_pattern = [[^[^w]\w*$]] },
+    { name = 'luasnip' },
   },
   mapping = {
-   ['<C-a>'] = cmp.mapping.confirm({ select = true }),
-   ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
-   ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+    ['<C-a>'] = cmp.mapping.confirm({ select = true }),
+    ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Insert }),
+    ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
   },
   window = {
     completion = cmp.config.window.bordered(),

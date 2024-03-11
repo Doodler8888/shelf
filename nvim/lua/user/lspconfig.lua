@@ -131,6 +131,11 @@ vim.api.nvim_create_autocmd("FileType", { -- Had an unexpected behavior with the
 })
 
 
+-- Gleam
+
+lspconfig.gleam.setup{}
+
+
 -- Nushell
 
 vim.cmd [[
