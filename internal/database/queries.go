@@ -5,12 +5,14 @@ import (
 )
 
 
+// InsertBook inserts file into a database
 func InsertBook(ctx context.Context, newBook *Book) error {
     _, err := db.NewInsert().Model(newBook).Exec(ctx)
     return err // Return potential errors
 }
 
 
+// GetBook gets file from a database
 func GetBook(ctx context.Context, bookID int64) (*Book, error) {
     // Initialize an empty Book struct to hold the result
     book := new(Book) 
