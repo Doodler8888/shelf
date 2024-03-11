@@ -17,7 +17,7 @@ func TestInsertBook(t *testing.T) {
 		Title:    "Test Book",
 		Author:   "Test Author",
 		FilePath: "test/path",
-		Uploaded_at: time.Now(),
+		UploadedAt: time.Now(),
 	}
 
 	err := InsertBook(ctx, newBook)

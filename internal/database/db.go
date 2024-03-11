@@ -19,7 +19,7 @@ type Book struct {
 	Title         string                      `bun:",notnull"`
 	Author        string
 	FilePath      string    `bun:",nullzero"`
-	Uploaded_at   time.Time `bun:",notnull"`
+	UploadedAt   time.Time `bun:",notnull"`
 }
 
 var db *bun.DB
