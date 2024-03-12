@@ -1,7 +1,11 @@
 import subprocess
+import sys
 
 # import os
 
+class Example:
+    def __init__(self):
+        print('hello, world', file=sys.stderr)
 
 def push_all():
     """Simulates Raku's push-all function to add, commit, and push to multiple git remotes."""

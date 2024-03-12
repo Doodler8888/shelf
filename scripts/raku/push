@@ -7,7 +7,7 @@ sub push-all($dir = ".") {
 
   for @remote_repos.kv -> $index, $repo {
       qqx/cd $dir && git push $repo/;
-      say "" if $index < @remote_repos.elems - 1;
+      say "" if $index < @remote_repos.elems - 1; # Indexing starts from 0, that's why i'm subtracting.
   }
 }
 
@@ -48,9 +48,8 @@ multi MAIN(Bool :a(:$all)!) {
 multi MAIN(Bool :h(:$help)!) {
         say "$*USAGE\n";
         say "Options:";
-        say " --list  (-l) List all local repositories with uncommitted changes";
-        say " --all   (-a) Push changes to all repositories";
-        say " --usage (-u) Usage description";
+        say "  --list  (-l) List all local repositories with uncommitted changes";
+        say "  --all   (-a) Push changes to all repositories";
 }
 
 # {$repo-dir.IO.dirname} - originally i go into a .git directory, with
