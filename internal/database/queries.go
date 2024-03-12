@@ -5,9 +5,9 @@ import (
 )
 
 
-func InsertBook(ctx context.Context, newBook *Book) error {
+func InsertBook(ctx context.Context, newBook Book) error {
     _, err := db.NewInsert().Model(newBook).Exec(ctx)
-    return err // Return potential errors
+    return err
 }
 
 
