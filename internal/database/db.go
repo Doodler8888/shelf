@@ -12,7 +12,6 @@ import (
 	"github.com/uptrace/bun/driver/pgdriver"
 )
 
-// Book s/e
 type Book struct {
 	bun.BaseModel `bun:"table:books,alias:b"` // The code within backticks called 'struct tag'.
 	ID            int64                       `bun:",pk,autoincrement"`

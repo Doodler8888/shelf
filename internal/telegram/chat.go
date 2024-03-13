@@ -9,52 +9,39 @@ import (
 )
 
 func AskQuestions(b *tb.Bot, chatID int64) (db.Book, error) {
-	var book db.Book
+    var book db.Book
+    var state int
 
-	// Create channels to receive responses
-	authorChan := make(chan string)
-	titleChan := make(chan string)
+    b.Handle(tb.OnText, func(c tb.Context) error {
+        switch state {
+        case 0:
+            book.Author = c.Message().Text
+            state = 1
+            _, err := b.Send(tb.ChatID(chatID), "What is the book's name?")
+            if err != nil {
+                return err
+            }
+        case 1:
+            book.Title = c.Message().Text
+            state = 2
+        }
+        return nil
+    })
 
-	// Ask for the author name
-	authorMessage, err := b.Send(tb.ChatID(chatID), "What is the author's name?")
-	if err != nil {
-		return book, fmt.Errorf("failed to send message: %v", err)
-	}
+    // Ask for the author's name
+    _, err := b.Send(tb.ChatID(chatID), "What is the author's name?")
+    if err != nil {
+        return book, fmt.Errorf("failed to send message: %v", err)
+    }
 
-	// Register a handler for the author response
-	fmt.Println("Before executing the first handler")
-	b.Handle(tb.OnText, func(c tb.Context) error {
-		if c.Message().ReplyTo != nil && c.Message().ReplyTo.ID == authorMessage.ID {
-			fmt.Println("Waiting for author response")
-			authorChan <- c.Message().Text
-			fmt.Println("Received author response")
-			return nil
-		}
-		return nil
-	})
-	book.Author = <-authorChan
+    // Wait for the responses
+    for state != 2 {
+        time.Sleep(time.Second)
+    }
 
-	// Ask for the book name
-	titleMessage, err := b.Send(tb.ChatID(chatID), "What is the book's name?")
-	if err != nil {
-		return book, fmt.Errorf("failed to send message: %v", err)
-	}
+    // Fill out the remaining fields of the Book struct
+    book.FilePath = ""
+    book.UploadedAt = time.Now()
 
-	// Register a handler for the title response
-	b.Handle(tb.OnText, func(c tb.Context) error {
-		if c.Message().ReplyTo != nil && c.Message().ReplyTo.ID == titleMessage.ID {
-			titleChan <- c.Message().Text
-			return nil
-		}
-		return nil
-	})
-
-	// Wait for the responses
-	book.Title = <-titleChan
-
-	// Fill out the remaining fields of the Book struct
-	book.FilePath = ""
-	book.UploadedAt = time.Now()
-
-	return book, nil
+    return book, nil
 }

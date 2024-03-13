@@ -15,8 +15,8 @@ func main() {
 	db.InitDB()
 	var (
 		port      = "8080"
-		publicURL = "https://5520-178-121-9-218.ngrok-free.app" 
-		token     = os.Getenv("SHELF_TOKEN")                    
+		publicURL = "https://9c03-178-121-12-218.ngrok-free.app"
+		token     = os.Getenv("SHELF_TOKEN")
 	)
 
 	webhook := &tb.Webhook{
@@ -51,13 +51,13 @@ func main() {
 		if ext == ".pdf" || ext == ".epub" {
 			record, err := tg.AskQuestions(b, c.Chat().ID)
 			if err != nil {
-				log.Printf("Error asking questions: %v", err)
-				return c.Send("An error occurred while processing the book.")
+			  log.Printf("Error asking questions: %v", err)
+			  return c.Send("An error occurred while processing the book.")
 			}
-			err = db.InsertBook(context.Background(), record)
+			err = db.InsertBook(context.Background(), &record)
 			if err != nil {
-			  log.Printf("Error inserting book into the database: %v", err)
-			  return c.Send("An error occurred while saving the book.")
+				log.Printf("Error inserting book into the database: %v", err)
+				return c.Send("An error occurred while saving the book.")
 			}
 			return c.Send("Book uploaded successfully!")
 		}
