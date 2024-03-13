@@ -73,29 +73,6 @@ end
 vim.api.nvim_create_user_command('Cd', change_to_buffer_dir, {})
 
 
-function Print_diagnostics_to_buffer()
-  -- Create a new buffer
-  local bufnr = vim.api.nvim_create_buf(false, true)
-
-  -- Get the diagnostics from the LSP
-  local diagnostics = vim.lsp.diagnostic.get()
-
-  -- Open the new buffer in a new split
-  vim.api.nvim_command("split | buffer " .. bufnr)
-
-  -- Iterate over the diagnostics and print them into the new buffer
-  for _, diagnostic in ipairs(diagnostics) do
-      for _, item in ipairs(diagnostic.items) do
-          local msg = string.format("%s: %s", item.source, item.message)
-          vim.api.nvim_buf_set_lines(bufnr, -1, -1, false, {msg})
-      end
-  end
-end
-
--- Bind the function to the key combination <leader>d
-vim.api.nvim_set_keymap('n', '<leader>dd', ':lua Print_diagnostics_to_buffer()<CR>', { noremap = true, silent = true })
-
-
 function ShowMessagesInNewBuffer()
   -- Capture the output of the :messages command
   local messages_output = vim.api.nvim_exec('messages', true)

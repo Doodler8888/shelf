@@ -76,7 +76,8 @@ vim.api.nvim_set_keymap('n', '<C-c><C-c>', [[:bd!<CR>]], {noremap = true, silent
 vim.api.nvim_set_keymap('t', '<C-w>c', '<C-\\><C-n>:q<CR>', {noremap = true, silent = true})
 
 vim.api.nvim_set_keymap('n', '<Leader>uu', ':UndotreeToggle<CR>', {noremap = true, silent = true})
-vim.api.nvim_set_keymap('n', '<Leader>bb', ':DBUIToggle<CR>', {noremap = true, silent = true})
+
+vim.api.nvim_set_keymap('n', '<Leader>dd', ':DBUIToggle<CR>', {noremap = true, silent = true})
 
 -- Navigate to the top-right split
 vim.api.nvim_set_keymap('n', '<C-w>y', '<Cmd>wincmd t<Bar>wincmd l<CR>', { noremap = true, silent = true })

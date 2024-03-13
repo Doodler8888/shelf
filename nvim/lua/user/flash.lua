@@ -9,9 +9,9 @@ require('flash').setup {
 	    enabled = false
 	},
 	search = {
-	  -- enabled = false
+	  enabled = false
 	}
     }
 }
 
--- vim.api.nvim_set_keymap('n', '\\', '<cmd>lua require("flash").jump({mode = "search"})<CR>', {noremap = true, silent = true})
+vim.api.nvim_set_keymap('n', '\\', '<cmd>lua require("flash").jump({mode = "search"})<CR>', {noremap = true, silent = true})

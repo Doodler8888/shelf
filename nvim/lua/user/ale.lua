@@ -17,7 +17,8 @@ vim.g.ale_linters = {
   yaml = {},
   terraform = {},
   rust = {},
-  python = {'flake8'},
+  python = {},
+  -- python = {'flake8'},
   -- ansible = {''},
 }
 
