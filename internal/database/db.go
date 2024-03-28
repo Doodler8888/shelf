@@ -16,9 +16,9 @@ type Book struct {
 	bun.BaseModel `bun:"table:books,alias:b"` // The code within backticks called 'struct tag'.
 	ID            int64                       `bun:",pk,autoincrement"`
 	Title         string                      `bun:",notnull"`
-	Author        string
-	FilePath      string    `bun:",nullzero"`
-	UploadedAt   time.Time `bun:",notnull"`
+	Author        string                      `bun:",null"`
+	FilePath      string                      `bun:",nullzero"`
+	UploadedAt    time.Time                   `bun:",notnull"`
 }
 
 var db *bun.DB

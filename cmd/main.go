@@ -15,7 +15,7 @@ func main() {
 	db.InitDB()
 	var (
 		port      = "8080"
-		publicURL = "https://9c03-178-121-12-218.ngrok-free.app"
+		publicURL = "https://6f2f-178-121-37-198.ngrok-free.app"
 		token     = os.Getenv("SHELF_TOKEN")
 	)
 

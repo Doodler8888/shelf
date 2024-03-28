@@ -27,3 +27,4 @@ func GetBook(ctx context.Context, bookID int64) (*Book, error) {
 
     return book, nil // Return the retrieved book
 }
+
