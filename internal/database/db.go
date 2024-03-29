@@ -13,11 +13,13 @@ import (
 )
 
 type Book struct {
-	bun.BaseModel `bun:"table:books,alias:b"` // The code within backticks called 'struct tag'.
+	// You can combine 'notnull' with 'nullzero' for example
+	// bun.BaseModel `bun:"table:books,alias:b"` // The code within backticks called 'struct tag'.
+	bun.BaseModel `bun:"table:books_test,alias:b"` // The code within backticks called 'struct tag'.
 	ID            int64                       `bun:",pk,autoincrement"`
 	Title         string                      `bun:",notnull"`
-	Author        string                      `bun:",null"`
-	FilePath      string                      `bun:",nullzero"`
+	Author        string                     // bun doesn't have 'null'? 
+	FilePath      string                      `bun:",nullzero"` // 'nullzero' could be just a null.
 	UploadedAt    time.Time                   `bun:",notnull"`
 }
 
@@ -28,8 +30,8 @@ func InitDB() {
 	port := os.Getenv("SHELF_DB_PORT")
 	user := os.Getenv("SHELF_DB_USER")
 	password := os.Getenv("SHELF_DB_PASS")
-	// dbname := os.Getenv("SHELF_DB_NAME")
-	dbname := os.Getenv("TEST_SHELF_DB_NAME")
+	dbname := os.Getenv("SHELF_DB_NAME")
+	// dbname := os.Getenv("TEST_SHELF_DB_NAME")
 
 	// Correctly format the DSN string
 	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", user, password, host, port, dbname)
