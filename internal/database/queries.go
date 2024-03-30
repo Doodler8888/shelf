@@ -11,20 +11,29 @@ func InsertBook(ctx context.Context, newBook *Book) error {
 }
 
 
-func GetBook(ctx context.Context, bookID int64) (*Book, error) {
-    // Initialize an empty Book struct to hold the result
+func GetBookByTitle(ctx context.Context, title string) (*Book, error) {
     book := new(Book)
 
-    // Construct the query using Bun
     err := db.NewSelect().
         Model(book).
-        Where("id = ?", bookID).
-        Scan(ctx) // Execute the query and populate 'book'
+        Where("title = ?", title).
+        Scan(ctx)
 
     if err != nil {
-        return nil, err // Return an error if the query fails
+        return nil, err
     }
 
-    return book, nil // Return the retrieved book
+    return book, nil
 }
 
+
+// .Where("title = ?", title) adds a WHERE clause to the query, specifying the
+// condition to filter the books by title. The ? is a placeholder for the title
+// parameter.
+
+// When you execute the query using .Scan(ctx), the bun ORM performs the following steps:
+//
+// It sends the SQL query to the database to retrieve the book record that
+// matches the specified title.
+// If a matching book record is found, the ORM maps the values from the database
+// columns to the corresponding fields of the book struct.

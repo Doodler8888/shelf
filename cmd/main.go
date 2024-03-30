@@ -15,7 +15,7 @@ func main() {
 	db.InitDB()
 	var (
 		port      = "8080"
-		publicURL = "https://4a71-178-121-39-70.ngrok-free.app"
+		publicURL = "https://2458-178-121-39-70.ngrok-free.app"
 		token     = os.Getenv("SHELF_TOKEN")
 	)
 
@@ -38,9 +38,10 @@ func main() {
 		return c.Send("Hi!")
 	})
 
-	// b.Handle(tb.OnText, func(c tb.Context) error {
-	// 	return c.Send("Please upload a book file (PDF, EPUB, etc.).")
-	// })
+	b.Handle("/show", func(c tb.Context) error {
+	  tg.HandleShowCommand(b, c)
+	  return nil // Because the signature returns error, i have to actually return anything, even if there is no error.
+	})
 
 	b.Handle(tb.OnDocument, func(c tb.Context) error {
 		file := c.Message().Document
@@ -54,7 +55,7 @@ func main() {
 			  log.Printf("Error asking questions: %v", err)
 			  return c.Send("An error occurred while processing the book.")
 			}
-			err = db.InsertBook(context.Background(), &record)
+			err = db.InsertBook(context.Background(), &record) // The ampersand symbol (&) takes the address of the record variable and passes it to the InsertBook function.
 			if err != nil {
 				log.Printf("Error inserting book into the database: %v", err)
 				return c.Send("An error occurred while saving the book.")

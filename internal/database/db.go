@@ -12,6 +12,9 @@ import (
 	"github.com/uptrace/bun/driver/pgdriver"
 )
 
+// By default, bun uses a convention where the struct field names are converted to
+// snake_case to match the database column names. For example, the FilePath field
+// in the struct corresponds to the file_path column in the database table.
 type Book struct {
 	// You can combine 'notnull' with 'nullzero' for example
 	// bun.BaseModel `bun:"table:books,alias:b"` // The code within backticks called 'struct tag'.
