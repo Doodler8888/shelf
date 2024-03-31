@@ -1,0 +1,96 @@
+// var userStates = make(map[int64]*UserState)
+//
+// type UserState struct {
+// 	AwaitingBookID bool
+// 	Books          []*db.Book
+// }
+//
+// func ProcessMessage(b *tb.Bot, c tb.Context) error {
+//     userID := c.Sender().ID
+//     userState, exists := userStates[userID]
+//
+//     // Check if we're waiting for a book ID from this user
+//     if exists && userState.AwaitingBookID {
+//         bookID, err := strconv.ParseInt(c.Text(), 10, 64) // Convert the text to int64
+//         if err != nil {
+//             // The user didn't send a valid ID, prompt them again
+//             c.Send("Invalid ID. Please enter a valid book ID.")
+//             return nil
+//         }
+//
+//         // Look for the book with the given ID
+//         for _, book := range userState.Books {
+//             if book.ID == bookID {
+//                 // Found the book, confirm the selection
+//                 c.Send(fmt.Sprintf("You have selected: %s", book.Title))
+//                 delete(userStates, userID) // Clear the user's state
+//                 return nil
+//             }
+//         }
+//
+//         // If we get here, no book was found with the given ID
+//         c.Send("No book found with the provided ID. Please try again.")
+//         return nil
+//     }
+//
+//     // If not awaiting a book ID, or the user doesn't have an active state, handle the message normally
+//     // This part can be expanded based on your bot's functionality
+//     return nil
+// }
+//
+// func HandleShowCommand(b *tb.Bot, c tb.Context) {
+// 	// Ask the user for the book name
+// 	err := c.Send("Please enter the book name:")
+// 	if err != nil {
+// 		fmt.Println("Error sending message:", err)
+// 		return
+// 	}
+//
+// 	// Setup a one-time listener for the next message from this user
+// 	// The listener is passed to the handler further in the
+// 	// HandleShowCommand function, so don't question the usage of
+// 	// '*tb.Message' as an argument.
+// 	listener := func(m *tb.Message) {
+// 		ctx := context.Background()
+//
+// 		// Search for books by title
+// 		books, err := db.GetBooksByTitle(ctx, m.Text)
+// 		if err != nil {
+// 			c.Send("Sorry, I couldn't find any books matching your query.")
+// 			return
+// 		}
+//
+// 		if len(books) == 0 {
+// 			c.Send("No books found matching your query.")
+// 			return
+// 		}
+//
+// 		// Format the response to list all matching books
+// 		response := "Found the following books:\n"
+// 		for _, book := range books {
+// 			bookDetails := fmt.Sprintf("ID: %d\nTitle: %s\nAuthor: %s\nUploaded At: %s\n---", book.ID, book.Title, book.Author, book.UploadedAt.Format(time.RFC1123))
+// 			response += bookDetails + "\n"
+// 		}
+//
+// 		if len(books) > 1 {
+// 			response += "Please enter the ID of the book you want to choose:"
+// 			// Update the user state to expect a book ID
+// 			userStates[c.Sender().ID] = &UserState{
+// 				AwaitingBookID: true,
+// 				Books:          books,
+// 			}
+// 		}
+//
+// 		c.Send(response)
+//
+// 		// // Unregister the handler (that is used below?) to prevent it
+// 		// // from consuming all text messages
+// 		// b.Handle(tb.OnText, nil)
+// 	}
+//
+// 	// Register the listener
+// 	b.Handle(tb.OnText, func(c tb.Context) error {
+// 		listener(c.Message())
+// 		return nil
+// 	})
+// }
