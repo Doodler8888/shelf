@@ -17,7 +17,7 @@ func main() {
 	db.InitDB()
 	var (
 		port      = "8080"
-		publicURL = "https://f450-178-121-34-198.ngrok-free.app"
+		publicURL = "https://1742-178-121-34-198.ngrok-free.app"
 		token     = os.Getenv("SHELF_TOKEN")
 	)
 
@@ -53,58 +53,72 @@ func main() {
 	})
 
 	b.Handle(tb.OnDocument, func(c tb.Context) error {
-		userID := c.Sender().ID
+	  userID := c.Sender().ID
 
-		// Check if the user is expected to upload a file
-		if !awaitingUpload[userID] {
-			return c.Send("Please use the /upload command before uploading a file.")
-		}
+	  if !awaitingUpload[userID] {
+	    return c.Send("Please use the /upload command before uploading a file.")
+	  }
 
-		// User has used /upload, proceed with handling the file
-		file := c.Message().Document
-		ext := strings.ToLower(filepath.Ext(file.FileName)) // Normalize extension to lowercase
+	  file := c.Message().Document
+	  ext := strings.ToLower(filepath.Ext(file.FileName)) // Normalize extension to lowercase
 
-		if ext == ".pdf" || ext == ".epub" {
-		  localFilename := "/home/wurfkreuz/Downloads/shelf_s3/" + file.FileName
-		  err := b.Download(&file.File, localFilename)
-		  if err != nil {
-		    log.Printf("Error downloading file: %v", err)
-		    return c.Send("Failed to download the file.")
-		  }
+	  if ext == ".pdf" || ext == ".epub" {
+	    localFilename := "/home/wurfkreuz/Downloads/shelf_s3/" + file.FileName
 
-		  // Ensure the local file is deleted after processing
-		  defer os.Remove(localFilename)
+	    // Assuming HandleUploadCommand populates the book record except for FilePath
+	    record, err := tg.HandleUploadCommand(b, c.Chat().ID)
+	    if err != nil {
+	      log.Printf("Error asking questions: %v", err)
+	      return c.Send("An error occurred while processing the book.")
+	    }
 
-		  // Read the file into a byte slice
-		  fileBytes, err := os.ReadFile(localFilename)
-		  if err != nil {
-		    log.Printf("Error reading file: %v", err)
-		    return c.Send("Failed to read the downloaded file.")
-		  }
+	    // Download the file
+	    err = b.Download(&file.File, localFilename)
+	    if err != nil {
+	      log.Printf("Error downloading file: %v", err)
+	      return c.Send("Failed to download the file.")
+	    }
+	    defer os.Remove(localFilename) // Ensure the local file is deleted after processing
 
-		  // Create an S3 client
-		  s3Client, err := aws.NewS3Client(context.Background())
-		  if err != nil {
-		    log.Printf("Error creating S3 client: %v", err)
-		    return c.Send("Failed to connect to file storage.")
-		  }
+	    // Read the file into a byte slice
+	    fileBytes, err := os.ReadFile(localFilename)
+	    if err != nil {
+	      log.Printf("Error reading file: %v", err)
+	      return c.Send("Failed to read the downloaded file.")
+	    }
 
-		  // Upload the file to S3
-		  err = aws.UploadFileToS3(context.Background(), s3Client, "shelf-bucket", "books/"+filepath.Base(localFilename), fileBytes)
-		  if err != nil {
-		    log.Printf("Error uploading file to S3: %v", err)
-		    return c.Send("Failed to upload the file.")
-		  }
+	    // Create an S3 client and upload the file
+	    s3Client, err := aws.NewS3Client(context.Background())
+	    if err != nil {
+	      log.Printf("Error creating S3 client: %v", err)
+	      return c.Send("Failed to connect to file storage.")
+	    }
 
-		  // Reset the user's state
-		  delete(awaitingUpload, userID)
-		  return c.Send("Book uploaded successfully!")
-		} else {
-		  // Reset the user's state even if the file format is invalid
-		  delete(awaitingUpload, userID)
-		  return c.Send("Invalid file format. Please upload a book file (PDF, EPUB, etc.).")
-		}
+	    s3Path := "books/" + filepath.Base(localFilename)
+	    err = aws.UploadFileToS3(context.Background(), s3Client, "shelf-bucket", s3Path, fileBytes)
+	    if err != nil {
+	      log.Printf("Error uploading file to S3: %v", err)
+	      return c.Send("Failed to upload the file.")
+	    }
+
+	    // Set the FilePath field to the S3 path
+	    record.FilePath = "https://shelf-bucket.s3.amazonaws.com/" + s3Path
+
+	    // Insert the book record into the database
+	    err = db.InsertBook(context.Background(), &record)
+	    if err != nil {
+	      log.Printf("Error inserting book into the database: %v", err)
+	      return c.Send("An error occurred while saving the book.")
+	    }
+
+	    delete(awaitingUpload, userID) // Reset the user's state
+	    return c.Send("Book uploaded successfully!")
+	  } else {
+	    delete(awaitingUpload, userID) // Reset the user's state even if the file format is invalid
+	    return c.Send("Invalid file format. Please upload a book file (PDF, EPUB, etc.).")
+	  }
 	})
+
 
 	b.Start()
 }

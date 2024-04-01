@@ -3,7 +3,8 @@ package aws
 import (
     "context"
     "bytes"
-    // "github.com/aws/aws-sdk-go-v2/aws"
+    "time"
+    "github.com/aws/aws-sdk-go-v2/aws"
     "github.com/aws/aws-sdk-go-v2/config"
     "github.com/aws/aws-sdk-go-v2/service/s3"
 )
@@ -26,4 +27,35 @@ func UploadFileToS3(ctx context.Context, client *s3.Client, bucket, key string, 
     return err
 }
 
+func GetPresignURL(cfg aws.Config, bucketName, keyName string) (string, error) {
+    s3Client := s3.NewFromConfig(cfg)
+    presignClient := s3.NewPresignClient(s3Client)
+    presignedURL, err := presignClient.PresignGetObject(context.Background(),
+        &s3.GetObjectInput{
+            Bucket: aws.String(bucketName),
+            Key:    aws.String(keyName),
+        },
+        s3.WithPresignExpires(15*time.Minute),
+    )
+    if err != nil {
+        return "", err
+    }
+    return presignedURL.URL, nil
+}
+
+func PutPresignURL(cfg aws.Config, bucketName, objectName string) (string, error) {
+    s3Client := s3.NewFromConfig(cfg)
+    presignClient := s3.NewPresignClient(s3Client)
+    presignedURL, err := presignClient.PresignPutObject(context.Background(),
+        &s3.PutObjectInput{
+            Bucket: aws.String(bucketName),
+            Key:    aws.String(objectName),
+        },
+        s3.WithPresignExpires(15*time.Minute),
+    )
+    if err != nil {
+        return "", err
+    }
+    return presignedURL.URL, nil
+}
 
