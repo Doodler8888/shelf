@@ -8,7 +8,7 @@ import (
 	tb "gopkg.in/telebot.v3"
 )
 
-func AskQuestions(b *tb.Bot, chatID int64) (db.Book, error) {
+func HandleUploadCommand(b *tb.Bot, chatID int64) (db.Book, error) {
 
 	var book db.Book
 	answerChan := make(chan string)
