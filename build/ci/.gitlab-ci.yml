@@ -1,5 +1,5 @@
 ---
-image: golang:1.22.1-alpine3.19  # Since your runner uses the same base image
+image: golang:1.22.1-alpine3.19
 
 stages:
   - test
@@ -19,21 +19,5 @@ build:
     - go build -o shelf # Builds your Go code and produces an executable binary file named my-go-app.
 ...
 
-# # Package Stage (Docker)
-# package:
-#   stage: package
-#   script:
-#     - docker build -t my-go-app-image:latest .
-#     - docker push my-go-app-image:latest  # Assuming you have a registry configured
-#
-#
-# # docker build -t my-go-app-image:latest .: Builds a Docker image named
-# # my-go-app-image:latest using the current directory (which should include the
-# # application binary and a Dockerfile) as the context.
-#
-# # docker push my-go-app-image:latest: Pushes the newly built Docker image to a
-# # Docker registry (you'll need to have this registry set up).
-
-# /home/wurfkreuz/.projects/shelf/build/ci/.gitlab-ci.yml
 
 # test
