@@ -8,8 +8,14 @@ stages:
 
 test:
   stage: test
+  variables:
+    SHELF_DB_HOST: "localhost"
+    SHELF_DB_PORT: "5432"
+    SHELF_DB_USER: "wurfkreuz"
+    SHELF_DB_PASS: "1337"
+    SHELF_DB_NAME: "shelf"
   script:
-    - go test ./... # Executes Go tests in the current directory and all its subdirectories.
+    - go test ./...
 
 # Build Stage
 build:
@@ -18,4 +24,3 @@ build:
     - cd cmd
     - go build -o shelf # Builds your Go code and produces an executable binary file named my-go-app.
 ...
-
