@@ -6,10 +6,6 @@ stages:
   - build
   # - package
 
-default:
-  tags:
-    - go
-
 test:
   stage: test
   script:
