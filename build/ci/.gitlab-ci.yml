@@ -1,5 +1,5 @@
 ---
-image: golang:1.22-alpine3.19  # Since your runner uses the same base image
+image: golang:1.22.1-alpine3.19  # Since your runner uses the same base image
 
 stages:
   - test
