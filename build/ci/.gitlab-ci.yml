@@ -19,5 +19,3 @@ build:
     - go build -o shelf # Builds your Go code and produces an executable binary file named my-go-app.
 ...
 
-
-# test
