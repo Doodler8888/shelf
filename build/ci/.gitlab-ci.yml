@@ -36,3 +36,5 @@ build:
 # # Docker registry (you'll need to have this registry set up).
 
 # /home/wurfkreuz/.projects/shelf/build/ci/.gitlab-ci.yml
+
+# test
