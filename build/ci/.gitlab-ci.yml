@@ -8,6 +8,12 @@ stages:
 
 test:
   stage: test
+  variables:
+    SHELF_DB_HOST: "localhost"
+    SHELF_DB_PORT: "5432"
+    SHELF_DB_USER: "wurfkreuz"
+    SHELF_DB_PASS: "1337"
+    SHELF_DB_NAME: "shelf"
   script:
     - go test ./...
 
